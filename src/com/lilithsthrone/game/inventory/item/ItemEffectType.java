@@ -59,6 +59,7 @@ import com.lilithsthrone.main.Main;
 import com.lilithsthrone.utils.Colour;
 import com.lilithsthrone.utils.Util;
 import com.lilithsthrone.utils.Util.ListValue;
+import com.lilithsthrone.utils.Util.Value;
 
 /**
  * @since 0.1.7
@@ -293,13 +294,13 @@ public enum ItemEffectType {
 					target.setSexualOrientation(SexualOrientation.GYNEPHILIC);
 					if(target.isPlayer()) {//TODO
 						return "<p style='text-align:center;'>"
-									+ (alreadyGynephilic?"[style.disabled(You're already gynephilic, so nothing happens...)]":"You're now [style.femininePlus(gynephilic)]!")
+									+ (alreadyGynephilic?"[style.disabled(You're already gynephilic, so nothing happens...)]":"You're now [style.colourFemininePlus(gynephilic)]!")
 								+ "</p>";
 					
 					} else {
 						return UtilText.parse(target,
 								"<p style='text-align:center;'>"
-										+ (alreadyGynephilic?"[style.disabled([npc.Name] is already gynephilic, so nothing happens...)]":"[npc.Name] is now [style.femininePlus(gynephilic)]!")
+										+ (alreadyGynephilic?"[style.disabled([npc.Name] is already gynephilic, so nothing happens...)]":"[npc.Name] is now [style.colourFemininePlus(gynephilic)]!")
 									+ "</p>");
 					}
 					
@@ -308,13 +309,13 @@ public enum ItemEffectType {
 					target.setSexualOrientation(SexualOrientation.AMBIPHILIC);
 					if(target.isPlayer()) {//TODO
 						return "<p style='text-align:center;'>"
-									+ (alreadyAmbiphilic?"[style.disabled(You're already ambiphilic, so nothing happens...)]":"You're now [style.androgynous(ambiphilic)]!")
+									+ (alreadyAmbiphilic?"[style.disabled(You're already ambiphilic, so nothing happens...)]":"You're now [style.colourAndrogynous(ambiphilic)]!")
 								+ "</p>";
 					
 					} else {
 						return UtilText.parse(target,
 								"<p style='text-align:center;'>"
-										+ (alreadyAmbiphilic?"[style.disabled([npc.Name] is already ambiphilic, so nothing happens...)]":"[npc.Name] is now [style.androgynous(ambiphilic)]!")
+										+ (alreadyAmbiphilic?"[style.disabled([npc.Name] is already ambiphilic, so nothing happens...)]":"[npc.Name] is now [style.colourAndrogynous(ambiphilic)]!")
 									+ "</p>");
 					}
 					
@@ -323,13 +324,13 @@ public enum ItemEffectType {
 					target.setSexualOrientation(SexualOrientation.ANDROPHILIC);
 					if(target.isPlayer()) {//TODO
 						return "<p style='text-align:center;'>"
-									+ (alreadyAndrophilic?"[style.disabled(You're already androphilic, so nothing happens...)]":"You're now [style.masculinePlus(androphilic)]!")
+									+ (alreadyAndrophilic?"[style.disabled(You're already androphilic, so nothing happens...)]":"You're now [style.colourMasculinePlus(androphilic)]!")
 								+ "</p>";
 					
 					} else {
 						return UtilText.parse(target,
 								"<p style='text-align:center;'>"
-										+ (alreadyAndrophilic?"[style.disabled([npc.Name] is already androphilic, so nothing happens...)]":"[npc.Name] is now [style.masculinePlus(androphilic)]!")
+										+ (alreadyAndrophilic?"[style.disabled([npc.Name] is already androphilic, so nothing happens...)]":"[npc.Name] is now [style.colourMasculinePlus(androphilic)]!")
 									+ "</p>");
 					}
 				}
@@ -1279,11 +1280,19 @@ public enum ItemEffectType {
 			
 			if(!target.hasFetish(Fetish.FETISH_BIMBO)) {
 				target.addFetish(Fetish.FETISH_BIMBO);
-				sb.append("</br>"
-						+ "<p>"
-							+ "A giggle escapes from between your [pc.lips], and you suddenly find yourself unable to think of anything other than how, like, super awesome bimbos are and stuff!"
-							+ "</br><b style='color:"+Colour.GENERIC_SEX.toWebHexString()+";'>You have gained the bimbo fetish!</b>"
-						+ "</p>");
+				if(target.isPlayer()) {
+					sb.append("</br>"
+							+ "<p>"
+								+ "A giggle escapes from between your [pc.lips], and you suddenly find yourself unable to think of anything other than how, like, super awesome bimbos are and stuff!"
+								+ "</br><b style='color:"+Colour.GENERIC_SEX.toWebHexString()+";'>You have gained the bimbo fetish!</b>"
+							+ "</p>");
+				} else {
+					sb.append(UtilText.parse(target, "</br>"
+							+ "<p>"
+								+ "A giggle escapes from between [npc.name]'s [npc.lips], and [npc.she] suddenly finds [npc.herself] unable to think of anything other than how, like, super awesome bimbos are and stuff!"
+								+ "</br><b style='color:"+Colour.GENERIC_SEX.toWebHexString()+";'>[npc.Name] has gained the bimbo fetish!</b>"
+							+ "</p>"));
+				}
 			}
 			
 			// Non-racial changes
@@ -1358,11 +1367,19 @@ public enum ItemEffectType {
 			
 			if(!target.hasPerk(Perk.NYMPHOMANIAC)) {
 				target.addPerk(Perk.NYMPHOMANIAC);
-				sb.append("</br>"
-						+ "<p>"
-							+ "A desperate moan escapes from between your [pc.lips], and you suddenly find yourself unable to think of anything other than sex, sex, and more sex!"
-							+ "</br><b style='color:"+Colour.GENERIC_SEX.toWebHexString()+";'>You have gained the nymphomaniac perk!</b>"
-						+ "</p>");
+				if(target.isPlayer()) {
+					sb.append("</br>"
+							+ "<p>"
+								+ "A desperate moan escapes from between your [pc.lips], and you suddenly find yourself unable to think of anything other than sex, sex, and more sex!"
+								+ "</br><b style='color:"+Colour.GENERIC_SEX.toWebHexString()+";'>You have gained the nymphomaniac perk!</b>"
+							+ "</p>");
+				} else {
+					sb.append(UtilText.parse(target, "</br>"
+							+ "<p>"
+								+ "A desperate moan escapes from between [npc.name]'s [npc.lips], and [npc.she] suddenly finds [npc.herself] unable to think of anything other than sex, sex, and more sex!"
+								+ "</br><b style='color:"+Colour.GENERIC_SEX.toWebHexString()+";'>[npc.Name] has gained the nymphomaniac perk!</b>"
+							+ "</p>"));
+				}
 			}
 			
 			// Non-racial changes
@@ -1446,11 +1463,19 @@ public enum ItemEffectType {
 			
 			if(!target.hasFetish(Fetish.FETISH_DOMINANT)) {
 				target.addFetish(Fetish.FETISH_DOMINANT);
-				sb.append("</br>"
-						+ "<p>"
-							+ "A deep groan escapes from between your [pc.lips], and you suddenly find yourself thinking of how much you want to dominate the next person you come across!"
-							+ "</br><b style='color:"+Colour.GENERIC_SEX.toWebHexString()+";'>You have gained the dominant fetish!</b>"
-						+ "</p>");
+				if(target.isPlayer()) {
+					sb.append("</br>"
+							+ "<p>"
+								+ "A deep groan escapes from between your [pc.lips], and you suddenly find yourself thinking of how much you want to dominate the next person you come across!"
+								+ "</br><b style='color:"+Colour.GENERIC_SEX.toWebHexString()+";'>You have gained the dominant fetish!</b>"
+							+ "</p>");
+				} else {
+					sb.append(UtilText.parse(target, "</br>"
+							+ "<p>"
+								+ "A deep groan escapes from between [npc.name]'s [npc.lips], and [npc.she] suddenly finds [npc.herslef] thinking of how much [npc.she] wants to dominate the next person [npc.she] meets!"
+								+ "</br><b style='color:"+Colour.GENERIC_SEX.toWebHexString()+";'>[npc.Name] has gained the dominant fetish!</b>"
+							+ "</p>"));
+				}
 			}
 			
 			// Non-racial changes
@@ -2437,11 +2462,11 @@ public enum ItemEffectType {
 	}
 	
 	// Caching:
-	private static Map<TFModifier, LinkedHashMap<TFModifier, List<TFPotency>>> racialPrimaryModSecondaryModPotencyGrid = new HashMap<>();
+	private static Map<Race, Map<TFModifier, LinkedHashMap<TFModifier, List<TFPotency>>>> racialPrimaryModSecondaryModPotencyGrid = new HashMap<>();
 	
 	private static List<TFModifier> getRacialSecondaryModifiers(Race race, TFModifier primaryModifier) {
-		if(racialPrimaryModSecondaryModPotencyGrid.containsKey(primaryModifier)) {
-			return new ArrayList<>(racialPrimaryModSecondaryModPotencyGrid.get(primaryModifier).keySet());
+		if(racialPrimaryModSecondaryModPotencyGrid.containsKey(race) && racialPrimaryModSecondaryModPotencyGrid.get(race).containsKey(primaryModifier)) {
+			return new ArrayList<>(racialPrimaryModSecondaryModPotencyGrid.get(race).get(primaryModifier).keySet());
 		} else {
 //			racialPrimaryModSecondaryModPotencyGrid.clear();
 //			for(TFModifier mod : TFModifier.values()) {
@@ -2453,16 +2478,16 @@ public enum ItemEffectType {
 //				}
 //			}
 			populateGrid(race, primaryModifier);
-			return new ArrayList<>(racialPrimaryModSecondaryModPotencyGrid.get(primaryModifier).keySet());
+			return new ArrayList<>(racialPrimaryModSecondaryModPotencyGrid.get(race).get(primaryModifier).keySet());
 		}
 	}
 	
 	private static List<TFPotency> getRacialPotencyModifiers(Race race, TFModifier primaryModifier, TFModifier secondaryModifier) {
-		if(racialPrimaryModSecondaryModPotencyGrid.containsKey(primaryModifier)) {
-			return new ArrayList<>(racialPrimaryModSecondaryModPotencyGrid.get(primaryModifier).get(secondaryModifier));
+		if(racialPrimaryModSecondaryModPotencyGrid.get(race).containsKey(primaryModifier)) {
+			return new ArrayList<>(racialPrimaryModSecondaryModPotencyGrid.get(race).get(primaryModifier).get(secondaryModifier));
 		} else {
 			populateGrid(race, primaryModifier);
-			return new ArrayList<>(racialPrimaryModSecondaryModPotencyGrid.get(primaryModifier).get(secondaryModifier));
+			return new ArrayList<>(racialPrimaryModSecondaryModPotencyGrid.get(race).get(primaryModifier).get(secondaryModifier));
 		}
 	}
 	
@@ -2695,7 +2720,7 @@ public enum ItemEffectType {
 				break;
 		}
 		
-		racialPrimaryModSecondaryModPotencyGrid.put(primaryModifier, secondaryModPotencyMap);
+		racialPrimaryModSecondaryModPotencyGrid.put(race, Util.newHashMapOfValues(new Value<>(primaryModifier, secondaryModPotencyMap)));
 	}
 	
 	// And in the comments these words appear: 'My name is Innoxia, creator of smut: Look on my methods, ye Modders, and despair!'
@@ -3380,23 +3405,23 @@ public enum ItemEffectType {
 						}
 						
 					case TF_TYPE_1:
-						return new RacialEffectUtil((RacialBody.valueOfRace(race).getHornType().get(0)==HornType.NONE?"Removes horns.":"Grows "+RacialBody.valueOfRace(race).getHornType().get(0).getName(true, Main.game.getPlayer())+"."), 0, "") {
+						return new RacialEffectUtil((RacialBody.valueOfRace(race).getHornType().get(0)==HornType.NONE?"Removes horns.":"Grows "+RacialBody.valueOfRace(race).getHornType().get(0).getTransformName()+"."), 0, "") {
 							@Override public String applyEffect() { return target.setHornType(RacialBody.valueOfRace(race).getHornType().get(0)); } };
 
 					case TF_TYPE_2:
-						return new RacialEffectUtil((RacialBody.valueOfRace(race).getHornType().get(1)==HornType.NONE?"Removes horns.":"Grows "+RacialBody.valueOfRace(race).getHornType().get(1).getName(true, Main.game.getPlayer())+"."), 0, "") {
+						return new RacialEffectUtil((RacialBody.valueOfRace(race).getHornType().get(1)==HornType.NONE?"Removes horns.":"Grows "+RacialBody.valueOfRace(race).getHornType().get(1).getTransformName()+"."), 0, "") {
 							@Override public String applyEffect() { return target.setHornType(RacialBody.valueOfRace(race).getHornType().get(1)); } };
 
 					case TF_TYPE_3:
-						return new RacialEffectUtil((RacialBody.valueOfRace(race).getHornType().get(2)==HornType.NONE?"Removes horns.":"Grows "+RacialBody.valueOfRace(race).getHornType().get(2).getName(true, Main.game.getPlayer())+"."), 0, "") {
+						return new RacialEffectUtil((RacialBody.valueOfRace(race).getHornType().get(2)==HornType.NONE?"Removes horns.":"Grows "+RacialBody.valueOfRace(race).getHornType().get(2).getTransformName()+"."), 0, "") {
 							@Override public String applyEffect() { return target.setHornType(RacialBody.valueOfRace(race).getHornType().get(2)); } };
 
 					case TF_TYPE_4:
-						return new RacialEffectUtil((RacialBody.valueOfRace(race).getHornType().get(3)==HornType.NONE?"Removes horns.":"Grows "+RacialBody.valueOfRace(race).getHornType().get(3).getName(true, Main.game.getPlayer())+"."), 0, "") {
+						return new RacialEffectUtil((RacialBody.valueOfRace(race).getHornType().get(3)==HornType.NONE?"Removes horns.":"Grows "+RacialBody.valueOfRace(race).getHornType().get(3).getTransformName()+"."), 0, "") {
 							@Override public String applyEffect() { return target.setHornType(RacialBody.valueOfRace(race).getHornType().get(3)); } };
 
 					case TF_TYPE_5:
-						return new RacialEffectUtil((RacialBody.valueOfRace(race).getHornType().get(4)==HornType.NONE?"Removes horns.":"Grows "+RacialBody.valueOfRace(race).getHornType().get(4).getName(true, Main.game.getPlayer())+"."), 0, "") {
+						return new RacialEffectUtil((RacialBody.valueOfRace(race).getHornType().get(4)==HornType.NONE?"Removes horns.":"Grows "+RacialBody.valueOfRace(race).getHornType().get(4).getTransformName()+"."), 0, "") {
 							@Override public String applyEffect() { return target.setHornType(RacialBody.valueOfRace(race).getHornType().get(4)); } };
 							
 					default:

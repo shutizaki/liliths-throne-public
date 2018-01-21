@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.attributes.CorruptionLevel;
@@ -36,7 +35,7 @@ import com.lilithsthrone.utils.Util.ListValue;
 
 /**
  * @since 0.1.0
- * @version 0.1.86
+ * @version 0.1.98
  * @author Innoxia
  */
 public class UtilText {
@@ -45,184 +44,6 @@ public class UtilText {
 	public static StringBuilder transformationContentSB = new StringBuilder(4096);
 	public static StringBuilder nodeContentSB = new StringBuilder(4096);
 	private static StringBuilder descriptionSB = new StringBuilder();
-
-	private static final Pattern[] patterns = {
-			Pattern.compile("<girl>"),
-			Pattern.compile("<woman>"),
-			Pattern.compile("<female>"),
-			Pattern.compile("<her>"),
-			Pattern.compile("<hers>"),
-			Pattern.compile("<herPro>"),
-			Pattern.compile("<she>"),
-			
-			Pattern.compile("<Girl>"),
-			Pattern.compile("<Woman>"),
-			Pattern.compile("<Female>"),
-			Pattern.compile("<Her>"),
-			Pattern.compile("<Hers>"),
-			Pattern.compile("<HerPro>"),
-			Pattern.compile("<She>") };
-
-	/**
-	 * <b>USE .parse() INSTEAD!</b> This method is deprecated, and will be deleted in a future update!
-	 */
-//	@Deprecated
-	public static String genderParsing(GameCharacter character, String text) {
-		modifiedSentence = text;
-		
-		boolean isFeminine = character.isFeminine();
-		
-		if(Femininity.valueOf(character.getFemininityValue()) == Femininity.ANDROGYNOUS) {
-			switch(Main.getProperties().androgynousIdentification){
-				case FEMININE:
-					isFeminine = true;
-					break;
-				case CLOTHING_FEMININE:
-					isFeminine = character.getClothingAverageFemininity() >= 50;
-					break;
-				case CLOTHING_MASCULINE:
-					isFeminine = character.getClothingAverageFemininity() > 50;
-					break;
-				case MASCULINE:
-					isFeminine = false;
-					break;
-				default:
-					break;
-			}
-		}
-		
-		
-		if (isFeminine)
-			for (int i = 0; i < patterns.length; i++)
-				modifiedSentence = patterns[i].matcher(modifiedSentence).replaceAll(getFemaleReplacement(i, character.isPlayer()));
-		else
-			for (int i = 0; i < patterns.length; i++)
-				modifiedSentence = patterns[i].matcher(modifiedSentence).replaceAll(getMaleReplacement(i, character.isPlayer()));
-
-		return modifiedSentence;
-	}
-	
-	private static String getFemaleReplacement(int i, boolean isPlayer){
-		switch(i){
-			case 0:
-				return Gender.F_V_B_FEMALE.getNounYoung();
-			case 1:
-				return Gender.F_V_B_FEMALE.getNoun();
-			case 2:
-				return Gender.F_V_B_FEMALE.getName();
-			case 3:
-				if(isPlayer)
-					return Gender.F_V_B_FEMALE.getPossessiveBeforeNoun();
-				else
-					return GenderPronoun.POSSESSIVE_BEFORE_NOUN.getFeminine();
-			case 4:
-				if(isPlayer)
-					return Gender.F_V_B_FEMALE.getPossessiveAlone();
-				else
-					return GenderPronoun.POSSESSIVE_ALONE.getFeminine();
-			case 5:
-				if(isPlayer)
-					return Gender.F_V_B_FEMALE.getThirdPerson();
-				else
-					return GenderPronoun.THIRD_PERSON.getFeminine();
-			case 6:
-				if(isPlayer)
-					return Gender.F_V_B_FEMALE.getSecondPerson();
-				else
-					return GenderPronoun.SECOND_PERSON.getFeminine();
-			// Capitalised:
-			case 7:
-				return Util.capitaliseSentence(Gender.F_V_B_FEMALE.getNounYoung());
-			case 8:
-				return Util.capitaliseSentence(Gender.F_V_B_FEMALE.getNoun());
-			case 9:
-				return Util.capitaliseSentence(Gender.F_V_B_FEMALE.getName());
-			case 10:
-				if(isPlayer)
-					return Util.capitaliseSentence(Gender.F_V_B_FEMALE.getPossessiveBeforeNoun());
-				else
-					return Util.capitaliseSentence(GenderPronoun.POSSESSIVE_BEFORE_NOUN.getFeminine());
-			case 11:
-				if(isPlayer)
-					return Util.capitaliseSentence(Gender.F_V_B_FEMALE.getPossessiveAlone());
-				else
-					return Util.capitaliseSentence(GenderPronoun.POSSESSIVE_ALONE.getFeminine());
-			case 12:
-				if(isPlayer)
-					return Util.capitaliseSentence(Gender.F_V_B_FEMALE.getThirdPerson());
-				else
-					return Util.capitaliseSentence(GenderPronoun.THIRD_PERSON.getFeminine());
-			case 13:
-				if(isPlayer)
-					return Util.capitaliseSentence(Gender.F_V_B_FEMALE.getSecondPerson());
-				else
-					return Util.capitaliseSentence(GenderPronoun.SECOND_PERSON.getFeminine());
-			default:
-				return "";
-		}
-	}
-	
-	private static String getMaleReplacement(int i, boolean isPlayer){
-		switch(i){
-			case 0:
-				return Gender.M_P_MALE.getNounYoung();
-			case 1:
-				return Gender.M_P_MALE.getNoun();
-			case 2:
-				return Gender.M_P_MALE.getName();
-			case 3:
-				if(isPlayer)
-					return Gender.M_P_MALE.getPossessiveBeforeNoun();
-				else
-					return GenderPronoun.POSSESSIVE_BEFORE_NOUN.getMasculine();
-			case 4:
-				if(isPlayer)
-					return Gender.M_P_MALE.getPossessiveAlone();
-				else
-					return GenderPronoun.POSSESSIVE_ALONE.getMasculine();
-			case 5:
-				if(isPlayer)
-					return Gender.M_P_MALE.getThirdPerson();
-				else
-					return GenderPronoun.THIRD_PERSON.getMasculine();
-			case 6:
-				if(isPlayer)
-					return Gender.M_P_MALE.getSecondPerson();
-				else
-					return GenderPronoun.SECOND_PERSON.getMasculine();
-			// Capitalised:
-			case 7:
-				return Util.capitaliseSentence(Gender.M_P_MALE.getNounYoung());
-			case 8:
-				return Util.capitaliseSentence(Gender.M_P_MALE.getNoun());
-			case 9:
-				return Util.capitaliseSentence(Gender.M_P_MALE.getName());
-			case 10:
-				if(isPlayer)
-					return Util.capitaliseSentence(Gender.M_P_MALE.getPossessiveBeforeNoun());
-				else
-					return Util.capitaliseSentence(GenderPronoun.POSSESSIVE_BEFORE_NOUN.getMasculine());
-			case 11:
-				if(isPlayer)
-					return Util.capitaliseSentence(Gender.M_P_MALE.getPossessiveAlone());
-				else
-					return Util.capitaliseSentence(GenderPronoun.POSSESSIVE_ALONE.getMasculine());
-			case 12:
-				if(isPlayer)
-					return Util.capitaliseSentence(Gender.M_P_MALE.getThirdPerson());
-				else
-					return Util.capitaliseSentence(GenderPronoun.THIRD_PERSON.getMasculine());
-			case 13:
-				if(isPlayer)
-					return Util.capitaliseSentence(Gender.M_P_MALE.getSecondPerson());
-				else
-					return Util.capitaliseSentence(GenderPronoun.SECOND_PERSON.getMasculine());
-			default:
-				return "";
-		}
-	}
-	
-	
 
 	public static String parsePlayerThought(String text) {
 		if(Main.game.getPlayer()==null) {
@@ -248,11 +69,11 @@ public class UtilText {
 		
 		// Apply speech effects:
 		if(Main.game.isInSex()) {
-			if(Sex.isPlayerPenetrated()) {
+			if(Sex.isCharacterPenetrated(Main.game.getPlayer())) {
 				modifiedSentence = Util.addSexSounds(modifiedSentence, 6);
 			}
 			
-			if(Sex.getPenetrationTypeInOrifice(OrificeType.MOUTH_PLAYER)!=null) {
+			if(Sex.getPenetrationTypeInOrifice(Main.game.getPlayer(), OrificeType.MOUTH)!=null) {
 				modifiedSentence = Util.addMuffle(modifiedSentence, 6);
 			} else {
 				if(!Main.game.getPlayer().isAbleToAccessCoverableArea(CoverableArea.MOUTH, false)) {
@@ -294,10 +115,10 @@ public class UtilText {
 		// Apply speech effects:
 		if(Main.game.isInSex()) {
 			if(target.isPlayer()) {
-				if(Sex.isPlayerPenetrated()) {
+				if(Sex.isCharacterPenetrated(Main.game.getPlayer())) {
 					modifiedSentence = Util.addSexSounds(modifiedSentence, 6);
 				}
-				if(Sex.getPenetrationTypeInOrifice(OrificeType.MOUTH_PLAYER)!=null) {
+				if(Sex.getPenetrationTypeInOrifice(Main.game.getPlayer(), OrificeType.MOUTH)!=null) {
 					modifiedSentence = Util.addMuffle(modifiedSentence, 6);
 				} else {
 					if(!target.isAbleToAccessCoverableArea(CoverableArea.MOUTH, false)) {
@@ -311,11 +132,11 @@ public class UtilText {
 				}
 				
 			} else {
-				if(Sex.isPartnerPenetrated()) {
+				if(Sex.isCharacterPenetrated(character)) {
 					modifiedSentence = Util.addSexSounds(modifiedSentence, 6);
 				}
 				
-				if(Sex.getPenetrationTypeInOrifice(OrificeType.MOUTH_PARTNER)!=null) {
+				if(Sex.getPenetrationTypeInOrifice(character, OrificeType.MOUTH)!=null) {
 					modifiedSentence = Util.addMuffle(modifiedSentence, 6);
 				} else {
 					if(!target.isAbleToAccessCoverableArea(CoverableArea.MOUTH, false)) {
@@ -377,7 +198,7 @@ public class UtilText {
 
 		// Apply speech effects:
 		if(Main.game.isInSex()) {
-			if(Sex.isPartnerPenetrated())
+			if(Sex.isCharacterPenetrated(target))
 				modifiedSentence = Util.addSexSounds(modifiedSentence, 5);
 		}
 
@@ -640,88 +461,212 @@ public class UtilText {
 //	}
 	
 	public static String parse(String input) {
-		return parse(null, input);
+		return parse(new ArrayList<>(), input);
+	}
+	
+
+	public static String parse(GameCharacter specialNPC, String input) {
+		return parse(Util.newArrayListOfValues(new ListValue<>(specialNPC)), input);
+	}
+	
+	public static String parse(GameCharacter specialNPC1, GameCharacter specialNPC2, String input) {
+		return parse(Util.newArrayListOfValues(new ListValue<>(specialNPC1), new ListValue<>(specialNPC2)), input);
 	}
 	
 	/**
 	 * Parses supplied text.
 	 */
-	public static String parse(GameCharacter specialNPC, String input) {
+	public static String parse(List<GameCharacter> specialNPC, String input) {
 		
 		// Loop through input, when find '[', start parsing.
+		// [target.command(arguments)]
+		
+		// {npc1.isPlayer?Your:[npc1.Name]'s} [npc1.moans] are muffled into {npc2.isPlayer?your:[npc2.name]'s} [npc2.mouth]. {npc1.isPlayer?{npc1.isPlayer?Your:[npc1.Name]'s} feel turned on...}
+		
 		StringBuilder sb = new StringBuilder();
 		
-		int openBrackets = 0, closeBrackets = 0,
-				openArg = 0, closeArg = 0,
-				startIndex = 0, endIndex = 0;
-		String target=null, command=null, arguments=null;
+		int openBrackets = 0;
+		int closeBrackets = 0;
+		int openArg = 0;
+		int closeArg = 0;
+		int conditionalThens = 0;
+		int startIndex = 0;
+		int endIndex = 0;
+		
+		String target=null;
+		String command=null;
+		String arguments=null;
+		String conditionalTrue=null;
+		String conditionalFalse=null;
+		
+		boolean conditionalElseFound=false;
+		boolean processingConditional=false;
+		boolean processingRegular=false;
 		
 		for (int i = 0; i < input.length(); i++) {
 			char c = input.charAt(i);
 			
-			// Process char
-			if(c=='[') {
-				if(openBrackets==0)
-					startIndex = i;
-				
-				openBrackets++;
-				
-			} else if(c=='.' && target==null) {
-				if(openBrackets>0) {
-					target=sb.toString().substring(1); // Cut off the '[' at the start.
-					sb.setLength(0);
-				}
-			
-			} else if(c=='(') {
-				if(openBrackets>0) {
-					if(command==null) {
-						command=sb.toString().substring(1); // Cut off the '.' at the start.
-						sb.setLength(0);
+			if(!processingRegular) {
+				if(c=='F' && i-1>1 && input.charAt(i-1)=='I' && i-2>=0 && input.charAt(i-2)=='#') {
+					if(openBrackets==0) {
+						processingConditional=true;
+						startIndex = i-2;
 					}
 					
-					openArg++;
-				}
-				
-			} else if(c==')') {
-				if(openBrackets>0) {
-					closeArg++;
+					openBrackets++;
 					
-					if(openArg==closeArg){
-						arguments = sb.toString().substring(1);
-					}
-				}
-				
-			} else if(c==']') {
-				closeBrackets++;
-				
-				if(openBrackets==closeBrackets) {
-					if(command==null) {
-						command=sb.toString().substring(1); // Cut off the '.' at the start.
+				} else if(processingConditional) {
+					if(c=='.' && target==null) {
+						target=sb.toString().substring(1); // Cut off the '#IF' at the start.
 						sb.setLength(0);
+					
+					} else if(c=='(') {
+						if(command==null) {
+							command=sb.toString().substring(1); // Cut off the '.' at the start.
+							sb.setLength(0);
+						}
+						
+						openArg++;
+						
+					} else if(c==')') {
+						closeArg++;
+						
+						if(openArg==closeArg){
+							arguments = sb.toString().substring(1);
+						}
+						
+					} else if((c=='N' &&
+							(i-1>1 && input.charAt(i-1)=='E')
+							&& (i-2>=0 && input.charAt(i-2)=='H')
+							&& (i-3>=0 && input.charAt(i-3)=='T')
+							&& (i-4>=0 && input.charAt(i-4)=='#'))) {
+						conditionalThens++;
+						
+						if(conditionalThens==1){
+							if(command==null) {
+								command=sb.toString().substring(1, sb.length()-4); // Cut off the '#THEN' at the start.
+							}
+							sb.setLength(0);
+						}
+						
+					} else if((c=='E' &&
+							(i-1>1 && input.charAt(i-1)=='S')
+							&& (i-2>=0 && input.charAt(i-2)=='L')
+							&& (i-3>=0 && input.charAt(i-3)=='E')
+							&& (i-4>=0 && input.charAt(i-4)=='#')) && openBrackets-1==closeBrackets) {
+						conditionalElseFound = true;
+						conditionalTrue = sb.toString().substring(1, sb.length()-4); // Cut off the '#ELSE' at the start.
+						sb.setLength(0);
+						
+					} else if(c=='F' &&
+							(i-1>1 && input.charAt(i-1)=='I')
+							&& (i-2>=0 && input.charAt(i-2)=='D')
+							&& (i-3>=0 && input.charAt(i-3)=='N')
+							&& (i-4>=0 && input.charAt(i-4)=='E')
+							&& (i-5>=0 && input.charAt(i-5)=='#')) {
+						closeBrackets++;
+						
+						if(openBrackets==closeBrackets) {
+							
+							if(conditionalElseFound){
+								conditionalFalse = sb.toString().substring(1, sb.length()-5); // Cut off the '#ENDIF' at the start.
+							} else {
+								conditionalTrue = sb.toString().substring(1, sb.length()-5); // Cut off the '#ENDIF' at the start.
+								conditionalFalse = "";
+							}
+		
+							endIndex = i;
+							break;
+						}
 					}
-
-					endIndex = i;
-					break;
 				}
-				
 			}
 			
-			if(openBrackets>0)
+			if(!processingConditional) {
+				if(c=='[') {
+					if(openBrackets==0) {
+						processingRegular=true;
+						startIndex = i;
+					}
+					
+					openBrackets++;
+					
+				} else if(processingRegular) {
+					
+					if(c=='.' && target==null) {
+						target=sb.toString().substring(1); // Cut off the '[' at the start.
+						sb.setLength(0);
+					
+					} else if(c=='(') {
+						if(command==null) {
+							command=sb.toString().substring(1); // Cut off the '.' at the start.
+							sb.setLength(0);
+						}
+						
+						openArg++;
+						
+					} else if(c==')') {
+						closeArg++;
+						
+						if(openArg==closeArg){
+							arguments = sb.toString().substring(1);
+						}
+						
+					} else if(c==']') {
+						closeBrackets++;
+						
+						if(openBrackets==closeBrackets) {
+							if(command==null) {
+								command=sb.toString().substring(1); // Cut off the '.' at the start.
+								sb.setLength(0);
+							}
+		
+							endIndex = i;
+							break;
+						}
+					}
+				}
+			}
+			
+			
+			if(openBrackets>0 && ((target!=null && command!=null) || String.valueOf(c).matches(".") || c!=' ')) {
 				sb.append(c);
+			}
 		}
 		
 		
 		if(startIndex!=0 || endIndex!=0) {
-			return parse(specialNPC, input.substring(0, startIndex) + parseSyntaxNew(target, command, arguments, specialNPC) + input.substring(endIndex+1, input.length()));
+			return parse(specialNPC, input.substring(0, startIndex)
+					+ (processingConditional
+							?parseConditionalSyntaxNew(target, command, arguments, conditionalTrue, conditionalFalse)
+							:parseSyntaxNew(target, command, arguments, specialNPC))
+					+ input.substring(endIndex+1, input.length()));
 		} else {
-			return input;
+			return input;//.replaceAll(" a ", " <span style='color:"+Colour.GENERIC_SEX.toWebHexString()+";'>a big moo</span> ");
 		}
 	}
 	
+
+	public static List<ParserConditionalCommand> conditionalCommandsList = new ArrayList<>();
 	
 	public static List<ParserCommand> commandsList = new ArrayList<>();
 	public static Map<BodyPartType, List<ParserCommand>> commandsMap = new EnumMap<>(BodyPartType.class);
+	
 	static{
+		
+		conditionalCommandsList.add(new ParserConditionalCommand(
+				Util.newArrayListOfValues(
+						new ListValue<>("isPlayer"),
+						new ListValue<>("player")),
+				"",
+				"Returns true if the character is the player."){
+			@Override
+			public boolean process(String command, String arguments, String target) {
+				return character.isPlayer();
+			}
+		});
+		
+		
 		commandsList.add(new ParserCommand(
 				Util.newArrayListOfValues(new ListValue<>("name")),
 				true,
@@ -1230,7 +1175,7 @@ public class UtilText {
 			@Override
 			public String parse(String command, String arguments, String target) {
 				if(Main.game.isInSex()) {
-					if((character.isPlayer() && Sex.getSexPacePlayer()==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPacePartner()==SexPace.SUB_RESISTING)) {
+					if((character.isPlayer() && Sex.getSexPace(Main.game.getPlayer())==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPace(Sex.getActivePartner())==SexPace.SUB_RESISTING)) {
 						if(character.isFeminine()) {
 							return returnStringAtRandom("sob", "scream", "cry");
 						} else {
@@ -1266,7 +1211,7 @@ public class UtilText {
 			@Override
 			public String parse(String command, String arguments, String target) {
 				if(Main.game.isInSex()) {
-					if((character.isPlayer() && Sex.getSexPacePlayer()==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPacePartner()==SexPace.SUB_RESISTING)) {
+					if((character.isPlayer() && Sex.getSexPace(Main.game.getPlayer())==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPace(Sex.getActivePartner())==SexPace.SUB_RESISTING)) {
 						if(character.isFeminine()) {
 							return returnStringAtRandom("miserable", "pathetic", "distressed") + " " + returnStringAtRandom("sob", "scream", "cry");
 						} else {
@@ -1297,7 +1242,7 @@ public class UtilText {
 			@Override
 			public String parse(String command, String arguments, String target) {
 				if(Main.game.isInSex()) {
-					if((character.isPlayer() && Sex.getSexPacePlayer()==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPacePartner()==SexPace.SUB_RESISTING)) {
+					if((character.isPlayer() && Sex.getSexPace(Main.game.getPlayer())==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPace(Sex.getActivePartner())==SexPace.SUB_RESISTING)) {
 						if(character.isFeminine()) {
 							return returnStringAtRandom("sob", "scream", "cry");
 						} else {
@@ -1333,7 +1278,7 @@ public class UtilText {
 			@Override
 			public String parse(String command, String arguments, String target) {
 				if(Main.game.isInSex()) {
-					if((character.isPlayer() && Sex.getSexPacePlayer()==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPacePartner()==SexPace.SUB_RESISTING)) {
+					if((character.isPlayer() && Sex.getSexPace(Main.game.getPlayer())==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPace(Sex.getActivePartner())==SexPace.SUB_RESISTING)) {
 						if(character.isFeminine()) {
 							return returnStringAtRandom("miserably", "pathetically") + " " + returnStringAtRandom("sob", "scream", "cry");
 						} else {
@@ -1365,7 +1310,7 @@ public class UtilText {
 			@Override
 			public String parse(String command, String arguments, String target) {
 				if(Main.game.isInSex()) {
-					if((character.isPlayer() && Sex.getSexPacePlayer()==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPacePartner()==SexPace.SUB_RESISTING)) {
+					if((character.isPlayer() && Sex.getSexPace(Main.game.getPlayer())==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPace(Sex.getActivePartner())==SexPace.SUB_RESISTING)) {
 						if(character.isFeminine()) {
 							return returnStringAtRandom("sobs", "cries");
 						} else {
@@ -1402,7 +1347,7 @@ public class UtilText {
 			@Override
 			public String parse(String command, String arguments, String target) {
 				if(Main.game.isInSex()) {
-					if((character.isPlayer() && Sex.getSexPacePlayer()==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPacePartner()==SexPace.SUB_RESISTING)) {
+					if((character.isPlayer() && Sex.getSexPace(Main.game.getPlayer())==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPace(Sex.getActivePartner())==SexPace.SUB_RESISTING)) {
 						if(character.isFeminine()) {
 							return returnStringAtRandom("miserable", "pathetic", "distressed") + " " + returnStringAtRandom("sobs", "cries");
 						} else {
@@ -1434,7 +1379,7 @@ public class UtilText {
 			@Override
 			public String parse(String command, String arguments, String target) {
 				if(Main.game.isInSex()) {
-					if((character.isPlayer() && Sex.getSexPacePlayer()==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPacePartner()==SexPace.SUB_RESISTING)) {
+					if((character.isPlayer() && Sex.getSexPace(Main.game.getPlayer())==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPace(Sex.getActivePartner())==SexPace.SUB_RESISTING)) {
 						if(character.isFeminine()) {
 							return returnStringAtRandom("sobs", "cries");
 						} else {
@@ -1471,7 +1416,7 @@ public class UtilText {
 			@Override
 			public String parse(String command, String arguments, String target) {
 				if(Main.game.isInSex()) {
-					if((character.isPlayer() && Sex.getSexPacePlayer()==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPacePartner()==SexPace.SUB_RESISTING)) {
+					if((character.isPlayer() && Sex.getSexPace(Main.game.getPlayer())==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPace(Sex.getActivePartner())==SexPace.SUB_RESISTING)) {
 						if(character.isFeminine()) {
 							return returnStringAtRandom("miserably", "pathetically", "desperately") + " " + returnStringAtRandom("sobs", "cries");
 						} else {
@@ -1501,7 +1446,7 @@ public class UtilText {
 			@Override
 			public String parse(String command, String arguments, String target) {
 				if(Main.game.isInSex()) {
-					if((character.isPlayer() && Sex.getSexPacePlayer()==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPacePartner()==SexPace.SUB_RESISTING)) {
+					if((character.isPlayer() && Sex.getSexPace(Main.game.getPlayer())==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPace(Sex.getActivePartner())==SexPace.SUB_RESISTING)) {
 						if(character.isFeminine()) {
 							return returnStringAtRandom("sobbing", "crying");
 						} else {
@@ -1535,7 +1480,7 @@ public class UtilText {
 			@Override
 			public String parse(String command, String arguments, String target) {
 				if(Main.game.isInSex()) {
-					if((character.isPlayer() && Sex.getSexPacePlayer()==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPacePartner()==SexPace.SUB_RESISTING)) {
+					if((character.isPlayer() && Sex.getSexPace(Main.game.getPlayer())==SexPace.SUB_RESISTING) || (!character.isPlayer() && Sex.getSexPace(Sex.getActivePartner())==SexPace.SUB_RESISTING)) {
 						if(character.isFeminine()) {
 							return returnStringAtRandom("miserably", "pathetically", "desperately") + " " + returnStringAtRandom("sobbing", "crying");
 						} else {
@@ -2556,10 +2501,8 @@ public class UtilText {
 			public String parse(String command, String arguments, String target) {
 				if(character.getBreastRows()==1) {
 					return "pair of";
-				} else if(character.getBreastRows()==2) {
-					return "two pairs of";
 				} else {
-					return "three pairs of";
+					return Util.intToString(character.getBreastRows())+" pairs of";
 				}
 			}
 		});
@@ -2766,6 +2709,35 @@ public class UtilText {
 		});
 		
 		// Leg:
+		
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						new ListValue<>("thighs")),
+				true,
+				true,
+				"",
+				"Description of method",
+				BodyPartType.LEG){//TODO
+			@Override
+			public String parse(String command, String arguments, String target) {
+				return "thighs";
+			}
+		});
+		
+		commandsList.add(new ParserCommand(
+				Util.newArrayListOfValues(
+						new ListValue<>("thighs+"),
+						new ListValue<>("thighsD")),
+				true,
+				true,
+				"",
+				"Description of method",
+				BodyPartType.LEG){//TODO
+			@Override
+			public String parse(String command, String arguments, String target) {
+				return "thighs";
+			}
+		});
 		
 		commandsList.add(new ParserCommand(
 				Util.newArrayListOfValues(
@@ -3549,11 +3521,12 @@ public class UtilText {
 		}
 	}
 
-	private static GameCharacter character = Main.game.getPlayer(), specialNPC = null;
+	private static GameCharacter character = Main.game.getPlayer();
+	private static List<GameCharacter> specialNPCList = new ArrayList<>();
 	private static boolean parseCapitalise, parseAddPronoun;
-	private static String parseSyntaxNew(String target, String command, String arguments, GameCharacter specialNPC) {
+	private static String parseSyntaxNew(String target, String command, String arguments, List<GameCharacter> specialNPCList) {
 		
-		UtilText.specialNPC=specialNPC;
+		UtilText.specialNPCList = specialNPCList;
 		parseCapitalise=false;
 		parseAddPronoun=false;
 		
@@ -3578,7 +3551,7 @@ public class UtilText {
 		for(ParserTarget parserTarget : ParserTarget.values()) {
 			for(String s : parserTarget.getTags()) {
 				if(s.toLowerCase().equals(target.toLowerCase())) {
-					character = parserTarget.getCharacter();
+					character = parserTarget.getCharacter(s.toLowerCase());
 					characterFound = true;
 					break targetLoop;
 				}
@@ -3623,8 +3596,47 @@ public class UtilText {
 		}
 	}
 	
-	public static GameCharacter getSpecialNPC() {
-		return specialNPC;
+	private static String parseConditionalSyntaxNew(String target, String command, String arguments, String conditionalTrue, String conditionalFalse) {
+		if(target==null || target.isEmpty()) {
+			target = "npc";
+		}
+		
+		boolean characterFound = false;
+		targetLoop:
+		for(ParserTarget parserTarget : ParserTarget.values()) {
+			for(String s : parserTarget.getTags()) {
+				if(s.toLowerCase().equals(target.toLowerCase())) {
+					character = parserTarget.getCharacter(s.toLowerCase());
+					characterFound = true;
+					break targetLoop;
+				}
+			}
+		}
+		if(!characterFound) {
+			return "INVALID_TARGET_NAME";
+		}
+		
+		// Commands with arguments:
+		
+		for(ParserConditionalCommand cmd : conditionalCommandsList) {
+			for(String s : cmd.getTags()) {
+				if(command.equalsIgnoreCase(s)) {
+					if (cmd.process(command, arguments, target)) {
+						return conditionalTrue;
+					} else {
+						return conditionalFalse;
+					}
+				}
+			}
+		}
+		
+		return "<i style='color:"+Colour.GENERIC_BAD.toWebHexString()+";'>command_unknown</i>";
+		
+	}
+	
+	
+	public static List<GameCharacter> getSpecialNPCList() {
+		return specialNPCList;
 	}
 	
 	/**

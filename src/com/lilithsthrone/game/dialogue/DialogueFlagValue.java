@@ -39,6 +39,7 @@ public enum DialogueFlagValue {
 	readBook1,
 	readBook2,
 	readBook3,
+	readBook4,
 	
 	arthursRoomInstalled,
 	arthursPackageObtained,
@@ -48,6 +49,7 @@ public enum DialogueFlagValue {
 	givenLilayaPresent3,
 	
 	// Brax:
+	braxEncountered,
 	accessToEnforcerHQ,
 	braxTransformedPlayer,
 	braxBeaten,

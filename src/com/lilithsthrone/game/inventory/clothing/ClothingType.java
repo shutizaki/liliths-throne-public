@@ -644,7 +644,9 @@ public class ClothingType {
 			null,
 			Util.newArrayListOfValues(new ListValue<BlockedParts>(new BlockedParts(DisplacementType.REMOVE_OR_EQUIP, Util.newArrayListOfValues(new ListValue<ClothingAccess>(ClothingAccess.HEAD)), null, null))),
 			null,
-			Colour.allClothingColours, null, null, null, null, null){
+			Colour.allClothingColours, null,
+			null, null,
+			null, null){
 		
 		private static final long serialVersionUID = 1L;
 
@@ -763,7 +765,7 @@ public class ClothingType {
 			"antler headbands",
 			"A thin band of metal that sits atop your head.",
 			1,
-			Femininity.FEMININE,
+			null,
 			InventorySlot.HEAD,
 			Rarity.COMMON,
 			null,
@@ -812,56 +814,32 @@ public class ClothingType {
 			null,
 			"eye_glasses",
 			null,
-
 			Util.newArrayListOfValues(new ListValue<BlockedParts>(new BlockedParts(DisplacementType.REMOVE_OR_EQUIP, Util.newArrayListOfValues(new ListValue<ClothingAccess>(ClothingAccess.EYES)), null, null))),
-
-			null, // List<InventorySlot> incompatibleSlots
-
+			null,
 			Colour.allMetalColours, null, null, null, null, null){
 		
+		private static final long serialVersionUID = 1L;
 		
-				private static final long serialVersionUID = 1L;
-
 		@Override
 		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
-				return "You put on the glasses.";
-			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " puts on " + clothing.getName(true) + ".");
-			else {
-				if (rough) {
-					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " holds you by the chin and pushes " + clothing.getName(true) + " onto your face.";
-					else
-						return UtilText.genderParsing(clothingOwner, "You firmly hold " + clothingOwner.getName("the") + "'s chin and push the glasses onto <her> face.");
-				} else {
-					if (clothingOwner.isPlayer())
-						return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " places " + clothing.getName(true) + " onto your face.");
-					else
-						return UtilText.genderParsing(clothingOwner, "You place the glasses onto " + clothingOwner.getName("the") + "'s face.");
-				}
-			}
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You put on your glasses.",
+					"You push the glasses onto [npc.name]'s face.",
+					null,
+					"[npc.Name] puts on [npc.her] glasses.",
+					"[npc.Name] pushes the pair of glasses onto your face.",
+					null);
 		}
 
 		@Override
 		public String unequipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
-				return "You take off your glasses.";
-			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " takes off <her> glasses.");
-			else {
-				if (rough) {
-					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " grabs your glasses and pulls them off.";
-					else
-						return "You grab " + clothingOwner.getName("the") + "'s glasses and pull them off.";
-				} else {
-					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " takes your glasses off.";
-					else
-						return "You take off " + clothingOwner.getName("the") + "'s glasses.";
-				}
-			}
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You take off your glasses.",
+					"You take off [npc.name]'s glasses.",
+					"You grab [npc.name]'s glasses and roughly pull them off.", // Rude!
+					"[npc.Name] takes [npc.her] glasses off.",
+					"[npc.Name] takes your glasses off.",
+					"[npc.Name] grabs your glasses and roughly pulls them off.");
 		}
 	};
 	public static AbstractClothingType EYES_AVIATORS = new AbstractClothingType(
@@ -877,57 +855,35 @@ public class ClothingType {
 			null,
 			"eye_aviators",
 			null,
-
 			Util.newArrayListOfValues(new ListValue<BlockedParts>(new BlockedParts(DisplacementType.REMOVE_OR_EQUIP, Util.newArrayListOfValues(new ListValue<ClothingAccess>(ClothingAccess.EYES)), null, null))),
-
-			null, // List<InventorySlot> incompatibleSlots
-
-			Colour.allMetalColours, null, null, null, null, null){
+			null,
+			Colour.allMetalColours, null,
+			null, null,
+			null, null){
 		
-		
-				private static final long serialVersionUID = 1L;
-
-		@Override
-		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
-				return "You put on the aviators.";
-			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " puts on " + clothing.getName(true) + ".");
-			else {
-				if (rough) {
-					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " holds you by the chin and pushes " + clothing.getName(true) + " onto your face.";
-					else
-						return UtilText.genderParsing(clothingOwner, "You firmly hold " + clothingOwner.getName("the") + "'s chin and push the aviators onto <her> face.");
-				} else {
-					if (clothingOwner.isPlayer())
-						return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " places " + clothing.getName(true) + " onto your face.");
-					else
-						return UtilText.genderParsing(clothingOwner, "You place the aviators onto " + clothingOwner.getName("the") + "'s face.");
-				}
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
+				return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+						"You put on your aviators.",
+						"You push the aviators onto [npc.name]'s face.",
+						null,
+						"[npc.Name] puts on [npc.her] aviators.",
+						"[npc.Name] pushes the pair of aviators onto your face.",
+						null);
 			}
-		}
 
-		@Override
-		public String unequipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
-				return "You take off your aviators.";
-			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " takes off <her> aviators.");
-			else {
-				if (rough) {
-					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " grabs your aviators and pulls them off.";
-					else
-						return "You grab " + clothingOwner.getName("the") + "'s aviators and pull them off.";
-				} else {
-					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " takes your aviators off.";
-					else
-						return "You take off " + clothingOwner.getName("the") + "'s aviators.";
-				}
+			@Override
+			public String unequipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
+				return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+						"You take off your aviators.",
+						"You take off [npc.name]'s aviators.",
+						"You grab [npc.name]'s aviators and roughly pull them off.", // Rude!
+						"[npc.Name] takes [npc.her] aviators off.",
+						"[npc.Name] takes your aviators off.",
+						"[npc.Name] grabs your aviators and roughly pulls them off.");
 			}
-		}
 	};
 	
 
@@ -964,62 +920,50 @@ public class ClothingType {
 			Colour.allClothingColours, null, null, null, null, null){
 		
 		
-				private static final long serialVersionUID = 1L;
-
+		private static final long serialVersionUID = 1L;
+		
 		@Override
 		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer()) {
-				return "You position the bandana over your [pc.face], before reaching back and tying the ends together.";
-				
-			}else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer()) {
-				return UtilText.parse(clothingOwner, "[npc.Name] positions a bandana over [npc.her] [npc.face], before reaching back and tying the ends together.");
-				
-			}else {
-				if (clothingOwner.isPlayer()) {
-					return UtilText.parse(clothingRemover, "[npc.Name] holds your head still and ties a bandana around your [pc.face].");
-				} else {
-					return UtilText.parse(clothingOwner, "You hold [npc.name]'s head still as you tie the bandana around [npc.her] [npc.face].");
-				}
-			}
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You position the bandana over your [pc.face], before reaching back and tying the ends together.",
+					"You hold [npc.name]'s head still as you tie the bandana around [npc.her] [npc.face].",
+					null,
+					"[npc.Name] positions a bandana over [npc.her] [npc.face], before reaching back and tying the ends together.",
+					"[npc.Name] holds your head still and ties a bandana around your [pc.face].",
+					null);
 		}
 
 		@Override
 		public String unequipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer()) {
-				return "You untie the ends of your bandana and take it off.";
-				
-			}else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer()) {
-				return UtilText.parse(clothingOwner, "[npc.Name] unties the ends of [npc.her] bandana and take it off.");
-				
-			}else {
-				if (clothingOwner.isPlayer()) {
-					return UtilText.parse(clothingRemover, "[npc.Name] unties the ends of your bandana and takes it off.");
-				} else {
-					return UtilText.parse(clothingOwner, "You untie the ends of [npc.name]'s bandana and take it off.");
-				}
-			}
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You untie the ends of your bandana and take it off.",
+					"You untie the ends of [npc.name]'s bandana and take it off.",
+					null,
+					"[npc.Name] unties the ends of [npc.her] bandana and takes it off.",
+					"[npc.Name] unties the ends of your bandana and takes it off.",
+					null);
 		}
-
+		
 		@Override
 		public String displaceText(GameCharacter clothingOwner, GameCharacter clothingRemover, DisplacementType dt, boolean rough) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer()) {
-				return "You pull up your bandana.";
-			} else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer()) {
-				return UtilText.parse(clothingOwner, "[npc.Name] pulls up [npc.her] bandana.");
-			} else {
-				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your bandana up.";
-				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s bandana up.");
-			}
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You pull up your bandana.",
+					"You pull up [npc.name]'s bandana.",
+					null,
+					"[npc.Name] pulls up [npc.her] bandana.",
+					"[npc.Name] pulls your bandana up.",
+					null);
 		}
 
 		@Override
 		public String replaceText(GameCharacter clothingOwner, GameCharacter clothingRemover, DisplacementType dt, boolean rough) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
-				return "You pull your bandana back down.";
-			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> bandana back down.");
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You pull your bandana back down.",
+					"You pull [npc.name]'s bandana back down.",
+					null,
+					"[npc.Name] pulls [npc.her] bandana back down.",
+					"[npc.Name] pulls your bandana back down.",
+					null);
 		}
 	};
 
@@ -1039,11 +983,8 @@ public class ClothingType {
 			null,
 			"neck_heartNecklace",
 			null,
-
 			Util.newArrayListOfValues(new ListValue<BlockedParts>(new BlockedParts(DisplacementType.REMOVE_OR_EQUIP, null, null, null))),
-
-			null, // List<InventorySlot> incompatibleSlots
-
+			null,
 			Colour.allMetalColours, null, null, null, null, null){
 		
 		private static final long serialVersionUID = 1L;
@@ -1084,11 +1025,8 @@ public class ClothingType {
 			null,
 			"neck_snowflake_necklace",
 			null,
-
 			Util.newArrayListOfValues(new ListValue<BlockedParts>(new BlockedParts(DisplacementType.REMOVE_OR_EQUIP, null, null, null))),
-
-			null, // List<InventorySlot> incompatibleSlots
-
+			null,
 			Colour.allMetalColours, null, null, null, null, null){
 		
 		private static final long serialVersionUID = 1L;
@@ -1129,64 +1067,34 @@ public class ClothingType {
 			null,
 			"neck_ankhNecklace",
 			null,
-
 			Util.newArrayListOfValues(new ListValue<BlockedParts>(new BlockedParts(DisplacementType.REMOVE_OR_EQUIP, null, null, null))),
-
-			null, // List<InventorySlot> incompatibleSlots
-
-			Colour.allMetalColours, null, null, null, null, null){
+			null,
+			Colour.allMetalColours, null,
+			null, null,
+			null, null){
 		
-		
-				private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer()) {
-				return "You put on the necklace, clipping the chain together at the back of your neck.";
-				
-			}else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer()) {
-				return UtilText.parse(clothingOwner, "[npc.Name] puts an ankh necklace around [npc.her] neck, before reaching around to fasten the clip at the back.");
-				
-			}else {
-				if (rough) {
-					if (clothingOwner.isPlayer()) {
-						return UtilText.parse(clothingRemover, "[npc.Name] holds your head still and fastens an ankh necklace around your neck.");
-					} else {
-						return UtilText.parse(clothingOwner, "You hold [npc.name]'s head still as you fasten the necklace around [npc.her] neck.");
-					}
-				} else {
-					if (clothingOwner.isPlayer()) {
-						return UtilText.parse(clothingRemover, "[npc.Name] clips an ankh necklace around your neck.");
-					} else {
-						return UtilText.parse(clothingOwner, "You fasten the ankh necklace around [npc.name]'s neck.");
-					}
-				}
-			}
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You put on the ankh necklace, before reaching back and clipping the chain together behind your neck.",
+					"You place the ankh necklace around [npc.name]'s neck, before reaching back and clipping the chain together.",
+					"You hold [npc.name]'s head still as you fasten the ankh necklace around [npc.her] neck.",
+					"[npc.Name] puts on the ankh necklace, before reaching around and clipping the chain together behind [npc.her] neck.",
+					"[npc.Name] places the ankh necklace around your neck, before reaching around and clipping the chain together.",
+					"[npc.Name] holds your head still and fastens an ankh necklace around your neck.");
 		}
 
 		@Override
 		public String unequipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer()) {
-				return "You unclip your necklace and take it off.";
-				
-			}else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer()) {
-				return UtilText.parse(clothingOwner, "[npc.Name] unclips [npc.her] ankh necklace and takes it off.");
-				
-			}else {
-				if (rough) {
-					if (clothingOwner.isPlayer()) {
-						return UtilText.parse(clothingRemover, "[npc.Name] grabs your necklace and yanks it from your neck.");
-					} else {
-						return UtilText.parse(clothingOwner, "You grab [npc.name]'s necklace and yank it from [npc.her] neck.");
-					}
-				} else {
-					if (clothingOwner.isPlayer()) {
-						return UtilText.parse(clothingRemover, "[npc.Name] unclips your ankh necklace and removes it.");
-					} else {
-						return UtilText.parse(clothingOwner, "You unclip [npc.name]'s necklace and take it off.");
-					}
-				}
-			}
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You unclip your ankh necklace and take it off.",
+					"You unclip [npc.name]'s ankh necklace and take it off.",
+					"You grab [npc.name]'s ankh necklace and yank it from [npc.her] neck.",
+					"[npc.Name] unclips [npc.her] ankh necklace and takes it off.",
+					"[npc.Name] unclips your ankh necklace and removes it.",
+					"[npc.Name] grabs your ankh necklace and yanks it from your neck.");
 		}
 	};
 	
@@ -1204,7 +1112,9 @@ public class ClothingType {
 			null,
 			Util.newArrayListOfValues(new ListValue<BlockedParts>(new BlockedParts(DisplacementType.REMOVE_OR_EQUIP, null, null, null))),
 			null,
-			Colour.allClothingColours, null, null, null, null, null){
+			Colour.allClothingColours, null,
+			null, null,
+			null, null){
 		
 		private static final long serialVersionUID = 1L;
 		
@@ -1243,63 +1153,34 @@ public class ClothingType {
 			null,
 			"neck_scarf",
 			null,
-
 			Util.newArrayListOfValues(new ListValue<BlockedParts>(new BlockedParts(DisplacementType.REMOVE_OR_EQUIP, null, null, null))),
-
-			null, // List<InventorySlot> incompatibleSlots
-
-			Colour.allClothingColours, null, null, null, null, null){
+			null,
+			Colour.allClothingColours, null,
+			null, null,
+			null, null){
 		
-				private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer()) {
-				return "You wrap the scarf around your neck.";
-				
-			}else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer()) {
-				return UtilText.parse(clothingOwner, "[npc.Name] wraps a scarf around [npc.her] neck.");
-				
-			}else {
-				if (rough) {
-					if (clothingOwner.isPlayer()) {
-						return UtilText.parse(clothingRemover, "[npc.Name] holds your head still and wraps a scarf around your neck.");
-					} else {
-						return UtilText.parse(clothingOwner, "You hold [npc.name]'s head still as you wrap the scarf around [npc.her] neck.");
-					}
-				} else {
-					if (clothingOwner.isPlayer()) {
-						return UtilText.parse(clothingRemover, "[npc.Name] wraps a scarf around your neck.");
-					} else {
-						return UtilText.parse(clothingOwner, "You wrap the scarf around [npc.name]'s neck.");
-					}
-				}
-			}
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You wrap the scarf around your neck.",
+					"You wrap the scarf around [npc.name]'s neck.",
+					null,
+					"[npc.Name] wraps a scarf around [npc.her] neck.",
+					"[npc.Name] wraps a scarf around your neck.",
+					null);
 		}
 
 		@Override
 		public String unequipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer()) {
-				return "You unwrap your scarf and take it off.";
-				
-			}else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer()) {
-				return UtilText.parse(clothingOwner, "[npc.Name] unwraps [npc.her] scarf and takes it off.");
-				
-			}else {
-				if (rough) {
-					if (clothingOwner.isPlayer()) {
-						return UtilText.parse(clothingRemover, "[npc.Name] grabs your scarf and yanks it from your neck.");
-					} else {
-						return UtilText.parse(clothingOwner, "You grab [npc.name]'s scarf and yank it from [npc.her] neck.");
-					}
-				} else {
-					if (clothingOwner.isPlayer()) {
-						return UtilText.parse(clothingRemover, "[npc.Name] unwraps your scarf and removes it.");
-					} else {
-						return UtilText.parse(clothingOwner, "You unwrap [npc.name]'s scarf and take it off.");
-					}
-				}
-			}
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You take off your scarf.",
+					"You take off [npc.name]'s scarf.",
+					null,
+					"[npc.Name] takes [npc.her] scarf off.",
+					"[npc.Name] takes your scarf off.",
+					null);
 		}
 	};
 	
@@ -1473,26 +1354,26 @@ public class ClothingType {
 			private static final long serialVersionUID = 1L;
 
 		@Override
-		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
+		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) { //TODO need to update equipText with getEquipDescriptions() from here:
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You put your arms through the shirt's sleeves and button it up.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " puts on " + clothing.getName(true) + ", pushing <her> " + clothingOwner.getArmName() + " through the" + " sleeves before buttoning it up.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] puts on " + clothing.getName(true) + ", pushing [npc.her] " + clothingOwner.getArmName() + " through the" + " sleeves before buttoning it up.");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pushes your " + clothingOwner.getArmName() + " through " + clothing.getName(true) + "'s sleeves and hastily buttons it up.";
+						return "[npc.Name] pushes your [pc.arms] through " + clothing.getName(true) + "'s sleeves and hastily buttons it up.";
 					else
-						return UtilText.genderParsing(clothingOwner,
-								"You push " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " through the shirt's sleeves and hastily button it up.");
+						return UtilText.parse(clothingOwner,
+								"You push [npc.name]'s [npc.arms] through the shirt's sleeves and hastily button it up.");
 				} else {
 					if (clothingOwner.isPlayer())
-						return UtilText.genderParsing(clothingOwner,
-								Util.capitaliseSentence(clothingOwner.getName("the")) + " guides your " + clothingOwner.getArmName() + " through " + clothing.getName(true) + "'s sleeves" + " and buttons it up.");
+						return UtilText.parse(clothingOwner,
+								"[npc.Name] guides your [pc.arms] through " + clothing.getName(true) + "'s sleeves" + " and buttons it up.");
 					else
-						return UtilText.genderParsing(clothingOwner,
-								"You guide " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " through the shirt's sleeves and button it up.");
+						return UtilText.parse(clothingOwner,
+								"You guide [npc.name]'s [npc.arms] through the shirt's sleeves and button it up.");
 				}
 			}
 		}
@@ -1502,28 +1383,28 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unbutton your shirt and pull it off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unbuttons <her> shirt and pulls it off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unbuttons [npc.her] shirt and pulls it off.");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
 						if (clothing.getDisplacedList().contains(DisplacementType.UNBUTTONS))
-							return Util.capitaliseSentence(clothingRemover.getName("the")) + " grabs your open shirt and yanks it down and off your " + clothingOwner.getArmName() + ".";
+							return "[npc.Name] grabs your open shirt and yanks it down and off your [pc.arms].";
 						else
-							return Util.capitaliseSentence(clothingRemover.getName("the")) + " yanks your shirt up and over your head.";
+							return "[npc.Name] yanks your shirt up and over your head.";
 					else if (clothing.getDisplacedList().contains(DisplacementType.UNBUTTONS))
-						return UtilText.genderParsing(clothingOwner, "You grab " + clothingOwner.getName("the") + "'s open shirt and yank it down and off <her> " + clothingOwner.getArmName() + ".");
+						return UtilText.parse(clothingOwner, "You grab [npc.name]'s open shirt and yank it down and off [npc.her] " + clothingOwner.getArmName() + ".");
 					else
-						return UtilText.genderParsing(clothingOwner, "You yank " + clothingOwner.getName("the") + "'s shirt up and over <her> head.");
+						return UtilText.parse(clothingOwner, "You yank [npc.name]'s shirt up and over [npc.her] head.");
 				} else {
 					if (clothingOwner.isPlayer())
 						if (clothing.getDisplacedList().contains(DisplacementType.UNBUTTONS))
-							return Util.capitaliseSentence(clothingRemover.getName("the")) + " slides your " + clothingOwner.getArmName() + " out of your open shirt.";
+							return "[npc.Name] slides your [pc.arms] out of your open shirt.";
 						else
-							return Util.capitaliseSentence(clothingRemover.getName("the")) + " unbuttons your shirt and slides your " + clothingOwner.getArmName() + " out of it.";
+							return "[npc.Name] unbuttons your shirt and slides your [pc.arms] out of it.";
 					else if (clothing.getDisplacedList().contains(DisplacementType.UNBUTTONS))
-						return UtilText.genderParsing(clothingOwner, "You slide " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " out of <her> open shirt.");
+						return UtilText.parse(clothingOwner, "You slide [npc.name]'s [npc.arms] out of [npc.her] open shirt.");
 					else
-						return UtilText.genderParsing(clothingOwner, "You unbutton " + clothingOwner.getName("the") + "'s shirt and slide <her> " + clothingOwner.getArmName() + " out of it.");
+						return UtilText.parse(clothingOwner, "You unbutton [npc.name]'s shirt and slide [npc.her] " + clothingOwner.getArmName() + " out of it.");
 				}
 			}
 		}
@@ -1533,18 +1414,18 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unbutton your shirt, leaving it hanging open.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unbuttons <her> shirt, leaving it hanging open.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unbuttons [npc.her] shirt, leaving it hanging open.");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " roughly pulls open your shirt, almost tearing the buttons right off.";
+						return "[npc.Name] roughly pulls open your shirt, almost tearing the buttons right off.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You roughly pull open " + clothingOwner.getName("the") + "'s shirt, almost tearing the buttons off in the process.");
+						return UtilText.parse(clothingOwner, "You roughly pull open [npc.name]'s shirt, almost tearing the buttons off in the process.");
 				} else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " unbuttons your shirt.";
+						return "[npc.Name] unbuttons your shirt.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You unbutton " + clothingOwner.getName("the") + "'s shirt.");
+						return UtilText.parse(clothingOwner, "You unbutton [npc.name]'s shirt.");
 				}
 			}
 		}
@@ -1554,18 +1435,18 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You button up your shirt.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " buttons up <her> shirt.");
+				return UtilText.parse(clothingOwner, "[npc.Name] buttons up [npc.her] shirt.");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " hastily buttons up your shirt.";
+						return "[npc.Name] hastily buttons up your shirt.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You hastily button up " + clothingOwner.getName("the") + "'s shirt.");
+						return UtilText.parse(clothingOwner, "You hastily button up [npc.name]'s shirt.");
 				} else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " buttons up your shirt.";
+						return "[npc.Name] buttons up your shirt.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You button up " + clothingOwner.getName("the") + "'s shirt.");
+						return UtilText.parse(clothingOwner, "You button up [npc.name]'s shirt.");
 				}
 			}
 		}
@@ -1607,24 +1488,24 @@ public class ClothingType {
 		@Override
 		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
-				return "You put your " + clothingOwner.getArmName() + " through the shirt's sleeves and button it up.";
+				return "You put your [pc.arms] through the shirt's sleeves and button it up.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " puts on " + clothing.getName(true) + ", pushing <her> " + clothingOwner.getArmName() + " through the" + " sleeves before buttoning it up.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] puts on " + clothing.getName(true) + ", pushing [npc.her] " + clothingOwner.getArmName() + " through the" + " sleeves before buttoning it up.");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pushes your " + clothingOwner.getArmName() + " through " + clothing.getName(true) + "'s sleeves and hastily buttons it up.";
+						return "[npc.Name] pushes your [pc.arms] through " + clothing.getName(true) + "'s sleeves and hastily buttons it up.";
 					else
-						return UtilText.genderParsing(clothingOwner,
-								"You push " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " through the shirt's sleeves and hastily button it up.");
+						return UtilText.parse(clothingOwner,
+								"You push [npc.name]'s [npc.arms] through the shirt's sleeves and hastily button it up.");
 				} else {
 					if (clothingOwner.isPlayer())
-						return UtilText.genderParsing(clothingOwner,
-								Util.capitaliseSentence(clothingOwner.getName("the")) + " guides your " + clothingOwner.getArmName() + " through " + clothing.getName(true) + "'s sleeves" + " and buttons it up.");
+						return UtilText.parse(clothingOwner,
+								"[npc.Name] guides your [pc.arms] through " + clothing.getName(true) + "'s sleeves" + " and buttons it up.");
 					else
-						return UtilText.genderParsing(clothingOwner,
-								"You guide " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " through the shirt's sleeves and button it up.");
+						return UtilText.parse(clothingOwner,
+								"You guide [npc.name]'s [npc.arms] through the shirt's sleeves and button it up.");
 				}
 			}
 		}
@@ -1634,28 +1515,28 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unbutton your shirt and pull it off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unbuttons <her> shirt and pulls it off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unbuttons [npc.her] shirt and pulls it off.");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
 						if (clothing.getDisplacedList().contains(DisplacementType.UNBUTTONS))
-							return Util.capitaliseSentence(clothingRemover.getName("the")) + " grabs your open shirt and yanks it down and off your " + clothingOwner.getArmName() + ".";
+							return "[npc.Name] grabs your open shirt and yanks it down and off your [pc.arms].";
 						else
-							return Util.capitaliseSentence(clothingRemover.getName("the")) + " yanks your shirt up and over your head.";
+							return "[npc.Name] yanks your shirt up and over your head.";
 					else if (clothing.getDisplacedList().contains(DisplacementType.UNBUTTONS))
-						return UtilText.genderParsing(clothingOwner, "You grab " + clothingOwner.getName("the") + "'s open shirt and yank it down and off <her> " + clothingOwner.getArmName() + ".");
+						return UtilText.parse(clothingOwner, "You grab [npc.name]'s open shirt and yank it down and off [npc.her] " + clothingOwner.getArmName() + ".");
 					else
-						return UtilText.genderParsing(clothingOwner, "You yank " + clothingOwner.getName("the") + "'s shirt up and over <her> head.");
+						return UtilText.parse(clothingOwner, "You yank [npc.name]'s shirt up and over [npc.her] head.");
 				} else {
 					if (clothingOwner.isPlayer())
 						if (clothing.getDisplacedList().contains(DisplacementType.UNBUTTONS))
-							return Util.capitaliseSentence(clothingRemover.getName("the")) + " slides your " + clothingOwner.getArmName() + " out of your open shirt.";
+							return "[npc.Name] slides your [pc.arms] out of your open shirt.";
 						else
-							return Util.capitaliseSentence(clothingRemover.getName("the")) + " unbuttons your shirt and slides your " + clothingOwner.getArmName() + " out of it.";
+							return "[npc.Name] unbuttons your shirt and slides your [pc.arms] out of it.";
 					else if (clothing.getDisplacedList().contains(DisplacementType.UNBUTTONS))
-						return UtilText.genderParsing(clothingOwner, "You slide " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " out of <her> open shirt.");
+						return UtilText.parse(clothingOwner, "You slide [npc.name]'s [npc.arms] out of [npc.her] open shirt.");
 					else
-						return UtilText.genderParsing(clothingOwner, "You unbutton " + clothingOwner.getName("the") + "'s shirt and slide <her> " + clothingOwner.getArmName() + " out of it.");
+						return UtilText.parse(clothingOwner, "You unbutton [npc.name]'s shirt and slide [npc.her] " + clothingOwner.getArmName() + " out of it.");
 				}
 			}
 		}
@@ -1665,18 +1546,18 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unbutton your shirt, leaving it hanging open.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unbuttons <her> shirt, leaving it hanging open.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unbuttons [npc.her] shirt, leaving it hanging open.");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " roughly pulls open your shirt, almost tearing the buttons right off.";
+						return "[npc.Name] roughly pulls open your shirt, almost tearing the buttons right off.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You roughly pull open " + clothingOwner.getName("the") + "'s shirt, almost tearing the buttons off in the process.");
+						return UtilText.parse(clothingOwner, "You roughly pull open [npc.name]'s shirt, almost tearing the buttons off in the process.");
 				} else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " unbuttons your shirt.";
+						return "[npc.Name] unbuttons your shirt.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You unbutton " + clothingOwner.getName("the") + "'s shirt.");
+						return UtilText.parse(clothingOwner, "You unbutton [npc.name]'s shirt.");
 				}
 			}
 		}
@@ -1686,18 +1567,18 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You button up your shirt.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " buttons up <her> shirt.");
+				return UtilText.parse(clothingOwner, "[npc.Name] buttons up [npc.her] shirt.");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " hastily buttons up your shirt.";
+						return "[npc.Name] hastily buttons up your shirt.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You hastily button up " + clothingOwner.getName("the") + "'s shirt.");
+						return UtilText.parse(clothingOwner, "You hastily button up [npc.name]'s shirt.");
 				} else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " buttons up your shirt.";
+						return "[npc.Name] buttons up your shirt.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You button up " + clothingOwner.getName("the") + "'s shirt.");
+						return UtilText.parse(clothingOwner, "You button up [npc.name]'s shirt.");
 				}
 			}
 		}
@@ -1766,19 +1647,19 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your hoodie up to just below your chin, its elastic rim holding it in place.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> hoodie up to just below <her> chin," + " its elastic rim holding it in place.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls [npc.her] hoodie up to just below [npc.her] chin," + " its elastic rim holding it in place.");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " roughly yanks up your hoodie.";
+						return "[npc.Name] roughly yanks up your hoodie.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You roughly yank up " + clothingOwner.getName("the") + "'s hoodie.");
+						return UtilText.parse(clothingOwner, "You roughly yank up [npc.name]'s hoodie.");
 				} else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up your hoodie.";
+						return "[npc.Name] pulls up your hoodie.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You pull up " + clothingOwner.getName("the") + "'s hoodie.");
+						return UtilText.parse(clothingOwner, "You pull up [npc.name]'s hoodie.");
 				}
 			}
 		}
@@ -1788,18 +1669,18 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your hoodie back down, covering your torso.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> hoodie back down to cover <her> torso.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] hoodie back down to cover [npc.her] torso.");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " roughly pulls down your hoodie.";
+						return "[npc.Name] roughly pulls down your hoodie.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You roughly pull down " + clothingOwner.getName("the") + "'s hoodie.");
+						return UtilText.parse(clothingOwner, "You roughly pull down [npc.name]'s hoodie.");
 				} else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls down your hoodie.";
+						return "[npc.Name] pulls down your hoodie.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You pull down " + clothingOwner.getName("the") + "'s hoodie.");
+						return UtilText.parse(clothingOwner, "You pull down [npc.name]'s hoodie.");
 				}
 			}
 		}
@@ -1919,6 +1800,66 @@ public class ClothingType {
 					null,
 					"[npc.Name] takes [npc.her] blazer off.",
 					"[npc.Name] pulls your blazer off.",
+					null);
+		}
+	};
+	
+	public static AbstractClothingType TORSO_OVER_WOMENS_LEATHER_JACKET = new AbstractClothingType("a",
+			false,
+			"women's leather jacket",
+			"women's leather jackets",
+			"A feminine leather jacket, able to be worn both open and, by means of a zip, closed.",
+			3,
+			Femininity.FEMININE,
+			InventorySlot.TORSO_OVER,
+			Rarity.COMMON,
+			null,
+			"torso_over_womens_leather_jacket",
+			null,
+
+			Util.newArrayListOfValues(
+					new ListValue<BlockedParts>(new BlockedParts(
+							DisplacementType.REMOVE_OR_EQUIP,
+							Util.newArrayListOfValues(
+									new ListValue<ClothingAccess>(ClothingAccess.ARMS_UP_TO_SHOULDER)),
+							null,
+							Util.newArrayListOfValues(
+							new ListValue<ClothingAccess>(ClothingAccess.ARMS_UP_TO_SHOULDER)))),
+					new ListValue<BlockedParts>(new BlockedParts(
+							DisplacementType.UNZIPS,
+							null,
+							Util.newArrayListOfValues(
+									new ListValue<CoverableArea>(CoverableArea.BREASTS),
+									new ListValue<CoverableArea>(CoverableArea.NIPPLES)),
+							Util.newArrayListOfValues(
+									new ListValue<ClothingAccess>(ClothingAccess.CHEST),
+									new ListValue<ClothingAccess>(ClothingAccess.WAIST))))),
+			null,
+			Util.newArrayListOfValues(
+					new ListValue<Colour>(Colour.CLOTHING_BLACK)), Colour.allClothingColours,
+			null, null, null, null){
+		
+		private static final long serialVersionUID = 1L;
+		
+		@Override
+		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You pull on the leather jacket.",
+					"You guide [npc.name]'s [npc.arms] through the leather jacket's sleeves as you pull it on [npc.herHim].",
+					null,
+					"[npc.Name] pulls on the leather jacket.",
+					"[npc.Name] guides your [pc.arms] through the leather jacket's sleeves as [npc.she] pulls it on you.",
+					null);
+		}
+
+		@Override
+		public String unequipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You take off your leather jacket.",
+					"You pull off [npc.name]'s leather jacket.",
+					null,
+					"[npc.Name] takes [npc.her] leather jacket off.",
+					"[npc.Name] pulls your leather jacket off.",
 					null);
 		}
 	};
@@ -2195,7 +2136,8 @@ public class ClothingType {
 							)),
 					new ListValue<BlockedParts>(new BlockedParts(
 							DisplacementType.PULLS_UP,
-							null,
+							Util.newArrayListOfValues(
+									new ListValue<ClothingAccess>(ClothingAccess.WAIST)),
 							Util.newArrayListOfValues(
 									new ListValue<CoverableArea>(CoverableArea.BREASTS),
 									new ListValue<CoverableArea>(CoverableArea.NIPPLES)),
@@ -2209,32 +2151,24 @@ public class ClothingType {
 
 		@Override
 		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
-				return "You pull on the t-shirt.";
-			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + ".");
-			else {
-				if (clothingOwner.isPlayer())
-					return UtilText.genderParsing(clothingOwner,
-							Util.capitaliseSentence(clothingOwner.getName("the")) + " guides your " + clothingOwner.getArmName() + " through " + clothing.getName(true) + "'s sleeves" + " as <she> pulls it down over your head.");
-				else
-					return UtilText.genderParsing(clothingOwner,
-							"You guide " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " through the t-shirt's sleeves as you pull it down over <her> head.");
-			}
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You pull on the T-shirt.",
+					"You guide [npc.name]'s [npc.arms] through the T-shirt's sleeves as you pull down over [npc.her] head.",
+					null,
+					"[npc.Name] pulls on the T-shirt.",
+					"[npc.Name] guides your [pc.arms] through the T-shirt's sleeves as [npc.she] pulls it down over your head.",
+					null);
 		}
 
 		@Override
 		public String unequipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
-			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
-				return "You pull off your t-shirt.";
-			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> t-shirt.");
-			else {
-				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " slides your t-shirt up and over your head.";
-				else
-					return UtilText.genderParsing(clothingOwner, "You slide " + clothingOwner.getName("the") + "'s t-shirt up and over <her> head.");
-			}
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You take off your T-shirt.",
+					"You pull off [npc.name]'s T-shirt.",
+					null,
+					"[npc.Name] takes [npc.her] T-shirt off.",
+					"[npc.Name] pulls your T-shirt off.",
+					null);
 		}
 
 		@Override
@@ -2242,13 +2176,13 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your t-shirt up to just below your chin, exposing your torso.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> t-shirt up to just below <her> chin," + " exposing <her> torso.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls [npc.her] t-shirt up to just below [npc.her] chin," + " exposing [npc.her] torso.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up your t-shirt.";
+					return "[npc.Name] pulls up your t-shirt.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull up " + clothingOwner.getName("the") + "'s t-shirt.");
+					return UtilText.parse(clothingOwner, "You pull up [npc.name]'s t-shirt.");
 			}
 		}
 
@@ -2257,12 +2191,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your t-shirt back down, covering your torso.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> t-shirt back down to cover <her> torso.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] t-shirt back down to cover [npc.her] torso.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls down your t-shirt.";
+					return "[npc.Name] pulls down your t-shirt.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull down " + clothingOwner.getName("the") + "'s t-shirt.");
+					return UtilText.parse(clothingOwner, "You pull down [npc.name]'s t-shirt.");
 			}
 		}
 	};
@@ -2306,14 +2240,14 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the crop top.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + ".");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls on " + clothing.getName(true) + ".");
 			else {
 				if (clothingOwner.isPlayer())
-					return UtilText.genderParsing(clothingOwner,
-							Util.capitaliseSentence(clothingOwner.getName("the")) + " guides your " + clothingOwner.getArmName() + " through " + clothing.getName(true) + "'s sleeves" + " as <she> pulls it down over your head.");
+					return UtilText.parse(clothingOwner,
+							"[npc.Name] guides your [pc.arms] through " + clothing.getName(true) + "'s sleeves" + " as [npc.she] pulls it down over your head.");
 				else
-					return UtilText.genderParsing(clothingOwner,
-							"You guide " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " through the crop top's sleeves as you pull it down over <her> head.");
+					return UtilText.parse(clothingOwner,
+							"You guide [npc.name]'s [npc.arms] through the crop top's sleeves as you pull it down over [npc.her] head.");
 			}
 		}
 
@@ -2322,12 +2256,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your crop top.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> crop top.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] crop top.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " slides your crop top up and over your head.";
+					return "[npc.Name] slides your crop top up and over your head.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You slide " + clothingOwner.getName("the") + "'s crop top up and over <her> head.");
+					return UtilText.parse(clothingOwner, "You slide [npc.name]'s crop top up and over [npc.her] head.");
 			}
 		}
 
@@ -2336,13 +2270,13 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your crop top up to just below your chin, exposing your torso.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> crop top up to just below <her> chin," + " exposing <her> torso.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls [npc.her] crop top up to just below [npc.her] chin," + " exposing [npc.her] torso.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up your crop top.";
+					return "[npc.Name] pulls up your crop top.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull up " + clothingOwner.getName("the") + "'s crop top.");
+					return UtilText.parse(clothingOwner, "You pull up [npc.name]'s crop top.");
 			}
 		}
 
@@ -2351,12 +2285,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your crop top back down, covering your torso.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> crop top back down to cover <her> torso.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] crop top back down to cover [npc.her] torso.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls down your crop top.";
+					return "[npc.Name] pulls down your crop top.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull down " + clothingOwner.getName("the") + "'s crop top.");
+					return UtilText.parse(clothingOwner, "You pull down [npc.name]'s crop top.");
 			}
 		}
 	};
@@ -2402,14 +2336,14 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the crop top.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + ".");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls on " + clothing.getName(true) + ".");
 			else {
 				if (clothingOwner.isPlayer())
-					return UtilText.genderParsing(clothingOwner,
-							Util.capitaliseSentence(clothingOwner.getName("the")) + " guides your " + clothingOwner.getArmName() + " through " + clothing.getName(true) + "'s sleeves" + " as <she> pulls it down over your head.");
+					return UtilText.parse(clothingOwner,
+							"[npc.Name] guides your [pc.arms] through " + clothing.getName(true) + "'s sleeves" + " as [npc.she] pulls it down over your head.");
 				else
-					return UtilText.genderParsing(clothingOwner,
-							"You guide " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " through the crop top's sleeves as you pull it down over <her> head.");
+					return UtilText.parse(clothingOwner,
+							"You guide [npc.name]'s [npc.arms] through the crop top's sleeves as you pull it down over [npc.her] head.");
 			}
 		}
 
@@ -2418,12 +2352,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your crop top.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> crop top.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] crop top.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " slides your crop top up and over your head.";
+					return "[npc.Name] slides your crop top up and over your head.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You slide " + clothingOwner.getName("the") + "'s crop top up and over <her> head.");
+					return UtilText.parse(clothingOwner, "You slide [npc.name]'s crop top up and over [npc.her] head.");
 			}
 		}
 
@@ -2432,13 +2366,13 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your crop top up to just below your chin, exposing your chest.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> crop top up to just below <her> chin," + " exposing <her> chest.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls [npc.her] crop top up to just below [npc.her] chin," + " exposing [npc.her] chest.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up your crop top.";
+					return "[npc.Name] pulls up your crop top.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull up " + clothingOwner.getName("the") + "'s crop top.");
+					return UtilText.parse(clothingOwner, "You pull up [npc.name]'s crop top.");
 			}
 		}
 
@@ -2447,12 +2381,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your crop top back down, covering your chest.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> crop top back down to cover <her> chest.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] crop top back down to cover [npc.her] chest.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls down your crop top.";
+					return "[npc.Name] pulls down your crop top.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull down " + clothingOwner.getName("the") + "'s crop top.");
+					return UtilText.parse(clothingOwner, "You pull down [npc.name]'s crop top.");
 			}
 		}
 	};
@@ -2497,14 +2431,14 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the fishnet top.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + ".");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls on " + clothing.getName(true) + ".");
 			else {
 				if (clothingOwner.isPlayer())
-					return UtilText.genderParsing(clothingOwner,
-							Util.capitaliseSentence(clothingOwner.getName("the")) + " guides your " + clothingOwner.getArmName() + " through " + clothing.getName(true) + "'s sleeves" + " as <she> pulls it down over your head.");
+					return UtilText.parse(clothingOwner,
+							"[npc.Name] guides your [pc.arms] through " + clothing.getName(true) + "'s sleeves" + " as [npc.she] pulls it down over your head.");
 				else
-					return UtilText.genderParsing(clothingOwner,
-							"You guide " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " through the fishnet top's sleeves as you pull it down over <her> head.");
+					return UtilText.parse(clothingOwner,
+							"You guide [npc.name]'s [npc.arms] through the fishnet top's sleeves as you pull it down over [npc.her] head.");
 			}
 		}
 
@@ -2513,12 +2447,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your crop top.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> fishnet top.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] fishnet top.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " slides your fishnet top up and over your head.";
+					return "[npc.Name] slides your fishnet top up and over your head.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You slide " + clothingOwner.getName("the") + "'s fishnet top up and over <her> head.");
+					return UtilText.parse(clothingOwner, "You slide [npc.name]'s fishnet top up and over [npc.her] head.");
 			}
 		}
 
@@ -2527,13 +2461,13 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your fishnet top up to just below your chin, exposing your chest.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> fishnet top up to just below <her> chin," + " exposing <her> chest.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls [npc.her] fishnet top up to just below [npc.her] chin," + " exposing [npc.her] chest.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up your fishnet top.";
+					return "[npc.Name] pulls up your fishnet top.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull up " + clothingOwner.getName("the") + "'s fishnet top.");
+					return UtilText.parse(clothingOwner, "You pull up [npc.name]'s fishnet top.");
 			}
 		}
 
@@ -2542,12 +2476,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your fishnet top back down, covering your chest.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> fishnet top back down to cover <her> chest.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] fishnet top back down to cover [npc.her] chest.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls down your fishnet top.";
+					return "[npc.Name] pulls down your fishnet top.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull down " + clothingOwner.getName("the") + "'s fishnet top.");
+					return UtilText.parse(clothingOwner, "You pull down [npc.name]'s fishnet top.");
 			}
 		}
 	};
@@ -2595,14 +2529,14 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the blouse.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + ".");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls on " + clothing.getName(true) + ".");
 			else {
 				if (clothingOwner.isPlayer())
-					return UtilText.genderParsing(clothingOwner,
-							Util.capitaliseSentence(clothingOwner.getName("the")) + " guides your " + clothingOwner.getArmName() + " through " + clothing.getName(true) + "'s sleeves" + " as <she> pulls it down over your head.");
+					return UtilText.parse(clothingOwner,
+							"[npc.Name] guides your [pc.arms] through " + clothing.getName(true) + "'s sleeves" + " as [npc.she] pulls it down over your head.");
 				else
-					return UtilText.genderParsing(clothingOwner,
-							"You guide " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " through the blouse's sleeves as you pull it down over <her> head.");
+					return UtilText.parse(clothingOwner,
+							"You guide [npc.name]'s [npc.arms] through the blouse's sleeves as you pull it down over [npc.her] head.");
 			}
 		}
 
@@ -2611,12 +2545,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your blouse.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> blouse.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] blouse.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " slides your blouse up and over your head.";
+					return "[npc.Name] slides your blouse up and over your head.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You slide " + clothingOwner.getName("the") + "'s blouse up and over <her> head.");
+					return UtilText.parse(clothingOwner, "You slide [npc.name]'s blouse up and over [npc.her] head.");
 			}
 		}
 
@@ -2625,12 +2559,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your blouse up to just below your chin, exposing your torso.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> blouse up to just below <her> chin," + " exposing <her> torso.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] blouse up to just below [npc.her] chin," + " exposing [npc.her] torso.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up your blouse.";
+					return "[npc.Name] pulls up your blouse.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull up " + clothingOwner.getName("the") + "'s blouse.");
+					return UtilText.parse(clothingOwner, "You pull up [npc.name]'s blouse.");
 			}
 		}
 
@@ -2639,12 +2573,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your blouse back down, covering your torso.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> blouse back down to cover <her> torso.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] blouse back down to cover [npc.her] torso.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls down your blouse.";
+					return "[npc.Name] pulls down your blouse.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull down " + clothingOwner.getName("the") + "'s blouse.");
+					return UtilText.parse(clothingOwner, "You pull down [npc.name]'s blouse.");
 			}
 		}
 	};
@@ -2693,14 +2627,14 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the cami top.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + ".");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls on " + clothing.getName(true) + ".");
 			else {
 				if (clothingOwner.isPlayer())
-					return UtilText.genderParsing(clothingOwner,
-							Util.capitaliseSentence(clothingOwner.getName("the")) + " guides your " + clothingOwner.getArmName() + " through " + clothing.getName(true) + "'s sleeves" + " as <she> pulls it down over your head.");
+					return UtilText.parse(clothingOwner,
+							"[npc.Name] guides your [pc.arms] through " + clothing.getName(true) + "'s sleeves" + " as [npc.she] pulls it down over your head.");
 				else
-					return UtilText.genderParsing(clothingOwner,
-							"You guide " + clothingOwner.getName("the") + "'s " + clothingOwner.getArmName() + " through the cami top's sleeves as you pull it down over <her> head.");
+					return UtilText.parse(clothingOwner,
+							"You guide [npc.name]'s [npc.arms] through the cami top's sleeves as you pull it down over [npc.her] head.");
 			}
 		}
 
@@ -2709,12 +2643,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your cami top.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> cami top.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] cami top.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " slides your cami top up and over your head.";
+					return "[npc.Name] slides your cami top up and over your head.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You slide " + clothingOwner.getName("the") + "'s cami top up and over <her> head.");
+					return UtilText.parse(clothingOwner, "You slide [npc.name]'s cami top up and over [npc.her] head.");
 			}
 		}
 
@@ -2723,13 +2657,13 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your cami top up to just below your chin, exposing your chest.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> cami top up to just below <her> chin," + " exposing <her> chest.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls [npc.her] cami top up to just below [npc.her] chin," + " exposing [npc.her] chest.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up your cami top.";
+					return "[npc.Name] pulls up your cami top.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull up " + clothingOwner.getName("the") + "'s cami top.");
+					return UtilText.parse(clothingOwner, "You pull up [npc.name]'s cami top.");
 			}
 		}
 
@@ -2738,12 +2672,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your cami top back down, covering your chest.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> cami top back down to cover <her> chest.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] cami top back down to cover [npc.her] chest.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls down your cami top.";
+					return "[npc.Name] pulls down your cami top.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull down " + clothingOwner.getName("the") + "'s cami top.");
+					return UtilText.parse(clothingOwner, "You pull down [npc.name]'s cami top.");
 			}
 		}
 	};
@@ -2795,15 +2729,15 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the skater dress, tidying the skirt down before moving the straps into a comfortable position on your shoulders.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + ", tidying the skirt down before moving the straps into a comfortable position on <her> shoulders.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls on " + clothing.getName(true) + ", tidying the skirt down before moving the straps into a comfortable position on [npc.her] shoulders.");
 			else {
 				if (clothingOwner.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls " + clothing.getName(true)
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls " + clothing.getName(true)
 							+ " over your head and down around your torso, tidying the skirt before moving the" + " straps to sit comfortably on your shoulders.");
 				else
-					return UtilText.genderParsing(clothingOwner,
-							"You pull the skater dress over " + clothingOwner.getName("the") + "'s head and down around <her> torso, tidying the skirt before moving the" + " straps to sit comfortably on <her> shoulders.");
+					return UtilText.parse(clothingOwner,
+							"You pull the skater dress over [npc.name]'s head and down around [npc.her] torso, tidying the skirt before moving the" + " straps to sit comfortably on [npc.her] shoulders.");
 			}
 		}
 
@@ -2812,12 +2746,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your skater dress up over your head and take it off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> skater dress up over <her> head and takes it off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] skater dress up over [npc.her] head and takes it off.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your skater dress up over your head and takes it off.";
+					return "[npc.Name] pulls your skater dress up over your head and takes it off.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s skater dress up over <her> head and take it off.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s skater dress up over [npc.her] head and take it off.");
 			}
 		}
 
@@ -2827,23 +2761,23 @@ public class ClothingType {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull down the top of your skater dress.";
 				else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down the top of <her> skater dress.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls down the top of [npc.her] skater dress.");
 				else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls down the top of your skater dress.";
+						return "[npc.Name] pulls down the top of your skater dress.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You pull down the top of " + clothingOwner.getName("the") + "'s skater dress.");
+						return UtilText.parse(clothingOwner, "You pull down the top of [npc.name]'s skater dress.");
 				}
 			} else {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull up the skirt of your skater dress.";
 				else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls up the skirt of <her> skater dress.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls up the skirt of [npc.her] skater dress.");
 				else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up the skirt of your skater dress.";
+						return "[npc.Name] pulls up the skirt of your skater dress.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You pull up the skirt of " + clothingOwner.getName("the") + "'s skater dress.");
+						return UtilText.parse(clothingOwner, "You pull up the skirt of [npc.name]'s skater dress.");
 				}
 			}
 		}
@@ -2854,12 +2788,12 @@ public class ClothingType {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull your skater dress back up.";
 				else
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls up <her> skater dress.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls up [npc.her] skater dress.");
 			} else {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull your skater dress's skirt back down.";
 				else
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> skater dress's skirt back down.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] skater dress's skirt back down.");
 			}
 		}
 	};
@@ -2952,15 +2886,15 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the slip dress and pull it up around your torso. Once in place, you reach back and zip yourself up.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + ", pulling it up around <her> torso." + " Once in place, <she> reaches back to zip <herPro>self up.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + ", pulling it up around [npc.her] torso." + " Once in place, [npc.she] reaches back to zip [npc.herself] up.");
 			else {
 				if (clothingOwner.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " guides " + clothing.getName(true) + " around your "
-							+ clothingOwner.getLegName() + " before pulling it up around your torso. One it's in place, <she> zips it up at the back.");
+					return UtilText.parse(clothingOwner, "[npc.Name] guides " + clothing.getName(true) + " around your "
+							+ clothingOwner.getLegName() + " before pulling it up around your torso. One it's in place, [npc.she] zips it up at the back.");
 				else
-					return UtilText.genderParsing(clothingOwner,
-							"You guide the slip dress up around " + clothingOwner.getName("the") + "'s " + clothingOwner.getLegName() + " before pulling it up around <her> torso. Once it's in place, you zip <herPro> up at the back.");
+					return UtilText.parse(clothingOwner,
+							"You guide the slip dress up around [npc.name]'s " + clothingOwner.getLegName() + " before pulling it up around [npc.her] torso. Once it's in place, you zip [npc.herHim] up at the back.");
 			}
 		}
 
@@ -2969,12 +2903,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unzip your slip dress and wriggle out of it as it drops to your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unzips <her> slip dress and wriggles out of it as it drops to <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unzips [npc.her] slip dress and wriggles out of it as it drops to [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unzips your slip dress and pulls it down your body and past your feet.";
+					return "[npc.Name] unzips your slip dress and pulls it down your body and past your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You unzip " + clothingOwner.getName("the") + "'s slip dress and pull it down off <her> body and past <her> feet.");
+					return UtilText.parse(clothingOwner, "You unzip [npc.name]'s slip dress and pull it down off [npc.her] body and past [npc.her] feet.");
 			}
 		}
 
@@ -2983,12 +2917,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull up your slip dress's skirt.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls up the lower half of <her> slip dress.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls up the lower half of [npc.her] slip dress.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up the lower half of your slip dress.";
+					return "[npc.Name] pulls up the lower half of your slip dress.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull up the lower half of " + clothingOwner.getName("the") + "'s slip dress.");
+					return UtilText.parse(clothingOwner, "You pull up the lower half of [npc.name]'s slip dress.");
 			}
 		}
 
@@ -2997,12 +2931,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your slip dress back down.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> slip dress back down.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] slip dress back down.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your slip dress back down.";
+					return "[npc.Name] pulls your slip dress back down.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull back down " + clothingOwner.getName("the") + "'s slip dress.");
+					return UtilText.parse(clothingOwner, "You pull back down [npc.name]'s slip dress.");
 			}
 		}
 	};
@@ -3265,7 +3199,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You put on the dress and zip yourself up.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " puts on " + clothing.getName(true) + " and zips <herPro>self up.");
+				return UtilText.parse(clothingOwner, "[npc.Name] puts on " + clothing.getName(true) + " and zips [npc.herself] up.");
 		}
 
 		@Override
@@ -3273,12 +3207,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You fully unzip your bodycon dress and shrug it off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " fully unzips <her> bodycon dress and shrugs it off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] fully unzips [npc.her] bodycon dress and shrugs it off.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " fully unzips your bodycon dress and pulls it off.";
+					return "[npc.Name] fully unzips your bodycon dress and pulls it off.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You fully unzip " + clothingOwner.getName("the") + "'s bodycon dress and pull it off.");
+					return UtilText.parse(clothingOwner, "You fully unzip [npc.name]'s bodycon dress and pull it off.");
 			}
 		}
 
@@ -3288,23 +3222,23 @@ public class ClothingType {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You unzip the top of your bodycon dress.";
 				else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unzips the top of <her> bodycon dress.");
+					return UtilText.parse(clothingOwner, "[npc.Name] unzips the top of [npc.her] bodycon dress.");
 				else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " unzips the top of your bodycon dress.";
+						return "[npc.Name] unzips the top of your bodycon dress.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You unzip the top of " + clothingOwner.getName("the") + "'s bodycon dress.");
+						return UtilText.parse(clothingOwner, "You unzip the top of [npc.name]'s bodycon dress.");
 				}
 			} else {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull up the bottom of your bodycon dress.";
 				else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls up the bottom of <her> bodycon dress.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls up the bottom of [npc.her] bodycon dress.");
 				else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up the bottom of your bodycon dress.";
+						return "[npc.Name] pulls up the bottom of your bodycon dress.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You pull up the bottom of " + clothingOwner.getName("the") + "'s bodycon dress.");
+						return UtilText.parse(clothingOwner, "You pull up the bottom of [npc.name]'s bodycon dress.");
 				}
 			}
 		}
@@ -3315,12 +3249,12 @@ public class ClothingType {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You zip up your bodycon dress.";
 				else
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " zips up <her> bodycon dress.");
+					return UtilText.parse(clothingOwner, "[npc.Name] zips up [npc.her] bodycon dress.");
 			} else {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull your bodycon dress back down.";
 				else
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> bodycon dress back down.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] bodycon dress back down.");
 			}
 		}
 	};
@@ -3383,8 +3317,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the swimsuit and pull it up over your torso.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " and pulls it up to cover <her> torso.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " and pulls it up to cover [npc.her] torso.");
 		}
 
 		@Override
@@ -3392,13 +3326,13 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You slide the swimsuit's straps down your arms and tug it down off your legs.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " slides the swimsuit's straps down <her> arms and tugs it down off <her> legs.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] slides the swimsuit's straps down [npc.her] arms and tugs it down off [npc.her] legs.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " tugs your swimsuit down, sliding it off your legs.";
+					return "[npc.Name] tugs your swimsuit down, sliding it off your legs.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You tug down " + clothingOwner.getName("the") + "'s swimsuit, sliding it off <her> legs.");
+					return UtilText.parse(clothingOwner, "You tug down [npc.name]'s swimsuit, sliding it off [npc.her] legs.");
 			}
 		}
 
@@ -3408,23 +3342,23 @@ public class ClothingType {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull down the top half of your swimsuit.";
 				else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down the top half of <her> swimsuit.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls down the top half of [npc.her] swimsuit.");
 				else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls down the top half of your swimsuit.";
+						return "[npc.Name] pulls down the top half of your swimsuit.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You pull down the top half of " + clothingOwner.getName("the") + "'s swimsuit.");
+						return UtilText.parse(clothingOwner, "You pull down the top half of [npc.name]'s swimsuit.");
 				}
 			} else {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull the lower part of your swimsuit to one side.";
 				else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls the lower part of <her> swimsuit to one side.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls the lower part of [npc.her] swimsuit to one side.");
 				else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls the lower part of your swimsuit to one side.";
+						return "[npc.Name] pulls the lower part of your swimsuit to one side.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You pull the lower part of " + clothingOwner.getName("the") + "'s swimsuit to one side.");
+						return UtilText.parse(clothingOwner, "You pull the lower part of [npc.name]'s swimsuit to one side.");
 				}
 			}
 		}
@@ -3435,12 +3369,12 @@ public class ClothingType {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull your swimsuit back up into its correct position.";
 				else
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> swimsuit up into its correct position.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] swimsuit up into its correct position.");
 			} else {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull the lower part of your swimsuit back into its correct position.";
 				else
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls the lower part of <her> swimsuit back into its correct position.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls the lower part of [npc.her] swimsuit back into its correct position.");
 			}
 		}
 	};
@@ -3827,8 +3761,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You place the bra over your chest before fastening the straps at your back.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " places " + clothing.getName(true) + " over <her> chest before fastening the clasp at <her> back.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] places " + clothing.getName(true) + " over [npc.her] chest before fastening the clasp at [npc.her] back.");
 		}
 
 		@Override
@@ -3836,12 +3770,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You release the bra's clasp and remove it from your chest.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unclasps <her> bra and removes it from <her> chest.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unclasps [npc.her] bra and removes it from [npc.her] chest.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unclasps your bra and pulls it off your chest.";
+					return "[npc.Name] unclasps your bra and pulls it off your chest.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You unclasp " + clothingOwner.getName("the") + "'s bra and pull it off <her> chest.");
+					return UtilText.parse(clothingOwner, "You unclasp [npc.name]'s bra and pull it off [npc.her] chest.");
 			}
 		}
 	};
@@ -3889,8 +3823,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull the sports bra down over your head before securing it around your chest.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls " + clothing.getName(true) + " down over <her> head before securing it around <her> chest.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls " + clothing.getName(true) + " down over [npc.her] head before securing it around [npc.her] chest.");
 		}
 
 		@Override
@@ -3898,12 +3832,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull the sports bra off over your head.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> sports bra off over <her> head.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] sports bra off over [npc.her] head.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your sports bra off over your head.";
+					return "[npc.Name] pulls your sports bra off over your head.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s sports bra off over <her> head.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s sports bra off over [npc.her] head.");
 			}
 		}
 
@@ -3912,12 +3846,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull up your sports bra.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls up <her> sports bra.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls up [npc.her] sports bra.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up your sports bra.";
+					return "[npc.Name] pulls up your sports bra.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull up " + clothingOwner.getName("the") + "'s sports bra.");
+					return UtilText.parse(clothingOwner, "You pull up [npc.name]'s sports bra.");
 			}
 		}
 
@@ -3926,7 +3860,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your sports bra back down.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> sports bra back down.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] sports bra back down.");
 		}
 	};
 	public static AbstractClothingType CHEST_CROPTOP_BRA = new AbstractClothingType(
@@ -3973,8 +3907,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull the croptop bra down over your head before securing it around your chest.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls " + clothing.getName(true) + " down over <her> head before securing it around <her> chest.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls " + clothing.getName(true) + " down over [npc.her] head before securing it around [npc.her] chest.");
 		}
 
 		@Override
@@ -3982,12 +3916,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull the croptop bra off over your head.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> croptop bra off over <her> head.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] croptop bra off over [npc.her] head.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your croptop bra off over your head.";
+					return "[npc.Name] pulls your croptop bra off over your head.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s croptop bra off over <her> head.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s croptop bra off over [npc.her] head.");
 			}
 		}
 
@@ -3996,12 +3930,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull up your croptop bra.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls up <her> croptop bra.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls up [npc.her] croptop bra.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up your croptop bra.";
+					return "[npc.Name] pulls up your croptop bra.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull up " + clothingOwner.getName("the") + "'s croptop bra.");
+					return UtilText.parse(clothingOwner, "You pull up [npc.name]'s croptop bra.");
 			}
 		}
 
@@ -4010,7 +3944,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your croptop bra back down.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> croptop bra back down.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] croptop bra back down.");
 		}
 	};
 	public static AbstractClothingType CHEST_FULLCUP_BRA = new AbstractClothingType(
@@ -4056,8 +3990,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You place the bra over your chest before fastening the straps at your back.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " places " + clothing.getName(true) + " over <her> chest before fastening the clasp at <her> back.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] places " + clothing.getName(true) + " over [npc.her] chest before fastening the clasp at [npc.her] back.");
 		}
 
 		@Override
@@ -4065,12 +3999,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You release the bra's clasp and remove it from your chest.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unclasps <her> bra and removes it from <her> chest.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unclasps [npc.her] bra and removes it from [npc.her] chest.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unclasps your bra and pulls it off your chest.";
+					return "[npc.Name] unclasps your bra and pulls it off your chest.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You unclasp " + clothingOwner.getName("the") + "'s bra and pull it off <her> chest.");
+					return UtilText.parse(clothingOwner, "You unclasp [npc.name]'s bra and pull it off [npc.her] chest.");
 			}
 		}
 
@@ -4079,13 +4013,13 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You slide your bra's straps off your shoulders before tugging it down to reveal your chest.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " slides <her> bra's straps off <her> shoulders before tugging it down to reveal <her> chest.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] slides [npc.her] bra's straps off [npc.her] shoulders before tugging it down to reveal [npc.her] chest.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " slides your bra's straps off your shoulders before tugging it down to reveal your chest.";
+					return "[npc.Name] slides your bra's straps off your shoulders before tugging it down to reveal your chest.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You slide the straps of " + clothingOwner.getName("the") + "'s bra off <her> shoulders before tugging it down to reveal <her> chest.");
+					return UtilText.parse(clothingOwner, "You slide the straps of [npc.name]'s bra off [npc.her] shoulders before tugging it down to reveal [npc.her] chest.");
 			}
 		}
 
@@ -4094,7 +4028,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your bra back up to cover your chest.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> bra back up to cover <her> chest.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] bra back up to cover [npc.her] chest.");
 		}
 	};
 
@@ -4181,6 +4115,67 @@ public class ClothingType {
 		}
 	};
 
+	public static AbstractClothingType CHEST_STRIPED_BRA = new AbstractClothingType("a",
+			false,
+			"striped bra",
+			"striped bras",
+			"A cotton bikini-style bra, designed to match with a pair of striped panties.",
+			1,
+			Femininity.FEMININE,
+			InventorySlot.CHEST,
+			Rarity.COMMON,
+			null,
+			"chest_striped_bra",
+			null,
+			Util.newArrayListOfValues(
+					new ListValue<BlockedParts>(
+							new BlockedParts(DisplacementType.REMOVE_OR_EQUIP,
+									Util.newArrayListOfValues(new ListValue<ClothingAccess>(ClothingAccess.ARMS_UP_TO_SHOULDER),
+											new ListValue<ClothingAccess>(ClothingAccess.CHEST)),
+									null,
+									null)),
+					new ListValue<BlockedParts>(
+							new BlockedParts(DisplacementType.PULLS_DOWN,
+									Util.newArrayListOfValues(
+											new ListValue<ClothingAccess>(ClothingAccess.CHEST)),
+									Util.newArrayListOfValues(
+											new ListValue<CoverableArea>(CoverableArea.NIPPLES)),
+									Util.newArrayListOfValues(
+											new ListValue<ClothingAccess>(ClothingAccess.CHEST))
+									))
+					),
+			null,
+			Util.newArrayListOfValues(new ListValue<Colour>(Colour.CLOTHING_BLUE_LIGHT), new ListValue<Colour>(Colour.CLOTHING_PINK_LIGHT)), Colour.allClothingColours,
+			Util.newArrayListOfValues(new ListValue<Colour>(Colour.CLOTHING_WHITE)), Colour.allClothingColours,
+			null, null){
+		
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You place the bra over your chest before tying up the strings at your back.",
+					"You place the bra over [npc.name]'s chest before tying up the strings at [npc.her] back.",
+					null,
+					"[npc.Name] places the bra over [npc.her] chest before tying up the strings at [npc.her] back.",
+					"[npc.Name] places the bra over your chest before tying up the strings at your back.",
+					null);
+		}
+
+		@Override
+		public String unequipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You untie the bra's strings and take it off.",
+					"You untie [npc.name]'s bra's strings and take it off.",
+					null,
+					"[npc.Name] unties [npc.her] bra's strings and takes it off.",
+					"[npc.Name] unties your bra's strings and takes it off.",
+					null);
+		}
+	};
+
+	
+	
 	public static AbstractClothingType CHEST_BIKINI = new AbstractClothingType(
 			"a",
 			false,
@@ -4224,8 +4219,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You place the bikini top over your chest before tying the strings together at your back.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " places " + clothing.getName(true) + " over <her> chest before tying the strings together at <her> back.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] places " + clothing.getName(true) + " over [npc.her] chest before tying the strings together at [npc.her] back.");
 		}
 
 		@Override
@@ -4233,12 +4228,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You untie the bikini top's strings and remove it from your chest.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unties <her> bikini top's strings and removes it from <her> chest.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unties [npc.her] bikini top's strings and removes it from [npc.her] chest.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unties your bikini top's strings and removes it from your chest.";
+					return "[npc.Name] unties your bikini top's strings and removes it from your chest.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You untie " + clothingOwner.getName("the") + "'s bikini top's strings and pull it off <her> chest.");
+					return UtilText.parse(clothingOwner, "You untie [npc.name]'s bikini top's strings and pull it off [npc.her] chest.");
 			}
 		}
 
@@ -4247,14 +4242,14 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You slide your bikini top's straps off your shoulders before tugging it down to reveal your chest.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " slides <her> bikini top's straps off <her> shoulders before tugging it down to reveal <her> chest.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] slides [npc.her] bikini top's straps off [npc.her] shoulders before tugging it down to reveal [npc.her] chest.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " slides your bikini top's straps off your shoulders before tugging it down to reveal your chest.";
+					return "[npc.Name] slides your bikini top's straps off your shoulders before tugging it down to reveal your chest.";
 				else
-					return UtilText.genderParsing(clothingOwner,
-							"You slide the straps of " + clothingOwner.getName("the") + "'s bikini top off <her> shoulders before tugging it down to reveal <her> chest.");
+					return UtilText.parse(clothingOwner,
+							"You slide the straps of [npc.name]'s bikini top off [npc.her] shoulders before tugging it down to reveal [npc.her] chest.");
 			}
 		}
 
@@ -4263,7 +4258,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your bikini top back up to cover your chest.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> bikini top back up to cover <her> chest.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] bikini top back up to cover [npc.her] chest.");
 		}
 	};
 	
@@ -4434,8 +4429,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the bodysuit and pull it up over your torso.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " and pulls it up to cover <her> torso.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " and pulls it up to cover [npc.her] torso.");
 		}
 
 		@Override
@@ -4443,13 +4438,13 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You slide the bodysuit's straps down your arms and tug it down off your legs.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " slides the bodysuit's straps down <her> arms and tugs it down off <her> legs.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] slides the bodysuit's straps down [npc.her] arms and tugs it down off [npc.her] legs.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " tugs your bodysuit down, sliding it off your legs.";
+					return "[npc.Name] tugs your bodysuit down, sliding it off your legs.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You tug down " + clothingOwner.getName("the") + "'s bodysuit, sliding it off <her> legs.");
+					return UtilText.parse(clothingOwner, "You tug down [npc.name]'s bodysuit, sliding it off [npc.her] legs.");
 			}
 		}
 
@@ -4459,23 +4454,23 @@ public class ClothingType {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull down the top half of your bodysuit.";
 				else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down the top half of <her> bodysuit.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls down the top half of [npc.her] bodysuit.");
 				else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls down the top half of your bodysuit.";
+						return "[npc.Name] pulls down the top half of your bodysuit.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You pull down the top half of " + clothingOwner.getName("the") + "'s bodysuit.");
+						return UtilText.parse(clothingOwner, "You pull down the top half of [npc.name]'s bodysuit.");
 				}
 			} else {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull the lower part of your bodysuit to one side.";
 				else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls the lower part of <her> bodysuit to one side.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls the lower part of [npc.her] bodysuit to one side.");
 				else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls the lower part of your bodysuit to one side.";
+						return "[npc.Name] pulls the lower part of your bodysuit to one side.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You pull the lower part of " + clothingOwner.getName("the") + "'s bodysuit to one side.");
+						return UtilText.parse(clothingOwner, "You pull the lower part of [npc.name]'s bodysuit to one side.");
 				}
 			}
 		}
@@ -4486,12 +4481,12 @@ public class ClothingType {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull your bodysuit back up into its correct position.";
 				else
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> bodysuit up into its correct position.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] bodysuit up into its correct position.");
 			} else {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull the lower part of your bodysuit back into its correct position.";
 				else
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls the lower part of <her> bodysuit back into its correct position.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls the lower part of [npc.her] bodysuit back into its correct position.");
 			}
 		}
 	};
@@ -4528,8 +4523,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You place the corset around your stomach before tying the laces up at your back.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " places " + clothing.getName(true) + " around <her> stomach before tying the laces up at <her> back.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] places " + clothing.getName(true) + " around [npc.her] stomach before tying the laces up at [npc.her] back.");
 		}
 
 		@Override
@@ -4537,12 +4532,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You untie the corset's laces and remove it from your stomach.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unties <her> corset's laces and removes it from <her> stomach.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unties [npc.her] corset's laces and removes it from [npc.her] stomach.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unties your corset's laces and removes it from your stomach.";
+					return "[npc.Name] unties your corset's laces and removes it from your stomach.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You untie " + clothingOwner.getName("the") + "'s corset's laces and remove it from <her> stomach.");
+					return UtilText.parse(clothingOwner, "You untie [npc.name]'s corset's laces and remove it from [npc.her] stomach.");
 			}
 		}
 	};
@@ -4583,8 +4578,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You place the corset around your stomach before tying the laces up at your back.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " places " + clothing.getName(true) + " around <her> stomach before tying the laces up at <her> back.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] places " + clothing.getName(true) + " around [npc.her] stomach before tying the laces up at [npc.her] back.");
 		}
 
 		@Override
@@ -4592,12 +4587,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You untie the corset's laces and remove it from your stomach.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unties <her> corset's laces and removes it from <her> stomach.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unties [npc.her] corset's laces and removes it from [npc.her] stomach.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unties your corset's laces and removes it from your stomach.";
+					return "[npc.Name] unties your corset's laces and removes it from your stomach.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You untie " + clothingOwner.getName("the") + "'s corset's laces and remove it from <her> stomach.");
+					return UtilText.parse(clothingOwner, "You untie [npc.name]'s corset's laces and remove it from [npc.her] stomach.");
 			}
 		}
 	};
@@ -4684,8 +4679,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the gloves and give your fingers an experimental wiggle.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + " and gives <her> fingers an experimental wiggle.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls on " + clothing.getName(true) + " and gives [npc.her] fingers an experimental wiggle.");
 		}
 
 		@Override
@@ -4693,12 +4688,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your gloves.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> gloves.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] gloves.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your gloves off.";
+					return "[npc.Name] pulls your gloves off.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s gloves off.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s gloves off.");
 			}
 		}
 	};
@@ -4735,8 +4730,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the gloves and give your fingers an experimental wiggle.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + " and gives <her> fingers an experimental wiggle.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls on " + clothing.getName(true) + " and gives [npc.her] fingers an experimental wiggle.");
 		}
 
 		@Override
@@ -4744,12 +4739,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your gloves.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> gloves.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] gloves.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your gloves off.";
+					return "[npc.Name] pulls your gloves off.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s gloves off.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s gloves off.");
 			}
 		}
 	};
@@ -4786,8 +4781,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the gloves and give your fingers an experimental wiggle.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + " and gives <her> fingers an experimental wiggle.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls on " + clothing.getName(true) + " and gives [npc.her] fingers an experimental wiggle.");
 		}
 
 		@Override
@@ -4795,12 +4790,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your gloves.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> gloves.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] gloves.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your gloves off.";
+					return "[npc.Name] pulls your gloves off.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s gloves off.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s gloves off.");
 			}
 		}
 	};
@@ -4943,8 +4938,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You place the watch on your wrist and fasten the strap.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " places " + clothing.getName(true) + " on <her> wrist and fastens the strap.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] places " + clothing.getName(true) + " on [npc.her] wrist and fastens the strap.");
 		}
 
 		@Override
@@ -4952,12 +4947,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unfasten your watch's strap and take it off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unfastens <her> watch's strap and takes it off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unfastens [npc.her] watch's strap and takes it off.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unfastens your watch's strap and takes it off.";
+					return "[npc.Name] unfastens your watch's strap and takes it off.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You unfasten the strap on " + clothingOwner.getName("the") + "'s watch and take it off.");
+					return UtilText.parse(clothingOwner, "You unfasten the strap on [npc.name]'s watch and take it off.");
 			}
 		}
 	};
@@ -4990,8 +4985,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You place the watch on your wrist and fasten the strap.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " places " + clothing.getName(true) + " on <her> wrist and fastens the strap.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] places " + clothing.getName(true) + " on [npc.her] wrist and fastens the strap.");
 		}
 
 		@Override
@@ -4999,12 +4994,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unfasten your watch's strap and take it off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unfastens <her> watch's strap and takes it off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unfastens [npc.her] watch's strap and takes it off.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unfastens your watch's strap and takes it off.";
+					return "[npc.Name] unfastens your watch's strap and takes it off.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You unfasten the strap on " + clothingOwner.getName("the") + "'s watch and take it off.");
+					return UtilText.parse(clothingOwner, "You unfasten the strap on [npc.name]'s watch and take it off.");
 			}
 		}
 	};
@@ -5037,7 +5032,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You slide the bangle onto your wrist.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " slides " + clothing.getName(true) + " onto <her> wrist.");
+				return UtilText.parse(clothingOwner, "[npc.Name] slides " + clothing.getName(true) + " onto [npc.her] wrist.");
 		}
 
 		@Override
@@ -5045,12 +5040,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You slide your bangle off your wrist.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " slides <her> bangle off <her> wrist.");
+				return UtilText.parse(clothingOwner, "[npc.Name] slides [npc.her] bangle off [npc.her] wrist.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " slides your bangle off your wrist.";
+					return "[npc.Name] slides your bangle off your wrist.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You slide " + clothingOwner.getName("the") + "'s bangle off <her> wrist.");
+					return UtilText.parse(clothingOwner, "You slide [npc.name]'s bangle off [npc.her] wrist.");
 			}
 		}
 	};
@@ -5090,7 +5085,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull the ring onto your finger.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls " + clothing.getName(true) + " onto <her> finger.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls " + clothing.getName(true) + " onto [npc.her] finger.");
 		}
 
 		@Override
@@ -5098,12 +5093,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off the ring.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> ring.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] ring.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your ring.";
+					return "[npc.Name] pulls off your ring.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s ring.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s ring.");
 			}
 		}
 	};
@@ -5187,8 +5182,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the skirt before pulling it up to your waist.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " before pulling it up to <her> waist.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " before pulling it up to [npc.her] waist.");
 		}
 
 		@Override
@@ -5196,12 +5191,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your skirt and kick it off your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> skirt, kicking it off <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] skirt, kicking it off [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your skirt down and slides it off your feet.";
+					return "[npc.Name] pulls your skirt down and slides it off your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s skirt down and slide it off <her> feet.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s skirt down and slide it off [npc.her] feet.");
 			}
 		}
 
@@ -5210,12 +5205,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull up your skirt.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls up <her> skirt.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls up [npc.her] skirt.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your skirt up.";
+					return "[npc.Name] pulls your skirt up.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s skirt up.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s skirt up.");
 			}
 		}
 
@@ -5224,7 +5219,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your skirt back down.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> skirt back down.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] skirt back down.");
 		}
 	};
 	public static AbstractClothingType LEG_PENCIL_SKIRT = new AbstractClothingType(
@@ -5265,8 +5260,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the skirt before pulling it up to your waist.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " before pulling it up to <her> waist.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " before pulling it up to [npc.her] waist.");
 		}
 
 		@Override
@@ -5274,12 +5269,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your skirt and kick it off your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> skirt, kicking it off <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] skirt, kicking it off [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your skirt down and slides it off your feet.";
+					return "[npc.Name] pulls your skirt down and slides it off your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s skirt down and slide it off <her> feet.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s skirt down and slide it off [npc.her] feet.");
 			}
 		}
 
@@ -5288,12 +5283,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull up your skirt.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls up <her> skirt.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls up [npc.her] skirt.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your skirt up.";
+					return "[npc.Name] pulls your skirt up.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s skirt up.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s skirt up.");
 			}
 		}
 
@@ -5302,7 +5297,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your skirt back down.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> skirt back down.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] skirt back down.");
 		}
 	};
 	public static AbstractClothingType LEG_MINI_SKIRT = new AbstractClothingType(
@@ -5378,7 +5373,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your miniskirt back down.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> miniskirt back down.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] miniskirt back down.");
 		}
 	};
 
@@ -6054,8 +6049,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the assless chaps before pulling them up to your waist.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " before pulling them up to <her> waist.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " before pulling them up to [npc.her] waist.");
 		}
 
 		@Override
@@ -6063,12 +6058,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your assless chaps and kick them off your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> assless chaps, kicking them off <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] assless chaps, kicking them off [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your assless chaps down and slides them off your feet.";
+					return "[npc.Name] pulls your assless chaps down and slides them off your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s assless chaps down and slide them off <her> feet.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s assless chaps down and slide them off [npc.her] feet.");
 			}
 		}
 
@@ -6077,12 +6072,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your assless chaps.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> assless chaps.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] assless chaps.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your assless chaps down.";
+					return "[npc.Name] pulls your assless chaps down.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s assless chaps down.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s assless chaps down.");
 			}
 		}
 
@@ -6091,7 +6086,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your assless chaps back up.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> assless chaps back up.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] assless chaps back up.");
 		}
 	};
 
@@ -6129,8 +6124,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the crotchless chaps before pulling them up to your waist.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " before pulling them up to <her> waist.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " before pulling them up to [npc.her] waist.");
 		}
 
 		@Override
@@ -6138,12 +6133,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your crotchless chaps and kick them off your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> crotchless chaps, kicking them off <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] crotchless chaps, kicking them off [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your crotchless chaps down and slides them off your feet.";
+					return "[npc.Name] pulls your crotchless chaps down and slides them off your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s crotchless chaps down and slide them off <her> feet.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s crotchless chaps down and slide them off [npc.her] feet.");
 			}
 		}
 	};
@@ -6182,6 +6177,65 @@ public class ClothingType {
 
 			null,
 			Colour.lingerieColours, null, null, null, null, null){
+		
+		private static final long serialVersionUID = 1L;
+		
+		@Override
+		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You step into the panties before pulling them up to cover your private parts.",
+					"You pull the panties up [npc.name]'s [npc.legs] to cover [npc.her] private parts.",
+					null,
+					"[npc.Name] steps into the panties before pulling them up to cover [npc.her] private parts.",
+					"[npc.Name] pulls the panties up your [pc.legs] to cover your private parts.",
+					null);
+		}
+
+		@Override
+		public String unequipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You pull down your panties and kick them off your [pc.feet].",
+					"You pull down [npc.name]'s panties and slide them off [npc.her] [npc.feet].",
+					null,
+					"[npc.Name] pulls [npc.her] panties down and kicks them off [npc.her] [npc.feet].",
+					"[npc.Name] pulls your panties down and slides them off your [pc.feet].",
+					null);
+		}
+	};
+	
+	public static AbstractClothingType GROIN_SHIMAPAN = new AbstractClothingType("a pair of",
+			true,
+			"striped panties",
+			"striped panties",
+			"A pair of distinctly feminine, striped panties, made from soft cotton. They are sometimes referred to as 'shima-pantsu' (striped panties).",
+			1,
+			Femininity.FEMININE,
+			InventorySlot.GROIN,
+			Rarity.COMMON,
+			null,
+			"groin_shimapan",
+			null,
+			Util.newArrayListOfValues(
+					new ListValue<BlockedParts>(
+							new BlockedParts(DisplacementType.REMOVE_OR_EQUIP,
+							Util.newArrayListOfValues(
+									new ListValue<ClothingAccess>(ClothingAccess.LEGS_UP_TO_GROIN_LOW_LEVEL),
+									new ListValue<ClothingAccess>(ClothingAccess.LEGS_UP_TO_GROIN),
+									new ListValue<ClothingAccess>(ClothingAccess.GROIN)),
+							null,
+							null)),
+					new ListValue<BlockedParts>(
+							new BlockedParts(DisplacementType.SHIFTS_ASIDE,
+							Util.newArrayListOfValues(new ListValue<ClothingAccess>(ClothingAccess.GROIN)),
+							Util.newArrayListOfValues(
+									new ListValue<CoverableArea>(CoverableArea.ANUS),
+									new ListValue<CoverableArea>(CoverableArea.PENIS),
+									new ListValue<CoverableArea>(CoverableArea.VAGINA)),
+							null))),
+
+			null,
+			Util.newArrayListOfValues(new ListValue<Colour>(Colour.CLOTHING_BLUE_LIGHT), new ListValue<Colour>(Colour.CLOTHING_PINK_LIGHT)), Colour.allClothingColours,
+			Util.newArrayListOfValues(new ListValue<Colour>(Colour.CLOTHING_WHITE)), Colour.allClothingColours, null, null){
 		
 		private static final long serialVersionUID = 1L;
 		
@@ -6307,8 +6361,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the panties before pulling them up to cover your private parts.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " before pulling them up to cover <her> private parts.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " before pulling them up to cover [npc.her] private parts.");
 		}
 
 		@Override
@@ -6316,12 +6370,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your panties and kick them off your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> panties, kicking them off <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] panties, kicking them off [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your panties down and slides them off your feet.";
+					return "[npc.Name] pulls your panties down and slides them off your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s panties down and slide them off <her> feet.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s panties down and slide them off [npc.her] feet.");
 			}
 		}
 
@@ -6330,12 +6384,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You shift your panties to one side.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " shifts <her> panties to one side.");
+				return UtilText.parse(clothingOwner, "[npc.Name] shifts [npc.her] panties to one side.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " shifts your panties to one side.";
+					return "[npc.Name] shifts your panties to one side.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You shift " + clothingOwner.getName("the") + "'s panties to one side.");
+					return UtilText.parse(clothingOwner, "You shift [npc.name]'s panties to one side.");
 			}
 		}
 
@@ -6344,7 +6398,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You move your panties back into their proper place.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " moves <her> panties back into their proper place.");
+				return UtilText.parse(clothingOwner, "[npc.Name] moves [npc.her] panties back into their proper place.");
 		}
 	};
 	
@@ -6381,8 +6435,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the panties before pulling them up to cover your private parts.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " before pulling them up to cover <her> private parts.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " before pulling them up to cover [npc.her] private parts.");
 		}
 
 		@Override
@@ -6390,12 +6444,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your panties and kick them off your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> panties, kicking them off <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] panties, kicking them off [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your panties down and slides them off your feet.";
+					return "[npc.Name] pulls your panties down and slides them off your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s panties down and slide them off <her> feet.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s panties down and slide them off [npc.her] feet.");
 			}
 		}
 	};
@@ -6487,8 +6541,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the v-string panties before pulling them up to cover your private parts.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " before pulling them up to cover <her> private parts.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " before pulling them up to cover [npc.her] private parts.");
 		}
 
 		@Override
@@ -6496,12 +6550,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your v-string panties and kick them off your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> v-string panties, kicking them off <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] v-string panties, kicking them off [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your v-string panties down and slides them off your feet.";
+					return "[npc.Name] pulls your v-string panties down and slides them off your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s v-string panties down and slide them off <her> feet.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s v-string panties down and slide them off [npc.her] feet.");
 			}
 		}
 
@@ -6510,12 +6564,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You shift your v-string panties to one side.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " shifts <her> v-string panties to one side.");
+				return UtilText.parse(clothingOwner, "[npc.Name] shifts [npc.her] v-string panties to one side.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " shifts your v-string panties to one side.";
+					return "[npc.Name] shifts your v-string panties to one side.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You shift " + clothingOwner.getName("the") + "'s v-string panties to one side.");
+					return UtilText.parse(clothingOwner, "You shift [npc.name]'s v-string panties to one side.");
 			}
 		}
 
@@ -6524,7 +6578,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You move your v-string panties back into their proper place.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " moves <her> v-string panties back into their proper place.");
+				return UtilText.parse(clothingOwner, "[npc.Name] moves [npc.her] v-string panties back into their proper place.");
 		}
 	};
 	public static AbstractClothingType GROIN_THONG = new AbstractClothingType(
@@ -6570,8 +6624,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the thong before pulling it up to cover your private parts.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " before pulling it up to cover <her> private parts.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " before pulling it up to cover [npc.her] private parts.");
 		}
 
 		@Override
@@ -6579,12 +6633,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your thong and kick it off your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> thong and kicks it off <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] thong and kicks it off [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your thong down and slides it off your feet.";
+					return "[npc.Name] pulls your thong down and slides it off your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s thong down and slide it off <her> feet.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s thong down and slide it off [npc.her] feet.");
 			}
 		}
 
@@ -6593,12 +6647,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You shift your thong to one side.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " shifts <her> thong to one side.");
+				return UtilText.parse(clothingOwner, "[npc.Name] shifts [npc.her] thong to one side.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " shifts your thong to one side.";
+					return "[npc.Name] shifts your thong to one side.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You shift " + clothingOwner.getName("the") + "'s thong to one side.");
+					return UtilText.parse(clothingOwner, "You shift [npc.name]'s thong to one side.");
 			}
 		}
 
@@ -6607,7 +6661,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You move your thong back into its proper place.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " moves <her> thong back into its proper place.");
+				return UtilText.parse(clothingOwner, "[npc.Name] moves [npc.her] thong back into its proper place.");
 		}
 	};
 	public static AbstractClothingType GROIN_BIKINI = new AbstractClothingType(
@@ -6645,8 +6699,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the bikini bottoms before pulling them up to cover your private parts.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " before pulling them up to cover <her> private parts.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " before pulling them up to cover [npc.her] private parts.");
 		}
 
 		@Override
@@ -6654,12 +6708,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your bikini bottoms and kick them off your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> bikini bottoms, kicking them off <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] bikini bottoms, kicking them off [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your bikini bottoms down and slides them off your feet.";
+					return "[npc.Name] pulls your bikini bottoms down and slides them off your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s bikini bottoms down and slide them off <her> feet.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s bikini bottoms down and slide them off [npc.her] feet.");
 			}
 		}
 
@@ -6668,12 +6722,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You shift your bikini bottoms to one side.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " shifts <her> bikini bottoms to one side.");
+				return UtilText.parse(clothingOwner, "[npc.Name] shifts [npc.her] bikini bottoms to one side.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " shifts your bikini bottoms to one side.";
+					return "[npc.Name] shifts your bikini bottoms to one side.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You shift " + clothingOwner.getName("the") + "'s bikini bottoms to one side.");
+					return UtilText.parse(clothingOwner, "You shift [npc.name]'s bikini bottoms to one side.");
 			}
 		}
 
@@ -6682,7 +6736,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You move your bikini bottoms back into their proper place.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " moves <her> bikini bottoms back into their proper place.");
+				return UtilText.parse(clothingOwner, "[npc.Name] moves [npc.her] bikini bottoms back into their proper place.");
 		}
 	};
 	public static AbstractClothingType GROIN_BOYSHORTS = new AbstractClothingType(
@@ -6720,8 +6774,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the boyshorts before pulling them up to cover your private parts.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " before pulling them up to cover <her> private parts.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " before pulling them up to cover [npc.her] private parts.");
 		}
 
 		@Override
@@ -6729,12 +6783,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your boyshorts and kick them off your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> boyshorts, kicking them off <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] boyshorts, kicking them off [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your boyshorts down and slides them off your feet.";
+					return "[npc.Name] pulls your boyshorts down and slides them off your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s boyshorts down and slide them off <her> feet.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s boyshorts down and slide them off [npc.her] feet.");
 			}
 		}
 
@@ -6743,12 +6797,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You shift your boyshorts to one side.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " shifts <her> boyshorts to one side.");
+				return UtilText.parse(clothingOwner, "[npc.Name] shifts [npc.her] boyshorts to one side.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " shifts your boyshorts to one side.";
+					return "[npc.Name] shifts your boyshorts to one side.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You shift " + clothingOwner.getName("the") + "'s boyshorts to one side.");
+					return UtilText.parse(clothingOwner, "You shift [npc.name]'s boyshorts to one side.");
 			}
 		}
 
@@ -6757,7 +6811,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You move your boyshorts back into their proper place.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " moves <her> boyshorts back into their proper place.");
+				return UtilText.parse(clothingOwner, "[npc.Name] moves [npc.her] boyshorts back into their proper place.");
 		}
 	};
 	public static AbstractClothingType GROIN_BRIEFS = new AbstractClothingType(
@@ -6960,8 +7014,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the boxers before pulling them up to cover your private parts.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true) + " before pulling them up to cover <her> private parts.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] steps into " + clothing.getName(true) + " before pulling them up to cover [npc.her] private parts.");
 		}
 
 		@Override
@@ -6969,12 +7023,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull down your boxers and kick them off your feet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls down <her> boxers, kicking them off <her> feet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls down [npc.her] boxers, kicking them off [npc.her] feet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your boxers down and slides them off your feet.";
+					return "[npc.Name] pulls your boxers down and slides them off your feet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s boxers down and slide them off <her> feet.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s boxers down and slide them off [npc.her] feet.");
 			}
 		}
 
@@ -6983,12 +7037,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You shift your boxers to one side.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " shifts <her> boxers to one side.");
+				return UtilText.parse(clothingOwner, "[npc.Name] shifts [npc.her] boxers to one side.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " shifts your boxers to one side.";
+					return "[npc.Name] shifts your boxers to one side.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You shift " + clothingOwner.getName("the") + "'s boxers to one side.");
+					return UtilText.parse(clothingOwner, "You shift [npc.name]'s boxers to one side.");
 			}
 		}
 
@@ -6997,7 +7051,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You move your boxers back into their proper place.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " moves <her> boxers back into their proper place.");
+				return UtilText.parse(clothingOwner, "[npc.Name] moves [npc.her] boxers back into their proper place.");
 		}
 	};
 
@@ -7127,7 +7181,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the socks.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + ".");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls on " + clothing.getName(true) + ".");
 		}
 
 		@Override
@@ -7135,12 +7189,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your socks.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> socks.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] socks.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your socks.";
+					return "[npc.Name] pulls off your socks.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s socks.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s socks.");
 			}
 		}
 	};
@@ -7170,6 +7224,55 @@ public class ClothingType {
 		
 		
 				private static final long serialVersionUID = 1L;
+
+		@Override
+		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You put on the socks and pull them up to your mid-thigh.",
+					"You put the socks on [npc.name] and pull them up to [npc.her] mid-thigh.",
+					null,
+					"[npc.Name] puts on the socks and pulls them up to [npc.her] mid-thigh.",
+					"[npc.Name] puts the socks on your [pc.feet] and pulls them up to your mid-thigh.",
+					null);
+		}
+
+		@Override
+		public String unequipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
+			return getEquipDescriptions(clothingOwner, clothingRemover, rough,
+					"You pull off your socks.",
+					"You pull off [npc.name]'s socks.",
+					null,
+					"[npc.Name] pulls off [npc.her] socks.",
+					"[npc.Name] pulls off your socks.",
+					null);
+		}
+	};
+	
+	public static AbstractClothingType SOCK_THIGHHIGH_SOCKS_STRIPED = new AbstractClothingType("a pair of",
+			true,
+			"striped thigh-high socks",
+			"striped thigh-high socks",
+			"A pair of striped thigh-high socks, made from cotton and with an elastic band at the top.",
+			1,
+			Femininity.FEMININE,
+			InventorySlot.SOCK,
+			Rarity.COMMON,
+			null,
+			"sock_thighhigh_socks_striped",
+			null,
+			Util.newArrayListOfValues(new ListValue<BlockedParts>(
+					new BlockedParts(
+							DisplacementType.REMOVE_OR_EQUIP,
+							Util.newArrayListOfValues(
+									new ListValue<ClothingAccess>(ClothingAccess.FEET),
+									new ListValue<ClothingAccess>(ClothingAccess.CALVES)),
+							null,
+							null))),
+			null,
+			Util.newArrayListOfValues(new ListValue<Colour>(Colour.CLOTHING_BLUE_LIGHT), new ListValue<Colour>(Colour.CLOTHING_PINK_LIGHT)), Colour.allClothingColours,
+			Util.newArrayListOfValues(new ListValue<Colour>(Colour.CLOTHING_WHITE)), Colour.allClothingColours, null, null){
+		
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public String equipText(GameCharacter clothingOwner, GameCharacter clothingRemover, boolean rough, AbstractClothing clothing, boolean applyEffects) {
@@ -7245,8 +7348,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You push your feet into the pantyhose and pull them up to your waist.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pushes <her> feet into " + clothing.getName(true) + " and pulls them up to <her> waist.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pushes [npc.her] feet into " + clothing.getName(true) + " and pulls them up to [npc.her] waist.");
 		}
 
 		@Override
@@ -7254,12 +7357,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your pantyhose.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> pantyhose.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] pantyhose.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your pantyhose.";
+					return "[npc.Name] pulls off your pantyhose.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s pantyhose.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s pantyhose.");
 			}
 		}
 
@@ -7268,12 +7371,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull the top part of your pantyhose down.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls the top part of <her> pantyhose down.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls the top part of [npc.her] pantyhose down.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls the top part of your pantyhose down.";
+					return "[npc.Name] pulls the top part of your pantyhose down.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull the top part of " + clothingOwner.getName("the") + "'s pantyhose down.");
+					return UtilText.parse(clothingOwner, "You pull the top part of [npc.name]'s pantyhose down.");
 			}
 		}
 
@@ -7282,7 +7385,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your pantyhose back up to your waist.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> pantyhose back up to <her> waist.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] pantyhose back up to [npc.her] waist.");
 		}
 	};
 	public static AbstractClothingType SOCK_FISHNET_STOCKINGS = new AbstractClothingType(
@@ -7313,7 +7416,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the fishnet stockings.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + ".");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls on " + clothing.getName(true) + ".");
 		}
 
 		@Override
@@ -7321,12 +7424,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your fishnet stockings.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> fishnet stockings.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] fishnet stockings.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your fishnet stockings.";
+					return "[npc.Name] pulls off your fishnet stockings.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s fishnet stockings.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s fishnet stockings.");
 			}
 		}
 	};
@@ -7362,7 +7465,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You fasten the anklet around your ankle.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " fastens " + clothing.getName(true) + " around <her> ankle.");
+				return UtilText.parse(clothingOwner, "[npc.Name] fastens " + clothing.getName(true) + " around [npc.her] ankle.");
 		}
 
 		@Override
@@ -7370,12 +7473,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unfasten and remove your anklet.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unfastens and removes <her> anklet.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unfastens and removes [npc.her] anklet.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unfastens and removes your anklet.";
+					return "[npc.Name] unfastens and removes your anklet.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You unfasten and remove " + clothingOwner.getName("the") + "'s anklet.");
+					return UtilText.parse(clothingOwner, "You unfasten and remove [npc.name]'s anklet.");
 			}
 		}
 	};
@@ -7556,8 +7659,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You push your feet into the ankle boots and zip up the sides.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pushes <her> feet into " + clothing.getName(true) + " and zips up the sides.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pushes [npc.her] feet into " + clothing.getName(true) + " and zips up the sides.");
 		}
 
 		@Override
@@ -7565,12 +7668,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unzip your ankle boots and pull them off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unzips <her> ankle boots and pulls them off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unzips [npc.her] ankle boots and pulls them off.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your ankle boots.";
+					return "[npc.Name] pulls off your ankle boots.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s ankle boots.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s ankle boots.");
 			}
 		}
 	};
@@ -7603,8 +7706,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You push your feet into the platform boots and zip up the sides.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pushes <her> feet into " + clothing.getName(true) + " and zips up the sides.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pushes [npc.her] feet into " + clothing.getName(true) + " and zips up the sides.");
 		}
 
 		@Override
@@ -7612,12 +7715,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unzip your platform boots and pull them off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unzips <her> platform boots and pulls them off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unzips [npc.her] platform boots and pulls them off.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your platform boots.";
+					return "[npc.Name] pulls off your platform boots.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s platform boots.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s platform boots.");
 			}
 		}
 	};
@@ -7649,8 +7752,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You push your feet into the boots and pull them up to your mid-thigh.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pushes <her> feet into the boots and pulls them up to mid-thigh.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pushes [npc.her] feet into the boots and pulls them up to mid-thigh.");
 		}
 
 		@Override
@@ -7658,12 +7761,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your thigh high boots.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> thigh high boots.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] thigh high boots.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your thigh high boots.";
+					return "[npc.Name] pulls off your thigh high boots.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s thigh high boots.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s thigh high boots.");
 			}
 		}
 	};
@@ -7695,8 +7798,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You push your feet into the shoes and tie up the laces.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pushes <her> feet into " + clothing.getName(true) + " and ties up the laces.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pushes [npc.her] feet into " + clothing.getName(true) + " and ties up the laces.");
 		}
 
 		@Override
@@ -7704,12 +7807,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You untie the laces and pull your shoes off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unties <her> laces and pulls <her> shoes off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unties [npc.her] laces and pulls [npc.her] shoes off.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your shoes.";
+					return "[npc.Name] pulls off your shoes.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s shoes.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s shoes.");
 			}
 		}
 	};
@@ -7975,7 +8078,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You slide the headpiece onto your head.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " slides " + clothing.getName(true) + " onto <her> head.");
+				return UtilText.parse(clothingOwner, "[npc.Name] slides " + clothing.getName(true) + " onto [npc.her] head.");
 		}
 
 		@Override
@@ -7983,12 +8086,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You take your headpiece off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " takes <her> headpiece off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] takes [npc.her] headpiece off.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your headpiece.";
+					return "[npc.Name] pulls off your headpiece.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s headpiece.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s headpiece.");
 			}
 		}
 
@@ -8042,8 +8145,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You step into the dress and pull it up over your torso, zipping yourself up at the back before making sure the trimmings and apron are neatly arranged.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " steps into " + clothing.getName(true)
-						+ " and pulls it up to cover <her> torso," + " zipping <herPro>self up at the back before making sure the trimmings and apron are neatly arranged.");
+				return UtilText.parse(clothingOwner, "[npc.Name] steps into " + clothing.getName(true)
+						+ " and pulls it up to cover [npc.her] torso," + " zipping [npc.herself] up at the back before making sure the trimmings and apron are neatly arranged.");
 		}
 
 		@Override
@@ -8051,14 +8154,14 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You reach back and unzip your Maid's dress, pulling your arms out before sliding it down your body and stepping out.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " reaches back and unzips <her> Maid's dress, pulling <her> arms out before sliding it down <her> body and stepping out.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] reaches back and unzips [npc.her] Maid's dress, pulling [npc.her] arms out before sliding it down [npc.her] body and stepping out.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unzips the back of your Maid's dress." + " Having done so, " + clothingRemover.getGender().getSecondPerson()
+					return "[npc.Name] unzips the back of your Maid's dress." + " Having done so, " + clothingRemover.getGender().getSecondPerson()
 							+ " pulls your arms free to allow the dress to fall to the floor.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You unzip the back of " + clothingOwner.getName("the") + "'s Maid's dress." + " Having done so, you pull "
+					return UtilText.parse(clothingOwner, "You unzip the back of [npc.name]'s Maid's dress." + " Having done so, you pull "
 							+ clothingOwner.getGender().getPossessiveBeforeNoun() + " arms free to allow the dress to fall to the floor.");
 			}
 		}
@@ -8069,23 +8172,23 @@ public class ClothingType {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You unzip the back of your dress and pull down the top half.";
 				else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unzips the back of <her> dress and pulls the top half down");
+					return UtilText.parse(clothingOwner, "[npc.Name] unzips the back of [npc.her] dress and pulls the top half down");
 				else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " unzips the back of your dress and pulls the top half down.";
+						return "[npc.Name] unzips the back of your dress and pulls the top half down.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You unzip the back of " + clothingOwner.getName("the") + "'s dress and pull the top half down.");
+						return UtilText.parse(clothingOwner, "You unzip the back of [npc.name]'s dress and pull the top half down.");
 				}
 			} else {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull up your dress's skirt.";
 				else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls up <her> dress's skirt.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls up [npc.her] dress's skirt.");
 				else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up your dress's skirt.";
+						return "[npc.Name] pulls up your dress's skirt.";
 					else
-						return UtilText.genderParsing(clothingOwner, "You pull up the skirt of " + clothingOwner.getName("the") + "'s dress.");
+						return UtilText.parse(clothingOwner, "You pull up the skirt of [npc.name]'s dress.");
 				}
 			}
 		}
@@ -8096,13 +8199,13 @@ public class ClothingType {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull your dress back up into the correct position and zip yourself up.";
 				else
-					return UtilText.genderParsing(clothingOwner,
-							Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> dress up into the correct position and zips <herPro>self up.");
+					return UtilText.parse(clothingOwner,
+							"[npc.Name] pulls [npc.her] dress up into the correct position and zips [npc.herself] up.");
 			} else {
 				if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 					return "You pull your dress's skirt back down.";
 				else
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> dress's skirt back down.");
+					return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] dress's skirt back down.");
 			}
 		}
 	};
@@ -8136,7 +8239,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the stockings.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + ".");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls on " + clothing.getName(true) + ".");
 		}
 
 		@Override
@@ -8144,12 +8247,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your stockings.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> stockings.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] stockings.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your stockings.";
+					return "[npc.Name] pulls off your stockings.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s stockings.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s stockings.");
 			}
 		}
 	};
@@ -8183,7 +8286,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You slip on the heels and buckle up the straps.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " slips on " + clothing.getName(true) + " and buckles up the straps.");
+				return UtilText.parse(clothingOwner, "[npc.Name] slips on " + clothing.getName(true) + " and buckles up the straps.");
 		}
 
 		@Override
@@ -8191,12 +8294,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unbuckle your heels and slip them off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unbuckles <her> heels and slips them off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unbuckles [npc.her] heels and slips them off.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unbuckles your heels and pulls them off.";
+					return "[npc.Name] unbuckles your heels and pulls them off.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You unbuckle " + clothingOwner.getName("the") + "'s heels and pull them off.");
+					return UtilText.parse(clothingOwner, "You unbuckle [npc.name]'s heels and pull them off.");
 			}
 		}
 	};
@@ -8228,7 +8331,7 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the sleeves.";
 			else
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + ".");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls on " + clothing.getName(true) + ".");
 		}
 
 		@Override
@@ -8236,12 +8339,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your sleeves.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> sleeves.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] sleeves.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your sleeves.";
+					return "[npc.Name] pulls off your sleeves.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s sleeves.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s sleeves.");
 			}
 		}
 	};
@@ -8952,13 +9055,13 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You put on the cowbell collar, fastening the clasp at the back of your neck.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " puts a " + clothing.getName(true) + " around <her> neck, reaching around to fasten the clasp at the back.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] puts a " + clothing.getName(true) + " around [npc.her] neck, reaching around to fasten the clasp at the back.");
 			else {
 				if (clothingOwner.isPlayer())
-					return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " fastens " + clothing.getName(true) + " around your neck.");
+					return UtilText.parse(clothingOwner, "[npc.Name] fastens " + clothing.getName(true) + " around your neck.");
 				else
-					return UtilText.genderParsing(clothingOwner, "You fasten the cowbell collar around " + clothingOwner.getName("the") + "'s neck.");
+					return UtilText.parse(clothingOwner, "You fasten the cowbell collar around [npc.name]'s neck.");
 			}
 		}
 
@@ -8967,12 +9070,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You unfasten the cowbell collar and take it off.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " unfastens <her> cowbell collar and takes it off.");
+				return UtilText.parse(clothingOwner, "[npc.Name] unfastens [npc.her] cowbell collar and takes it off.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " unfastens your cowbell collar and removes it from around your neck.";
+					return "[npc.Name] unfastens your cowbell collar and removes it from around your neck.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You unfasten " + clothingOwner.getName("the") + "'s cowbell collar and remove it from <her> neck.");
+					return UtilText.parse(clothingOwner, "You unfasten [npc.name]'s cowbell collar and remove it from [npc.her] neck.");
 
 			}
 		}
@@ -9160,8 +9263,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You push your feet into the rainbow stockings and pull them up to your thighs.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pushes <her> feet into " + clothing.getName(true) + " and pulls them up to <her> thighs.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pushes [npc.her] feet into " + clothing.getName(true) + " and pulls them up to [npc.her] thighs.");
 		}
 
 		@Override
@@ -9169,12 +9272,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your rainbow stockings.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> rainbow stockings.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] rainbow stockings.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls off your rainbow stockings.";
+					return "[npc.Name] pulls off your rainbow stockings.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull off " + clothingOwner.getName("the") + "'s rainbow stockings.");
+					return UtilText.parse(clothingOwner, "You pull off [npc.name]'s rainbow stockings.");
 			}
 		}
 	};
@@ -9213,8 +9316,8 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull on the gloves and give your fingers an experimental wiggle.";
 			else
-				return UtilText.genderParsing(clothingOwner,
-						Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls on " + clothing.getName(true) + " and gives <her> fingers an experimental wiggle.");
+				return UtilText.parse(clothingOwner,
+						"[npc.Name] pulls on " + clothing.getName(true) + " and gives [npc.her] fingers an experimental wiggle.");
 		}
 
 		@Override
@@ -9222,12 +9325,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull off your gloves.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls off <her> gloves.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls off [npc.her] gloves.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your gloves off.";
+					return "[npc.Name] pulls your gloves off.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s gloves off.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s gloves off.");
 			}
 		}
 	};
@@ -10328,21 +10431,21 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You put on the safety goggles.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " puts on " + clothing.getName(true) + ".");
+				return UtilText.parse(clothingOwner, "[npc.Name] puts on " + clothing.getName(true) + ".");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " holds you by the chin and pushes " + clothing.getName(true) + " onto your face, before looping the elastic strap over your head.";
+						return "[npc.Name] holds you by the chin and pushes " + clothing.getName(true) + " onto your face, before looping the elastic strap over your head.";
 					else
-						return UtilText.genderParsing(clothingOwner,
-								"You firmly hold " + clothingOwner.getName("the") + "'s chin and push the safety goggles onto <her> face," + " before looping the elastic strap over <her> head.");
+						return UtilText.parse(clothingOwner,
+								"You firmly hold [npc.name]'s chin and push the safety goggles onto [npc.her] face," + " before looping the elastic strap over [npc.her] head.");
 				} else {
 					if (clothingOwner.isPlayer())
-						return UtilText.genderParsing(clothingOwner,
-								Util.capitaliseSentence(clothingOwner.getName("the")) + " places " + clothing.getName(true) + " onto your face," + " before looping the elastic strap over your head.");
+						return UtilText.parse(clothingOwner,
+								"[npc.Name] places " + clothing.getName(true) + " onto your face," + " before looping the elastic strap over your head.");
 					else
-						return UtilText.genderParsing(clothingOwner,
-								"You place the safety goggles onto " + clothingOwner.getName("the") + "'s face," + " before looping the elastic strap over your head.");
+						return UtilText.parse(clothingOwner,
+								"You place the safety goggles onto [npc.name]'s face," + " before looping the elastic strap over your head.");
 				}
 			}
 		}
@@ -10352,18 +10455,18 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You take off your safety goggles.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " takes off <her> safety goggles.");
+				return UtilText.parse(clothingOwner, "[npc.Name] takes off [npc.her] safety goggles.");
 			else {
 				if (rough) {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " grabs your safety goggles and pulls them off.";
+						return "[npc.Name] grabs your safety goggles and pulls them off.";
 					else
-						return "You grab " + clothingOwner.getName("the") + "'s safety goggles and pull them off.";
+						return "You grab [npc.name]'s safety goggles and pull them off.";
 				} else {
 					if (clothingOwner.isPlayer())
-						return Util.capitaliseSentence(clothingRemover.getName("the")) + " takes your safety goggles off.";
+						return "[npc.Name] takes your safety goggles off.";
 					else
-						return "You take off " + clothingOwner.getName("the") + "'s safety goggles.";
+						return "You take off [npc.name]'s safety goggles.";
 				}
 			}
 		}
@@ -10373,12 +10476,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your safety goggles up onto your forehead.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> safety goggles up onto <her> forehead.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] safety goggles up onto [npc.her] forehead.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls up your safety goggles.";
+					return "[npc.Name] pulls up your safety goggles.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull up " + clothingOwner.getName("the") + "'s safety goggles.");
+					return UtilText.parse(clothingOwner, "You pull up [npc.name]'s safety goggles.");
 			}
 		}
 
@@ -10387,12 +10490,12 @@ public class ClothingType {
 			if (clothingOwner.isPlayer() && clothingRemover.isPlayer())
 				return "You pull your safety goggles back down over your eyes.";
 			else if (!clothingOwner.isPlayer() && !clothingRemover.isPlayer())
-				return UtilText.genderParsing(clothingOwner, Util.capitaliseSentence(clothingOwner.getName("the")) + " pulls <her> safety goggles back down over <her> eyes.");
+				return UtilText.parse(clothingOwner, "[npc.Name] pulls [npc.her] safety goggles back down over [npc.her] eyes.");
 			else {
 				if (clothingOwner.isPlayer())
-					return Util.capitaliseSentence(clothingRemover.getName("the")) + " pulls your safety goggles down over your eyes.";
+					return "[npc.Name] pulls your safety goggles down over your eyes.";
 				else
-					return UtilText.genderParsing(clothingOwner, "You pull " + clothingOwner.getName("the") + "'s safety goggles down over <her> eyes.");
+					return UtilText.parse(clothingOwner, "You pull [npc.name]'s safety goggles down over [npc.her] eyes.");
 			}
 		}
 	};
@@ -10483,7 +10586,12 @@ public class ClothingType {
 					
 					allClothing.add(ct);
 					
-					if(ct==ClothingType.PENIS_CONDOM) {
+					if(ct==ClothingType.PENIS_CONDOM
+							|| ct==ClothingType.TORSO_OVER_CHRISTMAS_SWEATER
+							|| ct==ClothingType.HEAD_ANTLER_HEADBAND
+							|| ct==ClothingType.PIERCING_EAR_SNOW_FLAKES
+							|| ct==ClothingType.PIERCING_NOSE_SNOWFLAKE_STUD
+							|| ct==ClothingType.NECK_SNOWFLAKE_NECKLACE) {
 						continue;
 					}
 					

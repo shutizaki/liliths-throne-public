@@ -20,7 +20,7 @@ public enum ParserTarget {
 			new ListValue<>("style")),
 			"Returns the same as 'pc', but should be used for style methods such as 'bold' or 'italics'.") {
 				@Override
-				public GameCharacter getCharacter() {
+				public GameCharacter getCharacter(String tag) {
 					return Main.game.getPlayer();
 				}
 			},
@@ -30,35 +30,49 @@ public enum ParserTarget {
 			new ListValue<>("player")),
 			"The player character.") {
 				@Override
-				public GameCharacter getCharacter() {
+				public GameCharacter getCharacter(String tag) {
 					return Main.game.getPlayer();
 				}
 			},
 	
 	NPC(Util.newArrayListOfValues(
-			new ListValue<>("npc")),
+			new ListValue<>("npc"),
+			new ListValue<>("npc1"),
+			new ListValue<>("npc2"),
+			new ListValue<>("npc3"),
+			new ListValue<>("npc4"),
+			new ListValue<>("npc5"),
+			new ListValue<>("npc6")),
 			"The currently 'active' NPC.</br>"
+			+"<b>The tag 'npc' can be extended with a number, starting at 1, to signify which npc in the scene it is referring to!</b> e.g. 'npc1' is the first npc, 'npc2' is the second, etc.</br>"
 			+ "If in <b>combat</b>, it returns your opponent.</br>"
 			+ "If in <b>sex</b>, it returns your partner.</br>"
 			+ "<b>Otherwise</b>, it returns the most important NPC in the scene.") {
 				@Override
-				public GameCharacter getCharacter() {
-					if(UtilText.getSpecialNPC()!=null) {
-						return UtilText.getSpecialNPC();
+				public GameCharacter getCharacter(String tag) {
+					if(!UtilText.getSpecialNPCList().isEmpty()) {
+						if(tag.equalsIgnoreCase("npc")) {
+							return UtilText.getSpecialNPCList().get(0);
+						} else {
+							return UtilText.getSpecialNPCList().get(Math.max(0, Integer.parseInt(tag.substring(3))-1));
+						}
 						
 					} else if(Main.game.isInCombat()) {
 						return Combat.getOpponent();
 						
 					} else if (Main.game.isInSex()) {
-						return Sex.getPartner();
+						return Sex.getActivePartner();
 						
 					} else if (Main.game.getCurrentDialogueNode()!=null) {
 						if(Main.game.getCurrentDialogueNode()==CharactersPresentDialogue.MENU || Main.game.getCurrentDialogueNode()==PhoneDialogue.CONTACTS) {
 							return CharactersPresentDialogue.characterViewed;
-						} else if (!Main.game.getCharactersPresent().isEmpty()) {
-							return Main.game.getCharactersPresent().get(0);
+							
 						} else if(Main.game.getActiveNPC()!=null) {
 							return Main.game.getActiveNPC();
+							
+						} else if (!Main.game.getCharactersPresent().isEmpty()) {
+							return Main.game.getCharactersPresent().get(0);
+							
 						} else {
 							throw new NullPointerException();
 						}
@@ -76,7 +90,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getPrologueMale();
 		}
 	},
@@ -88,7 +102,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getPrologueFemale();
 		}
 	},
@@ -101,7 +115,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getGenericMaleNPC();
 		}
 	},
@@ -114,7 +128,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getGenericFemaleNPC();
 		}
 	},
@@ -129,7 +143,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getGenericAndrogynousNPC();
 		}
 	},
@@ -142,7 +156,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getTestNPC();
 		}
 	},
@@ -155,7 +169,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getLilaya();
 		}
 	},
@@ -167,7 +181,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getRose();
 		}
 	},
@@ -179,7 +193,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getKate();
 		}
 	},
@@ -191,7 +205,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getRalph();
 		}
 	},
@@ -203,7 +217,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getNyan();
 		}
 	},
@@ -215,7 +229,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getVicky();
 		}
 	},
@@ -227,7 +241,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getPix();
 		}
 	},
@@ -239,7 +253,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getBrax();
 		}
 	},
@@ -251,7 +265,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getCandi();
 		}
 	},
@@ -263,7 +277,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getScarlett();
 		}
 	},
@@ -275,7 +289,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getAlexa();
 		}
 	},
@@ -289,7 +303,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getHarpyBimbo();
 		}
 	},
@@ -303,7 +317,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getHarpyBimboCompanion();
 		}
 	},
@@ -317,7 +331,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getHarpyDominant();
 		}
 	},
@@ -331,7 +345,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getHarpyDominantCompanion();
 		}
 	},
@@ -345,7 +359,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getHarpyNympho();
 		}
 	},
@@ -359,7 +373,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getHarpyNymphoCompanion();
 		}
 	},
@@ -371,7 +385,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getPazu();
 		}
 	},
@@ -383,7 +397,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getFinch();
 		}
 	},
@@ -395,7 +409,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getZaranix();
 		}
 	},
@@ -407,7 +421,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getAmber();
 		}
 	},
@@ -419,7 +433,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getArthur();
 		}
 	},
@@ -431,7 +445,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getKelly();
 		}
 	},
@@ -443,7 +457,7 @@ public enum ParserTarget {
 		}
 
 		@Override
-		public GameCharacter getCharacter() {
+		public GameCharacter getCharacter(String tag) {
 			return Main.game.getKatherine();
 		}
 	},
@@ -466,5 +480,5 @@ public enum ParserTarget {
 		return description;
 	}
 	
-	public abstract GameCharacter getCharacter();
+	public abstract GameCharacter getCharacter(String tag);
 }

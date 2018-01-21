@@ -6,6 +6,9 @@
 	
 	
 	
+	
+	One minor thing I would suggest would be martial arts that (if using just your fists) could give different attacks or give your basic attacks extra effects. 
+	
 	1) Players will have parties made up of summoned battle pets.
 	2) Battle pets can be acquired based on lovers, also quests, transformations, and corruption.
 	3) You'll have masturbation scenes with your pets.
@@ -67,7 +70,7 @@
 	"but you know that's not safe right now"
 	Or even "I know I said it was a safe day but I lied"
 
-
+ 	some winter-y items? i know i suggested earmuffs, but perhaps coats, boots, hats and such?
 
 	enemies with crossdress fetish to force clothes onto you in sex scenes.
 
@@ -325,6 +328,30 @@ I'll implement clothing damage as mentioned above as well, in that it will go th
 Torn and destroyed items will be able to be repaired, so you won't lose your clothing
 	
 	
+	Event variation: Come to think of it, the Succubus encounter mentions that you elude her trap. I'd actually love to see what happens if you stumble into it.
+	
+	
+	
+	Now that multiple clothing colours are a thing, probably some of the old clothing items could do with them. Ones that spring immediately to mind as having significant non-primary-coloured parts would be the Bike Shorts, Shin Guards, Trainers, and Skater Shoes. Some of the panties also have that thing where if they’re light pink, they turn out white with trim, which would also suggest multiple coloured areas would fit nicely.
+
+We’ll be able to set up slaves in double rooms soon, correct? Will roommates have relationships with each other? I can imagine a bit of variety depending on if they get along or not, maybe if they start fighting the player has to step in and make them resolve things?
+
+In full character descriptions (selfie + examining NPC), animalistic faces are described, while human faces simply say “face”. Also, neither describes the colour of the face. IMO it should say something like “She has a feminine, human face with pale skin” or “He has a masculine, muzzled wolf-like face with white fur”.
+
+Unzipping trousers or shorts doesn’t provide access to a character’s pussy. While that might not be enough of an opening to fuck someone, it should easily be enough to get a hand in and finger them.
+
+The “Frustrated” status effect has been discussed before, but while quite a few people have complained about it, I don’t recall anyone else suggesting a way to improve it. One way would be, instead of basing it on orgasm count, to base it off of arousal level at the point sex ends; if you’re not aroused, you don’t get frustrated, if you’re building up to an orgasm and get denied, you do. Whether you’ve stayed calm while masturbating someone into oblivion, or are sated after having just cum yourself, either way you wouldn’t get frustrated.
+
+The shield spells are completely useless. They give you +50 resist, but they only last for 2 turns(?!?), so you’re pretty much wasting one action to get half damage on two enemy attacks. However, you’re then one attack behind them, so you actually only break even. Assuming that the enemy made that kind of attack, of course. If they made another kind of attack, you actually end up worse off than if you hadn’t cast anything. It would be worth casting a shield at the start of a fight if it had an extended duration, but with such a short duration they are totally not worth it.
+
+We can suck our own fingers (or tail if we have one), but we can’t make our partner do it. This would be both an alternative means to get them lubed up before use, or if you’ve already used them, make them taste themself on you.
+
+When farming for essence, it would be nice to have some form of indicator on the map to show if an NPC will give you any. Maybe a “Hunting Senses” perk? We could sure do with more of those. Or a spell we could learn — we have all sorts of examples of demons doing cool stuff with their magic, most of which we can’t learn to do.
+	
+	
+	
+	
+	
 	
 	attacker broodmother scene includes how huge their belly has gotten.
 	
@@ -433,6 +460,11 @@ Torn and destroyed items will be able to be repaired, so you won't lose your clo
 	c) "Enchanting" as a button kind of confused me in the beginning; Brewing, Alchemy or something I think would have been clearer for me. Enchanting is rather something I associate with items (or people maybe).
 	
 	Produce milk -> make nipples wet!!!
+	
+	
+	I'd like to throw in a suggestion with the Brax encounter. If you happen to already be a wolf-morph when you first encounter him, you can seduce him for information. Alternatively, if you are not, you could end up fighting him, losing, then being forcibly transformed into his dream wolf-morph (all optional). If you return after this, despite being his dream fuck, you only have the option to fight him.
+		I think it would make sense to now have the option to seduce him, but with a bit of a penalty compared to the first 'wolf tease' option. Perhaps you have no choice but to fuck him submissively, perhaps you gain corruption, perhaps he is guaranteed to breed you from this encounter, perhaps he has addictive cum from this encounter onward, etc. It just seems like you should gain a new option you did not have before, but have to sacrifice something to exploit that option.
+	
 	
 	Tongue length, width, type
 	
@@ -589,6 +621,9 @@ Speaking of bulges showing through clothing, crotch bulges should probably take 
 	If he rolls traditional, he might like having a knotted cock and a muscled body.  He might prefer sex with other wolves.  He might like partners with multiple breast rows, big tails, and knotting them vaginally in sex.
 	 
 	If he rolls non-traditional, he might want to grow out long hair and get tattoos.  He might prefer sex with humans and demons.  He might like partners with piercings, smooth skin, and penetrate him anally.
+	
+	Voice descriptors during sex (shrill, deep, husky, etc)
+		Pick or TF potion your voice, and you get a little flavor text in a few little lines about your girly moan or gruff grunts, or whatever
 	
 	RMB as bindable
 	 enabling num-pad in addition to regular numbers to work?
@@ -890,3 +925,42 @@ If she likes you enough she will hand you a pass that allows you to get into a d
 	Basically if you have a certain amount of virility, Penis+Testicle size and cum production and have sex with a pregnancy fetishist or one female member of that race but don't cum inside them they might find you again either out in the open world or at the house/camp. They would basically try to get you to have sex with them again but they make it clear they want you to finish inside. 
 	The way they try to convince you could vary depending on the personnality of the NPC, some might try to provoke you by saying you couldn't do it even if you tried all day, some might try to fan your ego, some would ask up front what they are lacking for you to be interested.
 	You would then have choices on how to answer to them, either you can choose to "take the bait" of their provocations etc, tell them you didn't feel like it but they could try to "convince you", make the "work" for it or even don't say anything and just breed them right then and there.
+	
+	
+	
+	
+	suggestion time:
+- Runaway Slave (if you don't equip your disobedience slave with low affection, they can run away (but you can capture them later if you met them)
+- make the slave revolt (if you have ten or more slave that have minus affection and obedience, they'll revolt and attack you in the same time one after another, and if you lose you, Lilaya, Rose, Arthur, and any other loyal slave will be raped in the orgy after that they can either free themselves or enslave you)
+- make your PC enslave able (to free yourself you either have to work in the slave pen to buy yourself or revolt against your master if you are strong enough (and you gonna be handicapped)
+- enlarge Lilaya palace (ask her permission to do that and go to contractor in the Shopping Mall... (from there you can buy a weapon like hammer etc))
+- Group Battle (since you make a Group Sex...)
+- Countable Wings (since 8 set of wings is much more cooler than 1 set of wing)
+- Angelic Tongue... 
+- If your PC got raped, your enemy can 'wear' you (if they have the D) as an armor... (you'll be automatically enslaved by this and in the fight you NEED to protect your master or you'll be enslaved by another guy rinse and repeat)
+
+For Accessories and Clothing suggestion:
+- Wings : Front Wing Armor as Wing Accessory or Purity Seal
+- Hand : Boxing Glove
+- Ankle : GPS Tracker, Iron Ball
+- Anus : Butt Plug, Tail Butt Plug
+- Vagina : Dildo
+- Dick : Horn
+- Vagina Piercing : Vagina Sewing (have the same effect as Chastity Belt)
+- Lip Piercing : Lip Sewing (like the above but for Lip)
+- Horns : Ribbon
+- Tail : Ribbon, Bell (Cat bell)
+- Main Weapon : Magic Sword/Rifle
+- Offhand : Shield/Pistol
+- Armor Set (since I like knight... ohh but with crown not full face helmet)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

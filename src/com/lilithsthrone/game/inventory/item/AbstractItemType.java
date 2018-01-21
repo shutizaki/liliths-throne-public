@@ -145,6 +145,8 @@ public abstract class AbstractItemType extends AbstractCoreType implements Seria
 		return true;
 	}
 	
+	public abstract boolean isCommonItem();
+	
 	// Enchantments:
 	
 	public int getEnchantmentLimit() {
@@ -232,11 +234,7 @@ public abstract class AbstractItemType extends AbstractCoreType implements Seria
 	}
 	
 	public boolean isAbleToBeUsed(GameCharacter target) {
-		if(Main.game.isInCombat() && !target.isPlayer()) {
-			return false;
-		} else {
-			return true;
-		}
+		return !Main.game.isInCombat() || target.isPlayer();
 	}
 	
 	public boolean isAbleToBeUsedInSex() {

@@ -1,12 +1,6 @@
 package com.lilithsthrone.main;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -23,6 +17,7 @@ import com.lilithsthrone.game.character.body.valueEnums.Femininity;
 import com.lilithsthrone.game.character.gender.Gender;
 import com.lilithsthrone.game.character.race.RaceStage;
 import com.lilithsthrone.game.character.race.RacialBody;
+import com.lilithsthrone.game.dialogue.DebugDialogue;
 import com.lilithsthrone.game.dialogue.DialogueNodeOld;
 import com.lilithsthrone.game.dialogue.MapDisplay;
 import com.lilithsthrone.game.dialogue.responses.Response;
@@ -60,7 +55,7 @@ public class Main extends Application {
 	public static Stage primaryStage;
 	public static String author = "Innoxia";
 
-	public static final String VERSION_NUMBER = "0.1.97",
+	public static final String VERSION_NUMBER = "0.1.97.5",
 			VERSION_DESCRIPTION = "Early Alpha";
 
 	public static final Image WINDOW_IMAGE = new Image("/com/lilithsthrone/res/images/windowIcon32.png");
@@ -78,12 +73,7 @@ public class Main extends Application {
 		+ "</p>"
 			
 		+ "<p>"
-			+ "This week's progress was a little hindered by the fact that I had a 4-day week (as I returned to working on LT after my 1-week break on January 2nd), as well as the fact that I made a large mistake with the new orgasm content."
-			+ " After spending a day implementing the framework in the engine, I realised that it wasn't going to work with the multiple-partner sex stuff, so I had to revert it all... x_x"
-		+ "</p>"
-			
-		+ "<p>"
-			+ "I hope that there's still enough here to make this preview interesting, and I'll have the new orgasm & sex stuff done for the full release on the 12th. :3"
+			+ "I'm very close to finishing the new sex & orgasm content now - just another few days and it will be all done! I'll then move on to combat & Nyan work. :3"
 		+ "</p>"
 		
 		+ "<p>"
@@ -94,43 +84,70 @@ public class Main extends Application {
 		+ "</br>"
 
 		+ "<list>"
-			+ "<h6>v0.1.97</h6>"
+			+ "<h6>v0.1.97.5</h6>"
 			+"<li>Engine:</li>"
-			+"<ul>Slightly improved enchanting mechanics to add in a limit to the number of enchantments possible on each item (default 100).</ul>"
-				
-			+"<li>Gameplay:</li>"
-			+"<ul>Added a small section of the main quest (just finishing up Arthur moving into Lilaya's home).</ul>"
-			+"<ul>Added the side-quest 'Arthur's Experiments', available after assigning a room to Arthur, and from which you obtain a way to change both the PC's and NPCs' sexual orientation.</ul>"
-				
+			+"<ul>Finished converting the save system to .xml. All saves now use the new .xml system, so you won't need to export/import between versions anymore.</ul>"
+			+"<ul>Optimised NPC load method, so loading a game should now be faster.</ul>"
+			+"<ul>Added support for conditional parsing commands to the parsing engine. I'll add documentation for this soon.</ul>"
+			+"<ul>Finished refactor of all sex engine code to properly support multiple-partner sex scenes.</ul>"
+
+			+"<li>UI:</li>"
+			+"<ul>Updated Save/Load UI, and changed Export/Import to exported character management screen.</ul>"
+			+"<ul>Updated inventory slot positions. (This should now be the final layout.)</ul>"
+
 			+"<li>Sex:</li>"
-			+"<ul>Reverted the removal of mutual orgasms.</ul>"
-			+"<ul>Dominant NPCs will no longer respect your requests in non-consensual sex.</ul>"
-			+"<ul>Added 'spread ass' action.</ul>"
-				
+			+"<ul>NPCs should no longer switch positions just before they orgasm.</ul>"
+			+"<ul>NPCs will no longer instantly re-penetrate themselves on the same turn that you forbid or stop all self-penetrative actions.</ul>"
+			+"<ul>Reworked all back-end code for generic orgasms, ready to write in more detailed content for the full release.</ul>"
+			+"<ul>Added 'cum on area' orgasm options, to allow you to cum on a specific area of your partner's body. (Not completely finished yet.)</ul>"
+
 			+"<li>Other:</li>"
-			+"<ul>Legendary items, weapons, and clothing will no longer be removed from tiles.</ul>"
-			+"<ul>Demonic wings now allow flight when grown to be large enough. (Flight only affects a couple of actions so far.)</ul>"
-			+"<ul>Added correct player-partner use descriptions for all items.</ul>"
-			+"<ul>Slightly adjusted item prices.</ul>"
-			+"<ul>Very slightly changed Rose's 'Slavery' dialogue (the one about her and Lilaya's relationship).</ul>"
-			+"<ul>Removed ability to cycle orientation in the phone's fetish screen (as this can now be achieved by using the new item).</ul>"
-			+"<ul>Updated Kate's clothing and appearance.</ul>"
-				
+			+"<ul>Demons now only have 1 pair of breasts by default. (I originally intended this to be the case, but I ended up giving them 3 a long time ago to test multiple-breast rows, and forgot to change it back.)</ul>"
+			+"<ul>Improved corruption descriptions to reflect the fact that corruption is a measure of perversion.</ul>"
+			+"<ul>Offspring are now permanently removed from the encounterable NPC list when you tell them to leave. (I'll add a way to manually find them again in the future.)</ul>"
+			+"<ul>Penis, anus, nipple, and vagina sex actions (such as 'Finger him/her' and 'Stroke his/her cock') are now completely hidden until you discover if the NPC has the correct genitals/nipples/anus to perform those actions on.</ul>"
+			+"<ul>Removed old lore reference to the arcane making everyone bi-sexual (this was the case before I added sexual orientations to the game).</ul>"
+			+"<ul>Moved pregnancy lore information out of the phone's 'Pregnancy stats' page and into a book in Lilaya's library.</ul>"
+			+"<ul>Forced TFs will now increase your cum production, where appropriate.</ul>"
+			+"<ul>Gynephilic NPCs will now prefer to forcibly TF you into a female, unless they have the 'pregnancy' or 'broodmother' fetishes, in which case they will prefer to TF you into a futanari, shemale, or trap.</ul>"
+			+"<ul>Added a masochistic/cum addict variation of the 'dirty clothes' status effect.</ul>"
+			+"<ul>Added a 'dirty body' status effect (with matching masochistic/cum addict variation), which is applied if any of your body parts are covered in cum. (Can be removed by washing in your room.)</ul>"
+
 			+"<li>Contributors:</li>"
-			+"<ul>Fixed alligator-morph eyes from having round to vertical pupils by default. (Rfpnj)</ul>"
-				
+			+"<ul>Added Linux font compatibility (added Carlito as an alternative font for Calibri). (by PyrophoricPlumage)</ul>"
+			+"<ul>Fixed incorrect colour reference. (by CognitiveMist)</ul>"
+			+"<ul>Numerous performance improvements. (by CognitiveMist)</ul>"
+			+"<ul>Addressed some control flow & code style items. (by CognitiveMist)</ul>"
+			+"<ul>Fixed striped leggings, panties, and bra using incorrect colour variables. (by Tukaima)</ul>"
+
 			+"<li>Bugs:</li>"
-			+"<ul>Jolnir's hat is no longer feminine.</ul>"
-			+"<ul>Demon attackers will now correctly prefer to use their penis.</ul>"
-			+"<ul>Nyan should now have correct hair/fur colour (black) when importing older games.</ul>"
-			+"<ul>Fixed some unfinished reindeer overseer dialogue.</ul>"
-			+"<ul>Fixed Lilaya's pregnancy dialogue to correctly reflect how pregnancies work in LT.</ul>"
-			+"<ul>Fixed major bug in AbstractClothing's hashCode method that was causing crashes.</ul>"
-			+"<ul>Fixed bug where physical resistance (and other effects) from clothing would not be removed when inventory was reset (most noticeably in character creation, when pressing start/back repeatedly).</ul>"
-			+"<ul>Fixed old elixir and potion imports showing 'null' as their background icon.</ul>"
-			+"<ul>Minor fix to Lilaya's post-creampie-sex scene.</ul>"
-			+"<ul>Fixed minor inventory text formatting bug.</ul>"
-			+"<ul>Temporarily stopped chemise from blocking groin areas until I can rework the clothing displacement system (there were some major issues with wearing chemise & pantyhose).</ul>"
+			+"<ul>NPC orgasms should now function correctly (that is, they should now cum inside when they're supposed to).</ul>"
+			+"<ul>Typo fixes (some minor ones in tooltips, changing 'reindeer morph' to be hyphenated like other races, and several other small fixes).</ul>"
+			+"<ul>Imported slaves at the auction block no longer spawn in as being pregnant.</ul>"
+			+"<ul>Fixed bugs related to Finch's ownership of slaves. (He should now correctly lose ownership of slaves you purchase from the auction block.)</ul>"
+			+"<ul>Fixed incorrect penis reveal dialogue (where the NPC would compare your penis size to their own, non-existent penis).</ul>"
+			+"<ul>Fixed enchanting bug where crafting a potion to change a certain body type (primarily horns) would then lock out transformation options for other racial potions.</ul>"
+			+"<ul>Fixed hypno-watch effect description returning 'command_unknown'.</ul>"
+			+"<ul>Slightly changed piercing slot descriptions to reflect whether or not your character knows what the NPC's genitals/nipples look like.</ul>"
+			+"<ul>Nyan's inventory is now correctly saved/loaded.</ul>"
+			+"<ul>Multiple partner sex scenes should no loner suddenly lose one of the NPC partners.</ul>"
+			+"<ul>Fixed major game-freezing bug where if you were on the receiving end of penetrative non-consensual sex, and your partner reached orgasm but you did not, you would get stuck on the 'receive creampie' and 'request pullout' options.</ul>"
+			+"<ul>Fixed duplicate actions showing up in Kate's and Lilaya's sex scenes.</ul>"
+			+"<ul>When starting from a character import, the flag that sets your having met Brax is now correctly reset.</ul>"
+			+"<ul>Fixed minor bug in gender appearance method (masculine characters with no genitals are no assumed to be male if their groin is concealed).</ul>"
+			+"<ul>Added correct description variants for NPCs when consuming the harpy matriarchs' special items.</ul>"
+			+"<ul>Fixed bug where you could perform anilingus and cunnilingus at the same time. (Also fixed a related bug where multiple penis-related sex actions could be performed.)</ul>"
+			+"<ul>Fixed four and five rows of breasts always being described as three.</ul>"
+			+"<ul>Fixed issue where in some screens/dialogue/tooltips, incorrect NPC names or stats would be displayed.</ul>"
+			+"<ul>Can no longer pull up T-shirt from under concealing/blocking clothing.</ul>"
+			+"<ul>NPCs will no longer be stuck at having a fraction of their health, willpower, and stamina.</ul>"
+			+"<ul>Vicky's post-sex scene will now correctly no longer reference Arthur's package after you've completed that section of the side-quest.</ul>"
+			+"<ul>Importing a game that was exported while the difficulty was set to anything above 'Human' will no loner lock all NPC's levels to being double that of yours.</ul>"
+			+"<ul>Slightly improved genetics/inheritance method, so that offspring's ass & hip sizes (and probably a few other things) will now more closely resemble that of their parents.</ul>"
+			+"<ul>Fixed bugged arousal gain values in sex.</ul>"
+			+"<ul>Winter event Reindeer-morphs will no longer spawn in as human (if your furry settings are set to 'Human', then they'll spawn in as minor Reindeer-morphs).</ul>"
+			+"<ul>Reindeer overseers and cultist chapels should now both be able to be accessed if they are on the same tile.</ul>"
+			+"<ul>'Spread pussy' action will now transfer lubrication between fingers & vagina.</ul>"
 		+ "</list>"
 		;
 	
@@ -161,137 +178,146 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		credits.add(new CreditsSlot("Anonymous", "", 0, 6, 115, 37));
+		credits.add(new CreditsSlot("Anonymous", "", 0, 6, 115+61, 37+20));
 		
 
-		credits.add(new CreditsSlot("fun_bot", "", 0, 0, 0, 1));
-		credits.add(new CreditsSlot("WodashGSJ", "", 0, 0, 1, 0));
-		credits.add(new CreditsSlot("Dan", "", 0, 1, 0, 1));
-		credits.add(new CreditsSlot("Cryostorm", "", 0, 0, 1, 0));
-		credits.add(new CreditsSlot("Testostetyrone", "", 0, 0, 1, 0));
-		credits.add(new CreditsSlot("Tanall", "", 0, 1, 3, 0));
+		credits.add(new CreditsSlot("fun_bot", "", 0, 0, 0, 2));
+		credits.add(new CreditsSlot("Garth614", "", 0, 0, 0, 2));
+		credits.add(new CreditsSlot("Dan", "", 0, 1, 0, 2));
+		credits.add(new CreditsSlot("Ash", "", 0, 1, 0, 2));
+		
+		credits.add(new CreditsSlot("WodashGSJ", "", 0, 0, 2, 0));
 		credits.add(new CreditsSlot("vasadariu", "", 0, 0, 1, 0));
-		credits.add(new CreditsSlot("Casper &quot;Cdaser&quot; D.", "", 0, 0, 1, 0));
-		credits.add(new CreditsSlot("Ash", "", 0, 1, 0, 1));
-		credits.add(new CreditsSlot("BLKCandy", "", 0, 0, 1, 0));
-		credits.add(new CreditsSlot("CMPirate9867", "", 0, 0, 1, 0));
-		credits.add(new CreditsSlot("Brandon Stach", "", 0, 0, 1, 0));
-		credits.add(new CreditsSlot("Garth614", "", 0, 0, 0, 1));
+		credits.add(new CreditsSlot("Casper &quot;Cdaser&quot; D.", "", 0, 0, 2, 0));
+		credits.add(new CreditsSlot("Cryostorm", "", 0, 0, 2, 0));
+		credits.add(new CreditsSlot("BLKCandy", "", 0, 0, 2, 0));
+		credits.add(new CreditsSlot("Testostetyrone", "", 0, 0, 2, 0));
+		credits.add(new CreditsSlot("Brandon Stach", "", 0, 0, 2, 0));
+		credits.add(new CreditsSlot("CMPirate9867", "", 0, 0, 2, 0));
+
+		credits.add(new CreditsSlot("Zakarin", "", 0, 0, 0, 1));
+		credits.add(new CreditsSlot("Demonicgamer666", "", 0, 0, 0, 1));
+		credits.add(new CreditsSlot("masterpuppet", "", 0, 0, 2, 0));
+
+		credits.add(new CreditsSlot("Endness", "", 0, 0, 0, 1));
+		credits.add(new CreditsSlot("Aleskah", "", 0, 0, 0, 1));
+		credits.add(new CreditsSlot("The Void Prince", "", 0, 0, 1, 0));
 		
 		
 		
 		
 		credits.add(new CreditsSlot("Adhana Konker", "", 0, 0, 3, 0));
 		credits.add(new CreditsSlot("Lexi <3", "", 0, 0, 0, 1));
-		credits.add(new CreditsSlot("48days", "", 0, 0, 2, 3));
+		credits.add(new CreditsSlot("48days", "", 0, 0, 2, 4));
 		credits.add(new CreditsSlot("Spaghetti Code", "", 0, 0, 2, 0));
-		credits.add(new CreditsSlot("SchALLieS", "", 0, 0, 0, 4));
-		credits.add(new CreditsSlot("Argmoe", "", 0, 0, 4, 0));
-		credits.add(new CreditsSlot("HoneyNutQueerios", "", 0, 0, 2, 0));
-		credits.add(new CreditsSlot("Arkhan", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("Avery", "", 0, 1, 2, 0));
-		credits.add(new CreditsSlot("b00marrows", "", 0, 1, 4, 0));
-		credits.add(new CreditsSlot("Baz GoldenClaw", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("Runehood66", "", 0, 0, 0, 1));
-		credits.add(new CreditsSlot("Blackcanine", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("Blacktouch", "", 0, 0, 2, 3));
-		credits.add(new CreditsSlot("Blue999", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("BreakerB", "", 0, 0, 2, 0));
-		credits.add(new CreditsSlot("BRobort", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("BloodsailXXII", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Burt", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("Calrak", "", 0, 0, 0, 4));
-		credits.add(new CreditsSlot("CelestialNightmare", "", 0, 0, 0, 5));
+		credits.add(new CreditsSlot("SchALLieS", "", 0, 0, 0, 5));
+		credits.add(new CreditsSlot("Argmoe", "", 0, 0, 5, 0));
+		credits.add(new CreditsSlot("HoneyNutQueerios", "", 0, 0, 3, 0));
+		credits.add(new CreditsSlot("Arkhan", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("Avery", "", 0, 1, 4, 0));
+		credits.add(new CreditsSlot("b00marrows", "", 0, 1, 5, 0));
+		credits.add(new CreditsSlot("Baz GoldenClaw", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("Runehood66", "", 0, 0, 0, 4));
+		credits.add(new CreditsSlot("Blackcanine", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("Blacktouch", "", 0, 0, 2, 4));
+		credits.add(new CreditsSlot("Blue999", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("BreakerB", "", 0, 0, 3, 0));
+		credits.add(new CreditsSlot("BRobort", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("BloodsailXXII", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("Burt", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("Calrak", "", 0, 0, 0, 5));
+		credits.add(new CreditsSlot("CelestialNightmare", "", 0, 0, 0, 6));
 		credits.add(new CreditsSlot("Sxythe", "", 0, 0, 0, 2));
-		credits.add(new CreditsSlot("Lexi the slut", "", 0, 0, 0, 5));
+		credits.add(new CreditsSlot("Lexi the slut", "", 0, 0, 0, 6));
 		credits.add(new CreditsSlot("Vmpireassassin (Chloe)", "", 0, 0, 0, 1));
-		credits.add(new CreditsSlot("crashtestdummy", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("Crimson", "", 0, 0, 0, 3));
-		credits.add(new CreditsSlot("Cursed Rena", "", 0, 0, 1, 3));
+		credits.add(new CreditsSlot("crashtestdummy", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("Crimson", "", 0, 0, 0, 4));
+		credits.add(new CreditsSlot("Cursed Rena", "", 0, 0, 1, 4));
 		credits.add(new CreditsSlot("DeadMasterZero", "", 0, 0, 1, 0));
-		credits.add(new CreditsSlot("Destont", "", 0, 0, 2, 0));
+		credits.add(new CreditsSlot("Destont", "", 0, 0, 3, 0));
 		credits.add(new CreditsSlot("Yllarius", "", 0, 0, 2, 0));
 		credits.add(new CreditsSlot("John Scarlet", "", 0, 0, 0, 1));
 		credits.add(new CreditsSlot("rinoskin", "", 0, 0, 0, 2));
 		credits.add(new CreditsSlot("Alatar", "", 0, 0, 0, 2));
-		credits.add(new CreditsSlot("Elmsdor", "", 0, 0, 0, 5));
+		credits.add(new CreditsSlot("Elmsdor", "", 0, 0, 0, 6));
 		credits.add(new CreditsSlot("Gr33n B3ans", "", 0, 0, 0, 2));
-		credits.add(new CreditsSlot("Farseeker", "", 0, 0, 4, 0));
-		credits.add(new CreditsSlot("pupslut felix", "", 0, 0, 0, 3));
-		credits.add(new CreditsSlot("Fenrakk101", "", 0, 0, 4, 0));
-		credits.add(new CreditsSlot("Fiona", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("ForeverFree2MeTaMax", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("Niki Parks", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("Georgio154", "", 0, 0, 1, 3));
-		credits.add(new CreditsSlot("glocknar", "", 0, 0, 2, 0));
-		credits.add(new CreditsSlot("Krissy2017", "", 0, 0, 0, 3));
-		credits.add(new CreditsSlot("Grakcnar", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("Hedgehog", "", 0, 0, 0, 2));
-		credits.add(new CreditsSlot("Bocaj91", "", 0, 0, 0, 3));
-		credits.add(new CreditsSlot("Krejil", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("suka", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("EnigmaticYoshi", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("HerrKommissar11", "", 0, 0, 1, 1));
-		credits.add(new CreditsSlot("Kelly999", "", 0, 1, 2, 0));
-		credits.add(new CreditsSlot("kenshin5491", "", 0, 0, 4, 0));
-		credits.add(new CreditsSlot("Kestrel", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("Kiroberos", "", 0, 0, 0, 3));
+		credits.add(new CreditsSlot("Farseeker", "", 0, 0, 5, 0));
+		credits.add(new CreditsSlot("pupslut felix", "", 0, 0, 0, 4));
+		credits.add(new CreditsSlot("Fenrakk101", "", 0, 0, 5, 0));
+		credits.add(new CreditsSlot("Fiona", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("ForeverFree2MeTaMax", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("Niki Parks", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("Georgio154", "", 0, 0, 1, 4));
+		credits.add(new CreditsSlot("glocknar", "", 0, 0, 3, 0));
+		credits.add(new CreditsSlot("Krissy2017", "", 0, 0, 0, 4));
+		credits.add(new CreditsSlot("Grakcnar", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("Hedgehog", "", 0, 0, 0, 3));
+		credits.add(new CreditsSlot("Bocaj91", "", 0, 0, 0, 4));
+		credits.add(new CreditsSlot("Krejil", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("suka", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("EnigmaticYoshi", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("HerrKommissar11", "", 0, 0, 1, 2));
+		credits.add(new CreditsSlot("Kelly999", "", 0, 1, 3, 0));
+		credits.add(new CreditsSlot("kenshin5491", "", 0, 0, 5, 0));
+		credits.add(new CreditsSlot("Kestrel", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("Kiroberos", "", 0, 0, 0, 4));
 		credits.add(new CreditsSlot("Kernog", "", 0, 0, 1, 0));
-		credits.add(new CreditsSlot("Knight-Lord Xander", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Chris Turpin", "", 0, 0, 3, 0));
+		credits.add(new CreditsSlot("Knight-Lord Xander", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("Chris Turpin", "", 0, 0, 4, 0));
 		credits.add(new CreditsSlot("Pallid", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Mr L", "", 0, 0, 4, 0));
-		credits.add(new CreditsSlot("loveless", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Vaddex", "", 0, 0, 0, 2));
-		credits.add(new CreditsSlot("KingofKings", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("waaaghkus", "", 0, 0, 5, 0));
+		credits.add(new CreditsSlot("Mr L", "", 0, 0, 4, 1));
+		credits.add(new CreditsSlot("loveless", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("Vaddex", "", 0, 0, 0, 3));
+		credits.add(new CreditsSlot("KingofKings", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("waaaghkus", "", 0, 0, 6, 0));
 		credits.add(new CreditsSlot("Nightmare", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("AlphaOneBravo", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Max Nobody", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Muhaku", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("Nick LaBlue", "", 0, 0, 4, 0));
-		credits.add(new CreditsSlot("Kvernik", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("Niko", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("Odd8Ball", "", 0, 0, 0, 4));
-		credits.add(new CreditsSlot("Party Commissar", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("Rohsie", "", 0, 0, 0, 5));
+		credits.add(new CreditsSlot("AlphaOneBravo", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("Max Nobody", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("Muhaku", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("Nick LaBlue", "", 0, 0, 5, 0));
+		credits.add(new CreditsSlot("Kvernik", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("Niko", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("Odd8Ball", "", 0, 0, 0, 5));
+		credits.add(new CreditsSlot("Party Commissar", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("Rohsie", "", 0, 0, 0, 6));
 		credits.add(new CreditsSlot("P.", "", 0, 0, 0, 4));
-		credits.add(new CreditsSlot("Pierre Mura", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Pokys", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("QQQ", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Rakesh", "", 0, 0, 4, 0));
-		credits.add(new CreditsSlot("Master's dumb bitch", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("redwulfen", "", 0, 0, 0, 4));
-		credits.add(new CreditsSlot("RogueRandom", "", 0, 0, 2, 0));
-		credits.add(new CreditsSlot("Horagen81", "", 0, 0, 0, 4));
-		credits.add(new CreditsSlot("RyubosJ", "", 0, 0, 2, 0));
-		credits.add(new CreditsSlot("Saladine", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("S", "", 0, 0, 1, 4));
-		credits.add(new CreditsSlot("Shas'O Dal'yth Kauyon Kais Taku", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("Crow Invictus", "", 0, 0, 4, 0));
-		credits.add(new CreditsSlot("Sheltem", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("Silentark", "", 0, 0, 2, 0));
-		credits.add(new CreditsSlot("Sorter", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Spookermen", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Swift Shot", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("TalonMort", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("Tanner D.", "", 0, 0, 0, 4));
+		credits.add(new CreditsSlot("Pierre Mura", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("Pokys", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("QQQ", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("Rakesh", "", 0, 0, 5, 0));
+		credits.add(new CreditsSlot("Master's dumb bitch", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("redwulfen", "", 0, 0, 0, 5));
+		credits.add(new CreditsSlot("RogueRandom", "", 0, 0, 3, 0));
+		credits.add(new CreditsSlot("Horagen81", "", 0, 0, 0, 5));
+		credits.add(new CreditsSlot("RyubosJ", "", 0, 0, 3, 0));
+		credits.add(new CreditsSlot("Saladine the Legendary", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("S", "", 0, 0, 1, 5));
+		credits.add(new CreditsSlot("Shas'O Dal'yth Kauyon Kais Taku", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("Crow Invictus", "", 0, 0, 5, 0));
+		credits.add(new CreditsSlot("Sheltem", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("Silentark", "", 0, 0, 3, 0));
+		credits.add(new CreditsSlot("Sorter", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("Spookermen", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("Swift Shot", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("TalonMort", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("Tanall", "", 0, 1, 3, 0));
+		credits.add(new CreditsSlot("Tanner D.", "", 0, 0, 0, 5));
 		credits.add(new CreditsSlot("Terrance", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("Jordan Aitken", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("T. Garou", "", 0, 0, 0, 3));
-		credits.add(new CreditsSlot("Timmybond24", "", 0, 0, 0, 3));
-		credits.add(new CreditsSlot("Torinir", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("Torsten015", "", 0, 0, 0, 4));
+		credits.add(new CreditsSlot("Jordan Aitken", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("T. Garou", "", 0, 0, 0, 4));
+		credits.add(new CreditsSlot("Timmybond24", "", 0, 0, 0, 4));
+		credits.add(new CreditsSlot("Torinir", "", 0, 0, 6, 0));
+		credits.add(new CreditsSlot("Torsten015", "", 0, 0, 0, 5));
 		credits.add(new CreditsSlot("TreenVall", "", 0, 0, 2, 0));
 		credits.add(new CreditsSlot("triangleman", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("Antriad", "", 0, 0, 1, 1));
-		credits.add(new CreditsSlot("Isidoros", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("Antriad", "", 0, 0, 1, 2));
+		credits.add(new CreditsSlot("Isidoros", "", 0, 0, 5, 0));
 		credits.add(new CreditsSlot("Vaelin", "", 0, 0, 4, 0));
-		credits.add(new CreditsSlot("iloveyouMiaoNiNi", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Whatever", "", 0, 0, 3, 0));
-		credits.add(new CreditsSlot("William Brown", "", 0, 0, 5, 0));
-		credits.add(new CreditsSlot("Wolfregis", "", 0, 0, 0, 5));
-		credits.add(new CreditsSlot("Nelson Adams", "", 0, 0, 5, 0));
+		credits.add(new CreditsSlot("iloveyouMiaoNiNi", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("Whatever", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("William Brown", "", 0, 0, 5, 1));
+		credits.add(new CreditsSlot("Wolfregis", "", 0, 0, 0, 6));
+		credits.add(new CreditsSlot("Nelson Adams", "", 0, 0, 6, 0));
 		
 		
 		credits.sort(Comparator.comparing((CreditsSlot a) -> a.getName().toLowerCase()));
@@ -492,6 +518,10 @@ public class Main extends Application {
 //		}
 	}
 
+	public static boolean isSaveGameAvailable() {
+		return Main.game.isStarted() && Main.game.getSavedDialogueNode() == DebugDialogue.getDefaultDialogueNoEncounter();
+	}
+	
 	public static void saveGame(String name, boolean allowOverwrite) {
 		if (name.length()==0) {
 			Main.game.flashMessage(Colour.GENERIC_BAD, "Name too short!");
@@ -506,47 +536,9 @@ public class Main extends Application {
 			return;
 		}
 		
-		File dir = new File("data/");
-		dir.mkdir();
-
-		dir = new File("data/saves");
-		dir.mkdir();
-		
-		boolean overwrite = false;
-		if (dir.isDirectory()) {
-			File[] directoryListing = dir.listFiles((path, filename) -> filename.endsWith(".lts"));
-			if (directoryListing != null) {
-				for (File child : directoryListing) {
-					if (child.getName().equals(name+".lts")){
-						if(!allowOverwrite) {
-							Main.game.flashMessage(Colour.GENERIC_BAD, "Name already exists!");
-							return;
-						} else {
-							overwrite = true;
-						}
-					}
-				}
-			}
-		}
-		
-		File file = new File("data/saves/"+name+".lts");
-		try {
-			file.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		Game.exportGame(name, allowOverwrite);
 
 		try {
-//			long timeStart = System.nanoTime();
-//			System.out.println(timeStart);
-			
-			try (ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
-			  oos.writeObject(Main.game);
-			  oos.close();
-			}
-			
-//			System.out.println("Difference: "+(System.nanoTime()-timeStart)/1000000000f);
-
 			properties.lastSaveLocation = name;//"data/saves/"+name+".lts";
 			properties.nameColour = Femininity.valueOf(game.getPlayer().getFemininityValue()).getColour().toWebHexString();
 			properties.name = game.getPlayer().getName();
@@ -562,41 +554,22 @@ public class Main extends Application {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
-		if(Main.game.getCurrentDialogueNode() == OptionsDialogue.SAVE_LOAD) {
-			if(overwrite) {
-				Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()), Colour.GENERIC_GOOD, "Save game overwritten!");
-			} else {
-				Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()), Colour.GENERIC_GOOD, "Game saved!");
-			}
-		} else if(name.equals("QuickSave_"+Main.game.getPlayer().getName())){
-			Main.game.flashMessage(Colour.GENERIC_GOOD, "Quick saved!");
-		}
 	}
 
+	public static boolean isLoadGameAvailable(String name) {
+		File file = new File("data/saves/"+name+".xml");
+
+		return file.exists();
+	}
+	
 	public static void loadGame(String name) {
-		
-		File file = new File("data/saves/"+name+".lts");
-		
-		if (file.exists()) {
-			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-				Main.game = (Game) ois.readObject();
-				Main.game.reloadContent();
-				if (Main.game.getCurrentDialogueNode().getMapDisplay() == MapDisplay.OPTIONS) {
-					Main.mainController.openOptions();
-				}
-				
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			
-		} else {
-			Main.game.flashMessage(Colour.GENERIC_BAD, "File not found...");
+		if (isLoadGameAvailable(name)) {
+			Game.importGame(name);
 		}
 	}
 	
 	public static void deleteGame(String name) {
-		File file = new File("data/saves/"+name+".lts");
+		File file = new File("data/saves/"+name+".xml");
 
 		if (file.exists()) {
 			try {
@@ -648,7 +621,7 @@ public class Main extends Application {
 		
 		File dir = new File("data/saves");
 		if (dir.isDirectory()) {
-			File[] directoryListing = dir.listFiles((path, name) -> name.endsWith(".lts"));
+			File[] directoryListing = dir.listFiles((path, name) -> name.endsWith(".xml"));
 			if (directoryListing != null) {
 				filesList.addAll(Arrays.asList(directoryListing));
 			}

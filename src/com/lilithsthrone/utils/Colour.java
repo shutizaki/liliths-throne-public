@@ -112,6 +112,7 @@ public enum Colour {
 	ATTRIBUTE_CORRUPTION(BaseColour.PINK_DEEP, "pink", Util.newArrayListOfValues(new ListValue<>("corruption"), new ListValue<>("cor"), new ListValue<>("corr"))),
 
 	ATTRIBUTE_AROUSAL(BaseColour.PINK_DEEP, "pink", Util.newArrayListOfValues(new ListValue<>("arousal"), new ListValue<>("ars"))),
+	ATTRIBUTE_LUST(BaseColour.MAGENTA, "magenta", Util.newArrayListOfValues(new ListValue<>("lust"), new ListValue<>("lst"))),
 
 	//TODO
 	STRENGTH_STAGE_ZERO(BaseColour.MAGENTA, "magenta"),
@@ -150,6 +151,12 @@ public enum Colour {
 	AROUSAL_STAGE_THREE(Util.newColour(0xf94dff), Util.newColour(0xf94dff), "pink"),
 	AROUSAL_STAGE_FOUR(Util.newColour(0xf824ff), Util.newColour(0xf824ff), "pink"),
 	AROUSAL_STAGE_FIVE(Util.newColour(0xf700ff), Util.newColour(0xf700ff), "pink"),
+	
+	LUST_STAGE_ZERO(Util.newColour(0x80CAFF), Util.newColour(0xfee6ff), "blue"),
+	LUST_STAGE_ONE(Util.newColour(0xB699FF), Util.newColour(0xfcb3ff), "purple"),
+	LUST_STAGE_TWO(Util.newColour(0xFF99D1), Util.newColour(0xfb80ff), "pink"),
+	LUST_STAGE_THREE(Util.newColour(0xFF61AB), Util.newColour(0xf94dff), "pink"),
+	LUST_STAGE_FOUR(Util.newColour(0xFF3377), Util.newColour(0xf824ff), "dark pink"),
 
 	AFFECTION(BaseColour.PINK_LIGHT, "light pink",  Util.newArrayListOfValues(new ListValue<>("affection"))),
 	OBEDIENCE(BaseColour.PURPLE_LIGHT, "light purple",  Util.newArrayListOfValues(new ListValue<>("obedience"))),
@@ -166,8 +173,8 @@ public enum Colour {
 	AFFECTION_POSITIVE_FOUR(Util.newColour(0xffd42a), Util.newColour(0xf2aadf), "gold"),
 	AFFECTION_POSITIVE_FIVE(Util.newColour(0xffcc00), Util.newColour(0xfbbcf4), "gold"),
 
-	MASCULINE(Util.newColour(0x8ABEFF), Util.newColour(0x8ABEFF), "blue", Util.newArrayListOfValues(new ListValue<>("masculine"), new ListValue<>("mas"), new ListValue<>("masculinePlus"))),
-	MASCULINE_PLUS(Util.newColour(0x4D9DFF), Util.newColour(0x4D9DFF), "dark blue", Util.newArrayListOfValues(new ListValue<>("masculineStrong"), new ListValue<>("masStr"))),
+	MASCULINE_PLUS(Util.newColour(0x4D9DFF), Util.newColour(0x4D9DFF), "dark blue", Util.newArrayListOfValues(new ListValue<>("masculineStrong"), new ListValue<>("masStr"), new ListValue<>("masculinePlus"))),
+	MASCULINE(Util.newColour(0x8ABEFF), Util.newColour(0x8ABEFF), "blue", Util.newArrayListOfValues(new ListValue<>("masculine"), new ListValue<>("mas"))),
 	ANDROGYNOUS(Util.newColour(0xB39EFF), Util.newColour(0xB39EFF), "purple", Util.newArrayListOfValues(new ListValue<>("androgynous"), new ListValue<>("andro"))),
 	FEMININE(Util.newColour(0xFFBDFF), Util.newColour(0xFFFBDFF), "pink", Util.newArrayListOfValues(new ListValue<>("feminine"), new ListValue<>("fem"))),
 	FEMININE_PLUS(Util.newColour(0xFF85FF), Util.newColour(0xFF85FF), "pink", Util.newArrayListOfValues(new ListValue<>("feminineStrong"), new ListValue<>("femStr"), new ListValue<>("femininePlus"))),
@@ -242,6 +249,7 @@ public enum Colour {
 	TEXT(Util.newColour(0xDDDDDD), Util.newColour(0x262626), "grey", Util.newArrayListOfValues(new ListValue<>("text"))),
 	TEXT_HALF_GREY(Util.newColour(0xBBBBBB), Util.newColour(0x444444), "grey", Util.newArrayListOfValues(new ListValue<>("halfDisabled"))),
 	TEXT_GREY(Util.newColour(0x777777), Util.newColour(0x777777), "grey", Util.newArrayListOfValues(new ListValue<>("disabled"))),
+	TEXT_GREY_DARK(Util.newColour(0x444444), Util.newColour(0xcccccc), "grey", Util.newArrayListOfValues(new ListValue<>("disabledDark"))),
 
 	// Standard colours used for clothing:
 	CLOTHING_RED(Util.newColour(0xD84646), Util.newColour(0xD84646), "red"),
@@ -669,29 +677,25 @@ public enum Colour {
 	}
 	
 	public String[] getShades(int shadesCount) {
-
+		String[] shadesString = new String[shadesCount];
 		float luminosity = -0.5f;
 		float increment = (Math.abs(luminosity)*2)/(shadesCount-1);
-		
-		String[] shadesString = new String[shadesCount];
-		String r = colour.toString().substring(2, 4), g = colour.toString().substring(4, 6), b = colour.toString().substring(6, 8), rgb = "#";
-		int colourValue = Integer.parseInt(r, 16);
+		int red = Integer.parseInt(colour.toString().substring(2, 4), 16);
+		int gre = Integer.parseInt(colour.toString().substring(4, 6), 16);
+		int blu = Integer.parseInt(colour.toString().substring(6, 8), 16);
+		int r, g, b;
 
 		for (int i = 0; i < shadesCount; i++) {
-			colourValue = Integer.parseInt(r, 16);
-			colourValue += (colourValue * (i * increment + luminosity));
-			rgb += String.format("%02X", Math.max(Math.min(colourValue, 255), 0), 16);
+			r = red + (int)(red * (i * increment + luminosity));
+			r = Math.max(Math.min(r, 255), 0);
 
-			colourValue = Integer.parseInt(g, 16);
-			colourValue += (colourValue * (i * increment + luminosity));
-			rgb += String.format("%02X", Math.max(Math.min(colourValue, 255), 0), 16);
+			g = gre + (int)(gre * (i * increment + luminosity));
+			g = Math.max(Math.min(g, 255), 0);
 
-			colourValue = Integer.parseInt(b, 16);
-			colourValue += (colourValue * (i * increment + luminosity));
-			rgb += String.format("%02X", Math.max(Math.min(colourValue, 255), 0), 16);
+			b = blu + (int)(blu * (i * increment + luminosity));
+			b = Math.max(Math.min(b, 255), 0);
 
-			shadesString[i] = rgb;
-			rgb = "#";
+			shadesString[i] = String.format("#%02X%02X%02X", r, g, b);
 		}
 
 		return shadesString;

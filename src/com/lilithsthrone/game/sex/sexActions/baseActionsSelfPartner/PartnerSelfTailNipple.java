@@ -7,6 +7,7 @@ import com.lilithsthrone.game.sex.OrificeType;
 import com.lilithsthrone.game.sex.PenetrationType;
 import com.lilithsthrone.game.sex.Sex;
 import com.lilithsthrone.game.sex.SexPace;
+import com.lilithsthrone.game.sex.SexParticipantType;
 import com.lilithsthrone.game.sex.sexActions.SexAction;
 import com.lilithsthrone.game.sex.sexActions.SexActionType;
 import com.lilithsthrone.main.Main;
@@ -20,11 +21,12 @@ public class PartnerSelfTailNipple {
 	
 	public static final SexAction PARTNER_SELF_TAIL_NIPPLE_PENETRATION = new SexAction(
 			SexActionType.PARTNER_PENETRATION,
-			ArousalIncrease.ONE_MINIMUM,
 			ArousalIncrease.THREE_NORMAL,
+			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.TAIL_PARTNER,
-			OrificeType.NIPPLE_PARTNER) {
+			PenetrationType.TAIL,
+			OrificeType.NIPPLE,
+			SexParticipantType.SELF) {
 		@Override
 		public String getActionTitle() {
 			return "Tail-fuck nipples (self)";
@@ -82,17 +84,18 @@ public class PartnerSelfTailNipple {
 	
 	public static final SexAction DOM_PARTNER_SELF_TAIL_NIPPLE_GENTLE = new SexAction(
 			SexActionType.PARTNER,
-			ArousalIncrease.ONE_MINIMUM,
 			ArousalIncrease.THREE_NORMAL,
+			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.TAIL_PARTNER,
-			OrificeType.NIPPLE_PARTNER,
+			PenetrationType.TAIL,
+			OrificeType.NIPPLE,
+			SexParticipantType.SELF,
 			null,
 			SexPace.DOM_GENTLE) {
 		
 		@Override
 		public boolean isBaseRequirementsMet() {
-			return !Sex.isPlayerDom();
+			return !Sex.isDom(Main.game.getPlayer());
 		}
 		
 		@Override
@@ -121,17 +124,18 @@ public class PartnerSelfTailNipple {
 	
 	public static final SexAction DOM_PARTNER_SELF_TAIL_NIPPLE_NORMAL = new SexAction(
 			SexActionType.PARTNER,
-			ArousalIncrease.ONE_MINIMUM,
 			ArousalIncrease.THREE_NORMAL,
+			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.TAIL_PARTNER,
-			OrificeType.NIPPLE_PARTNER,
+			PenetrationType.TAIL,
+			OrificeType.NIPPLE,
+			SexParticipantType.SELF,
 			null,
 			SexPace.DOM_NORMAL) {
 		
 		@Override
 		public boolean isBaseRequirementsMet() {
-			return !Sex.isPlayerDom();
+			return !Sex.isDom(Main.game.getPlayer());
 		}
 		
 		@Override
@@ -160,17 +164,18 @@ public class PartnerSelfTailNipple {
 	
 	public static final SexAction DOM_PARTNER_SELF_TAIL_NIPPLE_ROUGH = new SexAction(
 			SexActionType.PARTNER,
-			ArousalIncrease.ONE_MINIMUM,
 			ArousalIncrease.THREE_NORMAL,
+			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.TAIL_PARTNER,
-			OrificeType.NIPPLE_PARTNER,
+			PenetrationType.TAIL,
+			OrificeType.NIPPLE,
+			SexParticipantType.SELF,
 			null,
 			SexPace.DOM_ROUGH) {
 		
 		@Override
 		public boolean isBaseRequirementsMet() {
-			return !Sex.isPlayerDom();
+			return !Sex.isDom(Main.game.getPlayer());
 		}
 		
 		@Override
@@ -199,17 +204,18 @@ public class PartnerSelfTailNipple {
 	
 	public static final SexAction SUB_PARTNER_SELF_TAIL_NIPPLE_NORMAL = new SexAction(
 			SexActionType.PARTNER,
-			ArousalIncrease.ONE_MINIMUM,
 			ArousalIncrease.THREE_NORMAL,
+			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.TAIL_PARTNER,
-			OrificeType.NIPPLE_PARTNER,
+			PenetrationType.TAIL,
+			OrificeType.NIPPLE,
+			SexParticipantType.SELF,
 			null,
 			SexPace.SUB_NORMAL) {
 		
 		@Override
 		public boolean isBaseRequirementsMet() {
-			return Sex.isPlayerDom();
+			return Sex.isDom(Main.game.getPlayer());
 		}
 		
 		@Override
@@ -238,17 +244,18 @@ public class PartnerSelfTailNipple {
 	
 	public static final SexAction SUB_PARTNER_SELF_TAIL_NIPPLE_EAGER = new SexAction(
 			SexActionType.PARTNER,
-			ArousalIncrease.ONE_MINIMUM,
 			ArousalIncrease.THREE_NORMAL,
+			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.TAIL_PARTNER,
-			OrificeType.NIPPLE_PARTNER,
+			PenetrationType.TAIL,
+			OrificeType.NIPPLE,
+			SexParticipantType.SELF,
 			null,
 			SexPace.SUB_EAGER) {
 		
 		@Override
 		public boolean isBaseRequirementsMet() {
-			return Sex.isPlayerDom();
+			return Sex.isDom(Main.game.getPlayer());
 		}
 		
 		@Override
@@ -280,8 +287,9 @@ public class PartnerSelfTailNipple {
 			ArousalIncrease.ONE_MINIMUM,
 			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ZERO_PURE,
-			PenetrationType.TAIL_PARTNER,
-			OrificeType.NIPPLE_PARTNER) {
+			PenetrationType.TAIL,
+			OrificeType.NIPPLE,
+			SexParticipantType.SELF) {
 		
 		@Override
 		public String getActionTitle() {

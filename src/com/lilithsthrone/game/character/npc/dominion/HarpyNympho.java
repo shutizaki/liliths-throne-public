@@ -50,7 +50,7 @@ public class HarpyNympho extends NPC {
 		this(false);
 	}
 	
-	private HarpyNympho(boolean isImported) {
+	public HarpyNympho(boolean isImported) {
 		super(new NameTriplet("Lexi"),
 				"One of the more notable harpy matriarchs, Lexi is the leader of a flock of harpies."
 						+ " Either due to her obsession with sex, or perhaps because she's not as cruel as a typical harpy, Lexi is far more accepting of males than a typical matriarch."
@@ -97,12 +97,8 @@ public class HarpyNympho extends NPC {
 	}
 	
 	@Override
-	public HarpyNympho loadFromXML(Element parentElement, Document doc) {
-		HarpyNympho npc = new HarpyNympho(true);
-
-		loadNPCVariablesFromXML(npc, null, parentElement, doc);
-		
-		return npc;
+	public void loadFromXML(Element parentElement, Document doc) {
+		loadNPCVariablesFromXML(this, null, parentElement, doc);
 	}
 
 	@Override
@@ -270,7 +266,7 @@ public class HarpyNympho extends NPC {
 	@Override
 	public String getItemUseEffects(AbstractItem item, GameCharacter user, GameCharacter target){
 		if(user.isPlayer() && !target.isPlayer() && (item.getItemType().equals(ItemType.FETISH_UNREFINED) || item.getItemType().equals(ItemType.FETISH_REFINED))){
-			if(Sex.isPlayerDom()) {
+			if(Sex.isDom(Main.game.getPlayer())) {
 				Main.game.getPlayer().removeItem(item);
 				return "<p>"
 							+ "Taking your "+item.getName()+" out from your inventory, you hold it out to [npc.name]."

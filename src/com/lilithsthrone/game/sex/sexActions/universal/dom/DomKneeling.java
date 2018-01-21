@@ -2,6 +2,7 @@ package com.lilithsthrone.game.sex.sexActions.universal.dom;
 
 import java.util.List;
 
+import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.attributes.CorruptionLevel;
 import com.lilithsthrone.game.character.body.valueEnums.PenisModifier;
 import com.lilithsthrone.game.character.body.valueEnums.PenisSize;
@@ -11,6 +12,7 @@ import com.lilithsthrone.game.sex.OrificeType;
 import com.lilithsthrone.game.sex.PenetrationType;
 import com.lilithsthrone.game.sex.Sex;
 import com.lilithsthrone.game.sex.SexPace;
+import com.lilithsthrone.game.sex.SexParticipantType;
 import com.lilithsthrone.game.sex.sexActions.SexAction;
 import com.lilithsthrone.game.sex.sexActions.SexActionType;
 import com.lilithsthrone.main.Main;
@@ -26,11 +28,12 @@ public class DomKneeling {
 	
 	public static final SexAction PARTNER_MOUND_SNOG = new SexAction(
 			SexActionType.PARTNER_REQUIRES_NO_PENETRATION_AND_EXPOSED,
-			ArousalIncrease.THREE_NORMAL,
 			ArousalIncrease.ONE_MINIMUM,
+			ArousalIncrease.THREE_NORMAL,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.TONGUE_PARTNER,
-			OrificeType.VAGINA_PLAYER,
+			PenetrationType.TONGUE,
+			OrificeType.VAGINA,
+			SexParticipantType.PITCHER,
 			null,
 			SexPace.SUB_EAGER) {
 		@Override
@@ -64,11 +67,12 @@ public class DomKneeling {
 	
 	public static final SexAction PARTNER_MOUND_KISSING = new SexAction(
 			SexActionType.PARTNER_REQUIRES_NO_PENETRATION_AND_EXPOSED,
-			ArousalIncrease.THREE_NORMAL,
 			ArousalIncrease.ONE_MINIMUM,
+			ArousalIncrease.THREE_NORMAL,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.TONGUE_PARTNER,
-			OrificeType.VAGINA_PLAYER,
+			PenetrationType.TONGUE,
+			OrificeType.VAGINA,
+			SexParticipantType.PITCHER,
 			null,
 			SexPace.SUB_NORMAL) {
 		@Override
@@ -107,8 +111,9 @@ public class DomKneeling {
 			ArousalIncrease.FIVE_EXTREME,
 			ArousalIncrease.TWO_LOW,
 			CorruptionLevel.ZERO_PURE,
-			PenetrationType.TONGUE_PARTNER,
-			OrificeType.VAGINA_PLAYER) {
+			PenetrationType.TONGUE,
+			OrificeType.VAGINA,
+			SexParticipantType.CATCHER) {
 		
 		@Override
 		public String getActionTitle() {
@@ -186,7 +191,7 @@ public class DomKneeling {
 		
 		@Override
 		public void applyEffects() {
-			Sex.removePenetration(PenetrationType.TONGUE_PARTNER, OrificeType.VAGINA_PLAYER);
+			Sex.removePenetration(Sex.getActivePartner(), Main.game.getPlayer(), PenetrationType.TONGUE, OrificeType.VAGINA);
 		}
 		
 	};
@@ -196,8 +201,9 @@ public class DomKneeling {
 			ArousalIncrease.FIVE_EXTREME,
 			ArousalIncrease.TWO_LOW,
 			CorruptionLevel.THREE_DIRTY,
-			PenetrationType.PENIS_PLAYER,
-			OrificeType.MOUTH_PARTNER) {
+			PenetrationType.PENIS,
+			OrificeType.MOUTH,
+			SexParticipantType.PITCHER) {
 		@Override
 		public String getActionTitle() {
 			return "Deep throat";
@@ -275,12 +281,17 @@ public class DomKneeling {
 
 		@Override
 		public void applyEffects() {
-			Sex.removePenetration(PenetrationType.PENIS_PLAYER, OrificeType.MOUTH_PARTNER);
+			Sex.removePenetration(Main.game.getPlayer(), Sex.getActivePartner(), PenetrationType.PENIS, OrificeType.MOUTH);
 		}
 		
+
 		@Override
-		public List<OrificeType> getPartnerAreasCummedIn(){
-			return Util.newArrayListOfValues(new ListValue<>(OrificeType.MOUTH_PARTNER));
+		public List<OrificeType> getAreasCummedIn(GameCharacter cumProvider, GameCharacter cumTarget) {
+			if(cumProvider.equals(Main.game.getPlayer()) && cumTarget.equals(Sex.getTargetedPartner(Main.game.getPlayer()))) {
+				return Util.newArrayListOfValues(new ListValue<>(OrificeType.MOUTH));
+			} else {
+				return null;
+			}
 		}
 		
 	};
@@ -290,8 +301,9 @@ public class DomKneeling {
 			ArousalIncrease.FIVE_EXTREME,
 			ArousalIncrease.TWO_LOW,
 			CorruptionLevel.ZERO_PURE,
-			PenetrationType.PENIS_PLAYER,
-			OrificeType.MOUTH_PARTNER) {
+			PenetrationType.PENIS,
+			OrificeType.MOUTH,
+			SexParticipantType.PITCHER) {
 		@Override
 		public String getActionTitle() {
 			return "Orgasm facial";
@@ -362,12 +374,13 @@ public class DomKneeling {
 
 		@Override
 		public void applyEffects() {
-			Sex.removePenetration(PenetrationType.PENIS_PLAYER, OrificeType.MOUTH_PARTNER);
+			Sex.removePenetration(Main.game.getPlayer(), Sex.getActivePartner(), PenetrationType.PENIS, OrificeType.MOUTH);
 		}
 		
 		@Override
-		public boolean ignorePlayerCondom() {
-			return true;
+		public boolean ignoreCondom(GameCharacter condomWearer) {
+			return condomWearer.equals(Main.game.getPlayer());
+			
 		}
 	};
 }

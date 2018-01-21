@@ -2,6 +2,7 @@ package com.lilithsthrone.game.sex.sexActions.dominion.pix;
 
 import java.util.List;
 
+import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.attributes.ArousalLevel;
 import com.lilithsthrone.game.character.attributes.CorruptionLevel;
 import com.lilithsthrone.game.character.effects.Fetish;
@@ -11,6 +12,7 @@ import com.lilithsthrone.game.sex.OrificeType;
 import com.lilithsthrone.game.sex.PenetrationType;
 import com.lilithsthrone.game.sex.Sex;
 import com.lilithsthrone.game.sex.SexFlags;
+import com.lilithsthrone.game.sex.SexParticipantType;
 import com.lilithsthrone.game.sex.sexActions.SexAction;
 import com.lilithsthrone.game.sex.sexActions.SexActionPriority;
 import com.lilithsthrone.game.sex.sexActions.SexActionType;
@@ -38,7 +40,8 @@ public class PixShowerTime {
 			ArousalIncrease.ZERO_NONE,
 			CorruptionLevel.ZERO_PURE,
 			null,
-			null) {
+			null,
+			SexParticipantType.MISC) {
 		@Override
 		public String getActionTitle() {
 			return "Kiss";
@@ -51,7 +54,7 @@ public class PixShowerTime {
 
 		@Override
 		public boolean isBaseRequirementsMet() {
-			return Sex.isPartnerFreeMouth() && Sex.isPlayerFreeMouth();
+			return Sex.isOrificeFree(Sex.getActivePartner(), OrificeType.MOUTH) && Sex.isOrificeFree(Main.game.getPlayer(), OrificeType.MOUTH);
 		}
 
 		@Override
@@ -64,12 +67,7 @@ public class PixShowerTime {
 		}
 
 		@Override
-		public List<Fetish> getFetishesPlayer() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DENIAL));
-		}
-		
-		@Override
-		public List<Fetish> getFetishesPartner() {
+		public List<Fetish> getFetishes(GameCharacter character) {
 			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DENIAL));
 		}
 	};
@@ -80,7 +78,8 @@ public class PixShowerTime {
 			ArousalIncrease.ZERO_NONE,
 			CorruptionLevel.ZERO_PURE,
 			null,
-			null) {
+			null,
+			SexParticipantType.MISC) {
 		@Override
 		public String getActionTitle() {
 			return "Pinch nipples";
@@ -110,12 +109,7 @@ public class PixShowerTime {
 		}
 		
 		@Override
-		public List<Fetish> getFetishesPlayer() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DENIAL));
-		}
-		
-		@Override
-		public List<Fetish> getFetishesPartner() {
+		public List<Fetish> getFetishes(GameCharacter character) {
 			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DENIAL));
 		}
 	};
@@ -126,7 +120,8 @@ public class PixShowerTime {
 			ArousalIncrease.ZERO_NONE,
 			CorruptionLevel.ZERO_PURE,
 			null,
-			null) {
+			null,
+			SexParticipantType.MISC) {
 		@Override
 		public String getActionTitle() {
 			return "Masturbate";
@@ -152,12 +147,7 @@ public class PixShowerTime {
 		}
 		
 		@Override
-		public List<Fetish> getFetishesPlayer() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DENIAL));
-		}
-		
-		@Override
-		public List<Fetish> getFetishesPartner() {
+		public List<Fetish> getFetishes(GameCharacter character) {
 			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DENIAL));
 		}
 	};
@@ -168,7 +158,8 @@ public class PixShowerTime {
 			ArousalIncrease.ZERO_NONE,
 			CorruptionLevel.ZERO_PURE,
 			null,
-			null) {
+			null,
+			SexParticipantType.MISC) {
 		@Override
 		public String getActionTitle() {
 			return "Dirty talk";
@@ -192,12 +183,7 @@ public class PixShowerTime {
 		}
 
 		@Override
-		public List<Fetish> getFetishesPlayer() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DENIAL));
-		}
-		
-		@Override
-		public List<Fetish> getFetishesPartner() {
+		public List<Fetish> getFetishes(GameCharacter character) {
 			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DENIAL));
 		}
 	};
@@ -208,7 +194,8 @@ public class PixShowerTime {
 			ArousalIncrease.ZERO_NONE,
 			CorruptionLevel.ZERO_PURE,
 			null,
-			null) {
+			null,
+			SexParticipantType.MISC) {
 		@Override
 		public String getActionTitle() {
 			return "Struggle";
@@ -237,13 +224,12 @@ public class PixShowerTime {
 		}
 		
 		@Override
-		public List<Fetish> getFetishesPlayer() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_SUBMISSIVE));
-		}
-		
-		@Override
-		public List<Fetish> getFetishesPartner() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DOMINANT));
+		public List<Fetish> getFetishes(GameCharacter character) {
+			if(character.isPlayer()) {
+				return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_SUBMISSIVE));
+			} else {
+				return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DOMINANT));
+			}
 		}
 	};
 	
@@ -253,7 +239,8 @@ public class PixShowerTime {
 			ArousalIncrease.ZERO_NONE,
 			CorruptionLevel.ZERO_PURE,
 			null,
-			null) {
+			null,
+			SexParticipantType.MISC) {
 		@Override
 		public String getActionTitle() {
 			return "Submit";
@@ -277,23 +264,23 @@ public class PixShowerTime {
 		}
 		
 		@Override
-		public List<Fetish> getFetishesPlayer() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_SUBMISSIVE));
-		}
-		
-		@Override
-		public List<Fetish> getFetishesPartner() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DOMINANT));
+		public List<Fetish> getFetishes(GameCharacter character) {
+			if(character.isPlayer()) {
+				return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_SUBMISSIVE));
+			} else {
+				return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DOMINANT));
+			}
 		}
 	};
 	
-	public static final SexAction FINGER_PLAYERED_GRIND_DOWN = new SexAction(
+	public static final SexAction FINGERED_GRIND_DOWN = new SexAction(
 			SexActionType.PLAYER,
 			ArousalIncrease.FOUR_HIGH,
 			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.FINGER_PARTNER,
-			OrificeType.VAGINA_PLAYER) {
+			PenetrationType.FINGER,
+			OrificeType.VAGINA,
+			SexParticipantType.CATCHER) {
 		@Override
 		public String getActionTitle() {
 			return "Grind down";
@@ -322,11 +309,12 @@ public class PixShowerTime {
 	
 	public static final SexAction PARTNER_KISS = new SexAction(
 			SexActionType.PARTNER_REQUIRES_NO_PENETRATION_AND_EXPOSED,
-			ArousalIncrease.THREE_NORMAL,
 			ArousalIncrease.TWO_LOW,
+			ArousalIncrease.THREE_NORMAL,
 			CorruptionLevel.ZERO_PURE,
-			PenetrationType.TONGUE_PARTNER,
-			OrificeType.MOUTH_PLAYER) {
+			PenetrationType.TONGUE,
+			OrificeType.MOUTH,
+			SexParticipantType.PITCHER) {
 		@Override
 		public String getActionTitle() {
 			return "Kiss";
@@ -356,7 +344,8 @@ public class PixShowerTime {
 			ArousalIncrease.TWO_LOW,
 			CorruptionLevel.ZERO_PURE,
 			null,
-			null) {
+			null,
+			SexParticipantType.MISC) {
 		@Override
 		public String getActionTitle() {
 			return "Dirty talk";
@@ -387,11 +376,12 @@ public class PixShowerTime {
 	
 	public static final SexAction PARTNER_GROPE_BREASTS = new SexAction(
 			SexActionType.PARTNER_REQUIRES_NO_PENETRATION_AND_EXPOSED,
-			ArousalIncrease.THREE_NORMAL,
 			ArousalIncrease.ONE_MINIMUM,
+			ArousalIncrease.THREE_NORMAL,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.FINGER_PARTNER,
-			OrificeType.NIPPLE_PLAYER) {
+			PenetrationType.FINGER,
+			OrificeType.NIPPLE,
+			SexParticipantType.PITCHER) {
 		@Override
 		public String getActionTitle() {
 			return "Grope breasts";
@@ -452,24 +442,25 @@ public class PixShowerTime {
 		}
 		
 		@Override
-		public List<Fetish> getFetishesPlayer() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_BREASTS_SELF));
-		}
-		
-		@Override
-		public List<Fetish> getFetishesPartner() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_BREASTS_OTHERS));
+		public List<Fetish> getFetishes(GameCharacter character) {
+			if(character.isPlayer()) {
+				return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_BREASTS_SELF));
+			} else {
+				return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_BREASTS_OTHERS));
+			}
 		}
 		
 	};
 	
 	public static final SexAction PARTNER_MASTURBATE_PLAYER_COCK = new SexAction(
 			SexActionType.PARTNER_REQUIRES_NO_PENETRATION_AND_EXPOSED,
-			ArousalIncrease.THREE_NORMAL,
 			ArousalIncrease.ONE_MINIMUM,
+			ArousalIncrease.THREE_NORMAL,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.PENIS_PLAYER,
-			null) {
+			PenetrationType.PENIS,
+			null,
+			SexParticipantType.PITCHER) {
+		
 		@Override
 		public String getActionTitle() {
 			return "Stroke player's cock";
@@ -482,12 +473,12 @@ public class PixShowerTime {
 
 		@Override
 		public boolean isBaseRequirementsMet() {
-			return Sex.hasFreeHandPartner();
+			return Sex.isPenetrationTypeFree(Sex.getActivePartner(), PenetrationType.FINGER);
 		}
 
 		@Override
 		public String getDescription() {
-			return UtilText.genderParsing(Sex.getPartner(),
+			return UtilText.parse(Sex.getActivePartner(),
 					UtilText.returnStringAtRandom(
 					"Reaching around between your legs, Pix suddenly grabs your [pc.cock+], and as she starts stroking up and down its length, you find yourself letting out [pc.a_moan+] and leaning back into her.",
 					
@@ -500,13 +491,14 @@ public class PixShowerTime {
 		}
 	};
 	
-	public static final SexAction FINGER_PARTNERING_PLAYER_START = new SexAction(
+	public static final SexAction FINGERING_PLAYER_START = new SexAction(
 			SexActionType.PARTNER_PENETRATION,
-			ArousalIncrease.FOUR_HIGH,
 			ArousalIncrease.TWO_LOW,
+			ArousalIncrease.FOUR_HIGH,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.FINGER_PARTNER,
-			OrificeType.VAGINA_PLAYER) {
+			PenetrationType.FINGER,
+			OrificeType.VAGINA,
+			SexParticipantType.PITCHER) {
 		@Override
 		public String getActionTitle() {
 			return "Start fingering the player";
@@ -524,19 +516,20 @@ public class PixShowerTime {
 
 		@Override
 		public String getDescription() {
-			return UtilText.genderParsing(Sex.getPartner(),
+			return UtilText.parse(Sex.getActivePartner(),
 					"You feel Pix press heavily into your back, and as she growls menacingly into your ear, she reaches around with [pix.a_hand+] to start stroking and probing at your outer labia."
 						+ " With [pc.a_moan+], you lean back into her, and as the sound of falling water echoes off the walls all around you, she suddenly thrusts her [pix.fingers+] up, penetrating your [pc.pussy+] in one swift strike.");
 		}
 	};
 	
-	public static final SexAction FINGER_PARTNERING_PLAYER_GENTLE = new SexAction(
+	public static final SexAction FINGERING_PLAYER_GENTLE = new SexAction(
 			SexActionType.PARTNER,
-			ArousalIncrease.FOUR_HIGH,
 			ArousalIncrease.TWO_LOW,
+			ArousalIncrease.FOUR_HIGH,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.FINGER_PARTNER,
-			OrificeType.VAGINA_PLAYER) {
+			PenetrationType.FINGER,
+			OrificeType.VAGINA,
+			SexParticipantType.PITCHER) {
 		@Override
 		public String getActionTitle() {
 			return "Gentle fingering";
@@ -566,13 +559,14 @@ public class PixShowerTime {
 		}
 	};
 	
-	public static final SexAction FINGER_PARTNERING_PLAYER_ROUGH = new SexAction(
+	public static final SexAction FINGERING_PLAYER_ROUGH = new SexAction(
 			SexActionType.PARTNER,
-			ArousalIncrease.THREE_NORMAL,
 			ArousalIncrease.TWO_LOW,
+			ArousalIncrease.THREE_NORMAL,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.FINGER_PARTNER,
-			OrificeType.VAGINA_PLAYER) {
+			PenetrationType.FINGER,
+			OrificeType.VAGINA,
+			SexParticipantType.PITCHER) {
 		@Override
 		public String getActionTitle() {
 			return "Rough fingering";
@@ -598,23 +592,23 @@ public class PixShowerTime {
 		}
 		
 		@Override
-		public List<Fetish> getFetishesPlayer() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_SUBMISSIVE));
-		}
-		
-		@Override
-		public List<Fetish> getFetishesPartner() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DOMINANT));
+		public List<Fetish> getFetishes(GameCharacter character) {
+			if(character.isPlayer()) {
+				return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_SUBMISSIVE));
+			} else {
+				return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_DOMINANT));
+			}
 		}
 	};
 	
-	public static final SexAction FINGER_PARTNERING_PLAYER_CLIT_PLAY = new SexAction(
+	public static final SexAction FINGERING_PLAYER_CLIT_PLAY = new SexAction(
 			SexActionType.PARTNER,
-			ArousalIncrease.FOUR_HIGH,
 			ArousalIncrease.TWO_LOW,
+			ArousalIncrease.FOUR_HIGH,
 			CorruptionLevel.ONE_VANILLA,
-			PenetrationType.FINGER_PARTNER,
-			OrificeType.VAGINA_PLAYER) {
+			PenetrationType.FINGER,
+			OrificeType.VAGINA,
+			SexParticipantType.PITCHER) {
 		@Override
 		public String getActionTitle() {
 			return "Clit play";
@@ -652,7 +646,8 @@ public class PixShowerTime {
 			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ZERO_PURE,
 			null,
-			null) {
+			null,
+			SexParticipantType.MISC) {
 		@Override
 		public String getActionTitle() {
 			return "Demand promise";
@@ -701,7 +696,8 @@ public class PixShowerTime {
 			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ZERO_PURE,
 			null,
-			null) {
+			null,
+			SexParticipantType.MISC) {
 		@Override
 		public String getActionTitle() {
 			return "";
@@ -714,7 +710,7 @@ public class PixShowerTime {
 
 		@Override
 		public boolean isBaseRequirementsMet() {
-			return Sex.getNumberOfPlayerOrgasms()>=1;
+			return Sex.getNumberOfOrgasms(Main.game.getPlayer())>=1;
 		}
 
 		@Override

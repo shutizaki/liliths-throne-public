@@ -3,10 +3,14 @@ package com.lilithsthrone.world.places;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import com.lilithsthrone.game.Weather;
 import com.lilithsthrone.game.character.Quest;
 import com.lilithsthrone.game.character.QuestLine;
+import com.lilithsthrone.game.dialogue.DialogueFlagValue;
 import com.lilithsthrone.game.dialogue.DialogueNodeOld;
 import com.lilithsthrone.game.dialogue.encounters.Encounter;
 import com.lilithsthrone.game.dialogue.places.JunglePlaces;
@@ -39,6 +43,7 @@ import com.lilithsthrone.game.dialogue.places.dominion.zaranixHome.ZaranixHomeGr
 import com.lilithsthrone.main.Main;
 import com.lilithsthrone.utils.BaseColour;
 import com.lilithsthrone.utils.Bearing;
+import com.lilithsthrone.utils.Colour;
 import com.lilithsthrone.utils.Util;
 import com.lilithsthrone.utils.Util.ListValue;
 import com.lilithsthrone.world.EntranceType;
@@ -226,7 +231,7 @@ public enum PlaceType {
 	ENFORCER_HQ_BRAXS_OFFICE("Brax's Office", "dominion/enforcerHQ/braxsOffice", BaseColour.BLUE_STEEL, EnforcerHQDialogue.INTERIOR_BRAX, null, true, false, true, true, "in his office") {
 		@Override
 		public DialogueNodeOld getDialogue(boolean withRandomEncounter) {
-			if(Main.game.getPlayer().getCharactersEncountered().contains(Main.game.getBrax().getId())) {
+			if(Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.braxEncountered)) {
 				return EnforcerHQDialogue.INTERIOR_BRAX_REPEAT;
 				
 			} else {
@@ -384,6 +389,14 @@ public enum PlaceType {
 		public boolean isAbleToBeUpgraded() {
 			return true;
 		}
+		@Override
+		public String getSVGString(Set<PlaceUpgrade> upgrades) {
+			if(upgrades.contains(PlaceUpgrade.LILAYA_SLAVE_ROOM_DOUBLE)) {
+				return PlaceType.getSVGOverride("dominion/lilayasHome/roomSlaveDouble", Colour.BASE_MAGENTA);
+			} else {
+				return SVGString;
+			}
+		}
 	},
 	
 	LILAYA_HOME_ROOM_GARDEN_GROUND_FLOOR_SLAVE("Slave's Garden Room", "dominion/lilayasHome/roomSlave", BaseColour.CRIMSON, LilayaHomeGeneric.ROOM_GARDEN_GROUND_FLOOR_SLAVE, null, true, false, true, false, "in Lilaya's Home") {
@@ -394,6 +407,14 @@ public enum PlaceType {
 		@Override
 		public boolean isAbleToBeUpgraded() {
 			return true;
+		}
+		@Override
+		public String getSVGString(Set<PlaceUpgrade> upgrades) {
+			if(upgrades.contains(PlaceUpgrade.LILAYA_SLAVE_ROOM_DOUBLE)) {
+				return PlaceType.getSVGOverride("dominion/lilayasHome/roomSlaveDouble", Colour.BASE_MAGENTA);
+			} else {
+				return SVGString;
+			}
 		}
 	},
 	
@@ -406,6 +427,14 @@ public enum PlaceType {
 		public boolean isAbleToBeUpgraded() {
 			return true;
 		}
+		@Override
+		public String getSVGString(Set<PlaceUpgrade> upgrades) {
+			if(upgrades.contains(PlaceUpgrade.LILAYA_SLAVE_ROOM_DOUBLE)) {
+				return PlaceType.getSVGOverride("dominion/lilayasHome/roomSlaveDouble", Colour.BASE_MAGENTA);
+			} else {
+				return SVGString;
+			}
+		}
 	},
 	
 	LILAYA_HOME_ROOM_GARDEN_FIRST_FLOOR_SLAVE("Slave's Garden Room", "dominion/lilayasHome/roomSlave", BaseColour.CRIMSON, LilayaHomeGeneric.ROOM_GARDEN_SLAVE, null, true, false, true, false, "in Lilaya's Home") {
@@ -416,6 +445,14 @@ public enum PlaceType {
 		@Override
 		public boolean isAbleToBeUpgraded() {
 			return true;
+		}
+		@Override
+		public String getSVGString(Set<PlaceUpgrade> upgrades) {
+			if(upgrades.contains(PlaceUpgrade.LILAYA_SLAVE_ROOM_DOUBLE)) {
+				return PlaceType.getSVGOverride("dominion/lilayasHome/roomSlaveDouble", Colour.BASE_MAGENTA);
+			} else {
+				return SVGString;
+			}
 		}
 	},
 	
@@ -549,13 +586,16 @@ public enum PlaceType {
 	};
 
 	
-	private String name, SVGString;
+	private String name;
+	protected String SVGString;
 	private BaseColour colour;
 	private DialogueNodeOld dialogue;
 	private Encounter encounterType;
 	private boolean populated, dangerous, stormImmune, itemsDisappear;
 	private String virgintyLossDescription;
 
+	private static Map<String, String> SVGOverrides = new HashMap<>(); 
+	
 	private PlaceType(String name,
 			String SVGPath,
 			BaseColour colour,
@@ -635,8 +675,35 @@ public enum PlaceType {
 	public boolean isItemsDisappear() {
 		return itemsDisappear;
 	}
-
-	public String getSVGString() {
+	
+	private static String getSVGOverride(String pathName, Colour colour) {
+		if(!SVGOverrides.keySet().contains(pathName+colour)) {
+			try {
+				InputStream is = colour.getClass().getResourceAsStream("/com/lilithsthrone/res/map/" + pathName + ".svg");
+				String s = Util.inputStreamToString(is);
+				
+				if(colour!=null) {
+					s = s.replaceAll("#ff2a2a", colour.getShades()[0]);
+					s = s.replaceAll("#ff5555", colour.getShades()[1]);
+					s = s.replaceAll("#ff8080", colour.getShades()[2]);
+					s = s.replaceAll("#ffaaaa", colour.getShades()[3]);
+					s = s.replaceAll("#ffd5d5", colour.getShades()[4]);
+				}
+				SVGOverrides.put(pathName+colour, s);
+	
+				is.close();
+	
+			} catch (Exception e1) {
+				System.err.println("Eeeeeek! PlaceType.getSVGOverride()");
+				e1.printStackTrace();
+				return "";
+			}
+		}
+		
+		return SVGOverrides.get(pathName+colour);
+	}
+	
+	public String getSVGString(Set<PlaceUpgrade> upgrades) {
 		return SVGString;
 	}
 	
@@ -658,8 +725,6 @@ public enum PlaceType {
 	public EntranceType getParentAlignment() {
 		return null;
 	}
-	
-	
 	
 	public String getPlaceNameAppendFormat(int count) {
 		return "";

@@ -2,6 +2,7 @@ package com.lilithsthrone.game.sex.sexActions.baseActionsSelfPlayer;
 
 import java.util.List;
 
+import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.attributes.CorruptionLevel;
 import com.lilithsthrone.game.character.body.CoverableArea;
 import com.lilithsthrone.game.character.effects.Fetish;
@@ -9,6 +10,7 @@ import com.lilithsthrone.game.dialogue.utils.UtilText;
 import com.lilithsthrone.game.sex.ArousalIncrease;
 import com.lilithsthrone.game.sex.OrificeType;
 import com.lilithsthrone.game.sex.PenetrationType;
+import com.lilithsthrone.game.sex.SexParticipantType;
 import com.lilithsthrone.game.sex.sexActions.SexAction;
 import com.lilithsthrone.game.sex.sexActions.SexActionType;
 import com.lilithsthrone.main.Main;
@@ -27,8 +29,9 @@ public class PlayerSelfNoPen {
 			ArousalIncrease.THREE_NORMAL,
 			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ZERO_PURE,
-			PenetrationType.FINGER_PLAYER,
-			OrificeType.VAGINA_PLAYER) {
+			PenetrationType.FINGER,
+			OrificeType.VAGINA,
+			SexParticipantType.SELF) {
 		
 		@Override
 		public String getActionTitle() {
@@ -67,8 +70,9 @@ public class PlayerSelfNoPen {
 			ArousalIncrease.THREE_NORMAL,
 			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ZERO_PURE,
-			PenetrationType.FINGER_PLAYER,
-			OrificeType.URETHRA_PLAYER) {
+			PenetrationType.FINGER,
+			OrificeType.URETHRA,
+			SexParticipantType.SELF) {
 		
 		@Override
 		public String getActionTitle() {
@@ -109,8 +113,9 @@ public class PlayerSelfNoPen {
 			ArousalIncrease.THREE_NORMAL,
 			ArousalIncrease.ONE_MINIMUM,
 			CorruptionLevel.ZERO_PURE,
-			PenetrationType.FINGER_PLAYER,
-			null) {
+			PenetrationType.FINGER,
+			null,
+			SexParticipantType.SELF) {
 
 		@Override
 		public boolean isBaseRequirementsMet() {
@@ -151,8 +156,12 @@ public class PlayerSelfNoPen {
 		}
 		
 		@Override
-		public List<Fetish> getFetishesPlayer() {
-			return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_MASTURBATION));
+		public List<Fetish> getFetishes(GameCharacter character) {
+			if(character.isPlayer()) {
+				return Util.newArrayListOfValues(new ListValue<>(Fetish.FETISH_MASTURBATION));
+			} else {
+				return null;
+			}
 		}
 	};
 }
