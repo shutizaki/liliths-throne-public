@@ -28,6 +28,7 @@ import org.w3c.dom.Element;
 
 import com.lilithsthrone.controller.MainController;
 import com.lilithsthrone.controller.TooltipUpdateThread;
+import com.lilithsthrone.game.character.CharacterImportSetting;
 import com.lilithsthrone.game.character.CharacterUtils;
 import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.History;
@@ -362,7 +363,7 @@ public class Game implements Serializable, XMLSaving {
 
 			Element eventLogNode = doc.createElement("eventLog");
 			game.appendChild(eventLogNode);
-			for(EventLogEntry event : Main.game.getEventLog()) {
+			for(EventLogEntry event : Main.game.getEventLog().subList(Math.max(0, Main.game.getEventLog().size()-50), Main.game.getEventLog().size())) {
 				event.saveAsXML(eventLogNode, doc);
 			}
 			
@@ -411,12 +412,14 @@ public class Game implements Serializable, XMLSaving {
 			
 			transformer.transform(source, result);
 
-			if(overwrite) {
-				if(!exportFileName.startsWith("AutoSave")) {
+			if(!exportFileName.startsWith("AutoSave")) {
+				if(overwrite) {
+					Main.game.addEvent(new EventLogEntry(Main.game.getMinutesPassed(), "[style.colourGood(Game saved)]", saveLocation), false);
 					Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()), Colour.GENERIC_GOOD, "Save game overwritten!");
+				} else {
+					Main.game.addEvent(new EventLogEntry(Main.game.getMinutesPassed(), "[style.colourGood(Game saved)]", saveLocation), false);
+					Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()), Colour.GENERIC_GOOD, "Game saved!");
 				}
-			} else {
-				Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()), Colour.GENERIC_GOOD, "Game saved!");
 			}
 			
 			if(timeLog) {
@@ -467,7 +470,6 @@ public class Game implements Serializable, XMLSaving {
 				
 				newGame.dialogueFlags = DialogueFlags.loadFromXML((Element) gameElement.getElementsByTagName("dialogueFlags").item(0), doc);
 				
-				
 				for(int i=0; i<((Element) gameElement.getElementsByTagName("eventLog").item(0)).getElementsByTagName("eventLogEntry").getLength(); i++){
 					Element e = (Element) ((Element) gameElement.getElementsByTagName("eventLog").item(0)).getElementsByTagName("eventLogEntry").item(i);
 					newGame.eventLog.add(EventLogEntry.loadFromXML(e, doc));
@@ -501,16 +503,21 @@ public class Game implements Serializable, XMLSaving {
 					if(!addedIds.contains(((Element)e.getElementsByTagName("id").item(0)).getAttribute("value"))) {
 						@SuppressWarnings("unchecked")
 						Class<? extends NPC> npcClass = (Class<? extends NPC>) Class.forName(((Element)e.getElementsByTagName("pathName").item(0)).getAttribute("value"));
-						Method m = npcClass.getMethod("loadFromXML", Element.class, Document.class);
+						Method m = npcClass.getMethod("loadFromXML", Element.class, Document.class, CharacterImportSetting[].class);
 						
 						NPC npc = npcClass.getDeclaredConstructor(boolean.class).newInstance(true);
-						m.invoke(npc, e, doc);
+						m.invoke(npc, e, doc, new CharacterImportSetting[] {});
 						newGame.addNPC(npc, true);
 						addedIds.add(npc.getId());
 						
 						// To fix issues with older versions hair length:
 						if(Main.isVersionOlderThan(version, "0.1.90.5")) {
 							npc.getBody().getHair().setLength(null, npc.isFeminine()?RacialBody.valueOfRace(npc.getRace()).getFemaleHairLength():RacialBody.valueOfRace(npc.getRace()).getMaleHairLength());
+						}
+
+						// Generate desires in non-unique NPCs:
+						if(Main.isVersionOlderThan(version, "0.1.98.5") && !npc.isUnique()) {
+							CharacterUtils.generateDesires(npc);
 						}
 						
 						if(npc instanceof SlaveImport) {
@@ -600,6 +607,7 @@ public class Game implements Serializable, XMLSaving {
 		Main.game.started = true;
 		
 		DialogueNodeOld startingDialogueNode = Main.game.getPlayerCell().getPlace().getDialogue(false);
+		Main.game.addEvent(new EventLogEntry(Main.game.getMinutesPassed(), "[style.colourGood(Game loaded)]", "data/saves/"+name+".xml"), false);
 		Main.game.setContent(new Response(startingDialogueNode.getLabel(), startingDialogueNode.getDescription(), startingDialogueNode));
 		
 		newGame.endTurn(0);
@@ -906,7 +914,7 @@ public class Game implements Serializable, XMLSaving {
 			if(npc.getLocation().equals(Main.game.getPlayer().getLocation()) && npc.getWorldLocation()==Main.game.getPlayer().getWorldLocation()) {
 				for(CoverableArea ca : CoverableArea.values()) {
 					if(npc.isCoverableAreaExposed(ca) && ca!=CoverableArea.MOUTH) {
-						npc.getPlayerKnowsAreasMap().put(ca, true);
+						npc.getPlayerKnowsAreas().add(ca);
 					}
 				}
 			}
@@ -953,7 +961,6 @@ public class Game implements Serializable, XMLSaving {
 			}
 			
 			Main.game.setContent(new Response("", "", MiscDialogue.STATUS_EFFECTS){
-				
 				@Override
 				public void effects() {
 					if(!Main.game.getPlayer().hasQuest(QuestLine.SIDE_ENCHANTMENT_DISCOVERY) && Main.game.getPlayer().hasNonArcaneEssences()) {
@@ -2358,6 +2365,10 @@ public class Game implements Serializable, XMLSaving {
 		return new ArrayList<NPC>(NPCMap.values());
 	}
 	
+	public boolean isCharacterExisting(String id) {
+		return NPCMap.containsKey(id);
+	}
+	
 	public GameCharacter getNPCById(String id) {
 		if(id==null || id.isEmpty()) {
 			return null;
@@ -2368,8 +2379,8 @@ public class Game implements Serializable, XMLSaving {
 		}
 		if(!NPCMap.containsKey(id)) {
 			System.err.println("!WARNING! getNPC("+id+") is returning null!");
-//			return null;
-			throw new NullPointerException();
+			return null;
+//			throw new NullPointerException();
 		}
 		return NPCMap.get(id);
 	}

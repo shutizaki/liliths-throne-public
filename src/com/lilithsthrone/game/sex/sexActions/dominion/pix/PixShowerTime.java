@@ -5,7 +5,7 @@ import java.util.List;
 import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.attributes.ArousalLevel;
 import com.lilithsthrone.game.character.attributes.CorruptionLevel;
-import com.lilithsthrone.game.character.effects.Fetish;
+import com.lilithsthrone.game.character.fetishes.Fetish;
 import com.lilithsthrone.game.dialogue.utils.UtilText;
 import com.lilithsthrone.game.sex.ArousalIncrease;
 import com.lilithsthrone.game.sex.OrificeType;
@@ -459,7 +459,7 @@ public class PixShowerTime {
 			CorruptionLevel.ONE_VANILLA,
 			PenetrationType.PENIS,
 			null,
-			SexParticipantType.PITCHER) {
+			SexParticipantType.CATCHER) {
 		
 		@Override
 		public String getActionTitle() {

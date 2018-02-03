@@ -7,7 +7,6 @@ import java.util.List;
 import com.lilithsthrone.game.sex.sexActions.SexAction;
 import com.lilithsthrone.game.sex.sexActions.SexActionInterface;
 import com.lilithsthrone.game.sex.sexActions.SexActionPresets;
-import com.lilithsthrone.game.sex.sexActions.SexActionType;
 import com.lilithsthrone.utils.Util;
 import com.lilithsthrone.utils.Util.ListValue;
 
@@ -64,6 +63,7 @@ public enum SexPositionSlot {
 			Util.newArrayListOfValues(
 					new ListValue<>(OrgasmCumTarget.FLOOR),
 					new ListValue<>(OrgasmCumTarget.GROIN),
+					new ListValue<>(OrgasmCumTarget.STOMACH),
 					new ListValue<>(OrgasmCumTarget.LEGS)),
 			SexActionPresets.playerBackToWallAgainstWall,
 			SexActionPresets.partnerBackToWallAgainstWall),
@@ -72,6 +72,7 @@ public enum SexPositionSlot {
 			Util.newArrayListOfValues(
 					new ListValue<>(OrgasmCumTarget.FLOOR),
 					new ListValue<>(OrgasmCumTarget.GROIN),
+					new ListValue<>(OrgasmCumTarget.STOMACH),
 					new ListValue<>(OrgasmCumTarget.LEGS)),
 			SexActionPresets.playerBackToWallFacingTarget,
 			SexActionPresets.partnerBackToWallFacingTarget),
@@ -90,6 +91,7 @@ public enum SexPositionSlot {
 					new ListValue<>(OrgasmCumTarget.ASS),
 					new ListValue<>(OrgasmCumTarget.GROIN),
 					new ListValue<>(OrgasmCumTarget.LEGS),
+					new ListValue<>(OrgasmCumTarget.BACK),
 					new ListValue<>(OrgasmCumTarget.FLOOR)),
 			SexActionPresets.playerFacingWallFacingTarget,
 			SexActionPresets.partnerFacingWallFacingTarget),
@@ -209,7 +211,25 @@ public enum SexPositionSlot {
 					new ListValue<>(OrgasmCumTarget.FLOOR)),
 			SexActionPresets.playerStocksStandingBehind,
 			SexActionPresets.partnerStocksStandingBehind),
+
+	/* Missionary */
 	
+	MISSIONARY_ON_BACK("Lying on back",
+			Util.newArrayListOfValues(
+					new ListValue<>(OrgasmCumTarget.GROIN),
+					new ListValue<>(OrgasmCumTarget.STOMACH),
+					new ListValue<>(OrgasmCumTarget.FLOOR)),
+			SexActionPresets.playerMissionaryOnBack,
+			SexActionPresets.partnerMissionaryOnBack),
+	
+	MISSIONARY_KNEELING_BETWEEN_LEGS("Kneeling between legs",
+			Util.newArrayListOfValues(
+					new ListValue<>(OrgasmCumTarget.STOMACH),
+					new ListValue<>(OrgasmCumTarget.GROIN),
+					new ListValue<>(OrgasmCumTarget.LEGS),
+					new ListValue<>(OrgasmCumTarget.FLOOR)),
+			SexActionPresets.playerMissionaryKneelingBetweenLegs,
+			SexActionPresets.partnerMissionaryKneelingBetweenLegs),
 	
 	/* UNIQUE SEX SCENES */
 	
@@ -359,13 +379,13 @@ public enum SexPositionSlot {
 	private List<SexActionInterface> playerSlotActionsAvailablePartner;
 	private List<SexActionInterface> playerSlotOrgasmActionsPlayer;
 	private List<SexActionInterface> playerSlotOrgasmActionsPartner;
-	private List<SexActionInterface> playerSlotMutualOrgasmActions;
+//	private List<SexActionInterface> playerSlotMutualOrgasmActions;
 
 	private List<SexActionInterface> partnerSlotActionsAvailablePlayer;
 	private List<SexActionInterface> partnerSlotActionsAvailablePartner;
 	private List<SexActionInterface> partnerSlotOrgasmActionsPlayer;
 	private List<SexActionInterface> partnerSlotOrgasmActionsPartner;
-	private List<SexActionInterface> partnerSlotMutualOrgasmActions;
+//	private List<SexActionInterface> partnerSlotMutualOrgasmActions;
 	
 	private SexPositionSlot(String name,
 			List<OrgasmCumTarget> availableCumTargets,
@@ -379,13 +399,13 @@ public enum SexPositionSlot {
 		playerSlotActionsAvailablePartner = new ArrayList<>();
 		playerSlotOrgasmActionsPlayer = new ArrayList<>();
 		playerSlotOrgasmActionsPartner = new ArrayList<>();
-		playerSlotMutualOrgasmActions = new ArrayList<>();
+//		playerSlotMutualOrgasmActions = new ArrayList<>();
 		
 		partnerSlotActionsAvailablePlayer = new ArrayList<>();
 		partnerSlotActionsAvailablePartner = new ArrayList<>();
 		partnerSlotOrgasmActionsPlayer = new ArrayList<>();
 		partnerSlotOrgasmActionsPartner = new ArrayList<>();
-		partnerSlotMutualOrgasmActions = new ArrayList<>();
+//		partnerSlotMutualOrgasmActions = new ArrayList<>();
 		
 		try {
 			if (!playerSexActionContainingClasses.isEmpty()) {
@@ -397,10 +417,11 @@ public enum SexPositionSlot {
 							
 							if (SexAction.class.isAssignableFrom(f.getType())) {
 								if (((SexAction) f.get(null)).getActionType().isOrgasmOption()) {
-									if (((SexAction) f.get(null)).getActionType() == SexActionType.MUTUAL_ORGASM) {
-										playerSlotMutualOrgasmActions.add(((SexAction) f.get(null)));
-										
-									} else if (((SexAction) f.get(null)).getActionType().isPlayerAction()) {
+//									if (((SexAction) f.get(null)).getActionType() == SexActionType.MUTUAL_ORGASM) {
+//										playerSlotMutualOrgasmActions.add(((SexAction) f.get(null)));
+//										
+//									} else 
+									if (((SexAction) f.get(null)).getActionType().isPlayerAction()) {
 										playerSlotOrgasmActionsPlayer.add(((SexAction) f.get(null)));
 										
 									} else {
@@ -430,10 +451,11 @@ public enum SexPositionSlot {
 							
 							if (SexAction.class.isAssignableFrom(f.getType())) {
 								if (((SexAction) f.get(null)).getActionType().isOrgasmOption()) {
-									if (((SexAction) f.get(null)).getActionType() == SexActionType.MUTUAL_ORGASM) {
-										partnerSlotMutualOrgasmActions.add(((SexAction) f.get(null)));
-										
-									} else if (((SexAction) f.get(null)).getActionType().isPlayerAction()) {
+//									if (((SexAction) f.get(null)).getActionType() == SexActionType.MUTUAL_ORGASM) {
+//										partnerSlotMutualOrgasmActions.add(((SexAction) f.get(null)));
+//										
+//									} else 
+									if (((SexAction) f.get(null)).getActionType().isPlayerAction()) {
 										partnerSlotOrgasmActionsPlayer.add(((SexAction) f.get(null)));
 										
 									} else {
@@ -484,9 +506,9 @@ public enum SexPositionSlot {
 		return playerSlotOrgasmActionsPartner;
 	}
 
-	public List<SexActionInterface> getPlayerSlotMutualOrgasmActions() {
-		return playerSlotMutualOrgasmActions;
-	}
+//	public List<SexActionInterface> getPlayerSlotMutualOrgasmActions() {
+//		return playerSlotMutualOrgasmActions;
+//	}
 
 	public List<SexActionInterface> getPartnerSlotActionsAvailablePlayer() {
 		return partnerSlotActionsAvailablePlayer;
@@ -504,8 +526,8 @@ public enum SexPositionSlot {
 		return partnerSlotOrgasmActionsPartner;
 	}
 
-	public List<SexActionInterface> getPartnerSlotMutualOrgasmActions() {
-		return partnerSlotMutualOrgasmActions;
-	}
+//	public List<SexActionInterface> getPartnerSlotMutualOrgasmActions() {
+//		return partnerSlotMutualOrgasmActions;
+//	}
 
 }

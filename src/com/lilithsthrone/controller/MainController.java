@@ -84,10 +84,10 @@ import com.lilithsthrone.game.character.body.valueEnums.PiercingType;
 import com.lilithsthrone.game.character.body.valueEnums.TesticleSize;
 import com.lilithsthrone.game.character.body.valueEnums.TongueModifier;
 import com.lilithsthrone.game.character.body.valueEnums.Wetness;
-import com.lilithsthrone.game.character.effects.Fetish;
 import com.lilithsthrone.game.character.effects.Perk;
-import com.lilithsthrone.game.character.effects.PerkInterface;
 import com.lilithsthrone.game.character.effects.StatusEffect;
+import com.lilithsthrone.game.character.fetishes.Fetish;
+import com.lilithsthrone.game.character.fetishes.FetishDesire;
 import com.lilithsthrone.game.character.gender.Gender;
 import com.lilithsthrone.game.character.gender.GenderNames;
 import com.lilithsthrone.game.character.gender.GenderPreference;
@@ -100,9 +100,9 @@ import com.lilithsthrone.game.combat.Combat;
 import com.lilithsthrone.game.combat.DamageType;
 import com.lilithsthrone.game.combat.SpecialAttack;
 import com.lilithsthrone.game.combat.Spell;
-import com.lilithsthrone.game.dialogue.DialogueNodeOld;
 import com.lilithsthrone.game.dialogue.DebugDialogue;
 import com.lilithsthrone.game.dialogue.DialogueFlagValue;
+import com.lilithsthrone.game.dialogue.DialogueNodeOld;
 import com.lilithsthrone.game.dialogue.MapDisplay;
 import com.lilithsthrone.game.dialogue.SlaveryManagementDialogue;
 import com.lilithsthrone.game.dialogue.places.dominion.CityHall;
@@ -457,6 +457,12 @@ public class MainController implements Initializable {
 						
 						 if(event.getCode()==KeyCode.END){
 //							 
+							 for(Fetish f : Fetish.values()) {
+								 Main.game.getPlayer().incrementFetishExperience(f, (int) (Math.random()*20));
+							 }
+							 
+//							 Main.game.getPlayer().incrementCummedInArea(OrificeType.MOUTH, 2500);
+							 
 //							 for(NPC npc : Main.game.getNPCMap().values()) {
 //								 System.out.println(npc.getId());
 //							 }
@@ -464,9 +470,9 @@ public class MainController implements Initializable {
 //								 System.out.println(Util.intToString(i));
 //							 }
 							 
-							 Main.game.getPlayer().addDirtySlot(InventorySlot.GROIN);
-							 Main.game.getPlayer().addDirtySlot(InventorySlot.MOUTH);
-							 Main.game.getPlayer().addDirtySlot(InventorySlot.LEG);
+//							 Main.game.getPlayer().addDirtySlot(InventorySlot.GROIN);
+//							 Main.game.getPlayer().addDirtySlot(InventorySlot.MOUTH);
+//							 Main.game.getPlayer().addDirtySlot(InventorySlot.LEG);
 							 
 //							 System.out.println(Main.isVersionOlderThan("0.1.84", Main.VERSION_NUMBER));
 							 
@@ -2356,6 +2362,36 @@ public class MainController implements Initializable {
 							UtilText.parse(slave, "You cannot sell [npc.name], as there's nobody here to sell [npc.herHim] to."));
 					addEventListener(document, id, "mouseenter", el, false);
 				}
+				
+				id = slaveId+"_COSMETICS";
+				if (((EventTarget) document.getElementById(id)) != null) {
+					((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
+						Main.game.setContent(new Response("", "", SlaveryManagementDialogue.SLAVE_MANAGEMENT_COSMETICS_HAIR) {
+							@Override
+							public void effects() {
+								Main.game.getDialogueFlags().setSlaveryManagerSlaveSelected(slave);
+								BodyChanging.setTarget(slave);
+							}
+						});
+					}, false);
+					
+					addEventListener(document, id, "mousemove", moveTooltipListener, false);
+					addEventListener(document, id, "mouseleave", hideTooltipListener, false);
+
+					TooltipInformationEventListener el =  new TooltipInformationEventListener().setInformation("Send Slave to Kate",
+							UtilText.parse(slave, "Send [npc.name] to Kate's beauty salon, 'Succubi's Secrets', to get [npc.her] appearance changed."));
+					addEventListener(document, id, "mouseenter", el, false);
+				}
+				
+				id = slaveId+"_COSMETICS_DISABLED";
+				if (((EventTarget) document.getElementById(id)) != null) {
+					addEventListener(document, id, "mousemove", moveTooltipListener, false);
+					addEventListener(document, id, "mouseleave", hideTooltipListener, false);
+
+					TooltipInformationEventListener el =  new TooltipInformationEventListener().setInformation("Send Slave to Kate",
+							UtilText.parse(slave, "You haven't met Kate yet!"));
+					addEventListener(document, id, "mouseenter", el, false);
+				}
 			}
 			
 
@@ -2446,6 +2482,16 @@ public class MainController implements Initializable {
 	
 						TooltipInformationEventListener el =  new TooltipInformationEventListener().setInformation("Buy Slave",
 								UtilText.parse(slave, "You cannot buy [npc.name], as you don't have enough money!"));
+						addEventListener(document, id, "mouseenter", el, false);
+					}
+					
+					id = slaveId+"_TRADER_COSMETICS";
+					if (((EventTarget) document.getElementById(id)) != null) {
+						addEventListener(document, id, "mousemove", moveTooltipListener, false);
+						addEventListener(document, id, "mouseleave", hideTooltipListener, false);
+
+						TooltipInformationEventListener el =  new TooltipInformationEventListener().setInformation("Send Slave to Kate",
+								UtilText.parse(slave, "You can't send a slave you don't own to Kate!"));
 						addEventListener(document, id, "mouseenter", el, false);
 					}
 				}
@@ -3283,7 +3329,8 @@ public class MainController implements Initializable {
 			boolean noCost = !Main.game.isInNewWorld() || Main.game.getCurrentDialogueNode().getMapDisplay()==MapDisplay.PHONE;
 
 			for(BodyCoveringType bct : BodyCoveringType.values()) {
-				id = bct+"_PRIMARY_GLOW_OFF";
+				
+				id = "APPLY_COVERING_"+bct;
 				
 				if (((EventTarget) document.getElementById(id)) != null) {
 					
@@ -3292,21 +3339,38 @@ public class MainController implements Initializable {
 							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
 								@Override
 								public void effects() {
-									if(!noCost) {
-										Main.game.getPlayer().incrementMoney(-SuccubisSecrets.getBodyCoveringTypeCost(bct));
+									if(CharacterModificationUtils.getCoveringsToBeApplied().containsKey(bct)) {
+										if(!noCost) {
+											Main.game.getPlayer().incrementMoney(-SuccubisSecrets.getBodyCoveringTypeCost(bct));
+										}
+										
+										BodyChanging.getTarget().setSkinCovering(new Covering(CharacterModificationUtils.getCoveringsToBeApplied().get(bct)), false);
+										
+										if(noCost) {
+											if(bct == BodyCoveringType.HUMAN) {
+												BodyChanging.getTarget().getBody().updateCoverings(false, false, false, true);
+											}
+										}
 									}
-									
-									BodyChanging.getTarget().setSkinCovering(new Covering(
-											bct,
-											BodyChanging.getTarget().getCovering(bct).getPattern(),
-											BodyChanging.getTarget().getCovering(bct).getPrimaryColour(),
-											false,
-											BodyChanging.getTarget().getCovering(bct).getSecondaryColour(),
-											BodyChanging.getTarget().getCovering(bct).isSecondaryGlowing()), false);
-									
 								}
 							});
 						}
+					}, false);
+				}
+				
+				
+				id = bct+"_PRIMARY_GLOW_OFF";
+				
+				if (((EventTarget) document.getElementById(id)) != null) {
+					
+					((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
+						Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
+							@Override
+							public void effects() {
+								CharacterModificationUtils.getCoveringsToBeApplied().putIfAbsent(bct, new Covering(BodyChanging.getTarget().getCovering(bct)));
+								CharacterModificationUtils.getCoveringsToBeApplied().get(bct).setPrimaryGlowing(false);
+							}
+						});
 					}, false);
 				}
 				
@@ -3315,25 +3379,14 @@ public class MainController implements Initializable {
 				if (((EventTarget) document.getElementById(id)) != null) {
 					
 					((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
-						if(Main.game.getPlayer().getMoney() >= SuccubisSecrets.getBodyCoveringTypeCost(bct) || noCost) {
-							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
-								@Override
-								public void effects() {
-									if(!noCost) {
-										Main.game.getPlayer().incrementMoney(-SuccubisSecrets.getBodyCoveringTypeCost(bct));
-									}
-									
-									BodyChanging.getTarget().setSkinCovering(new Covering(
-											bct,
-											BodyChanging.getTarget().getCovering(bct).getPattern(),
-											BodyChanging.getTarget().getCovering(bct).getPrimaryColour(),
-											true,
-											BodyChanging.getTarget().getCovering(bct).getSecondaryColour(),
-											BodyChanging.getTarget().getCovering(bct).isSecondaryGlowing()), false);
-									
-								}
-							});
-						}
+						Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
+							@Override
+							public void effects() {
+								CharacterModificationUtils.getCoveringsToBeApplied().putIfAbsent(bct, new Covering(BodyChanging.getTarget().getCovering(bct)));
+								CharacterModificationUtils.getCoveringsToBeApplied().get(bct).setPrimaryGlowing(true);
+								
+							}
+						});
 					}, false);
 				}
 				
@@ -3342,25 +3395,13 @@ public class MainController implements Initializable {
 				if (((EventTarget) document.getElementById(id)) != null) {
 					
 					((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
-						if(Main.game.getPlayer().getMoney() >= SuccubisSecrets.getBodyCoveringTypeCost(bct) || noCost) {
-							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
-								@Override
-								public void effects() {
-									if(!noCost) {
-										Main.game.getPlayer().incrementMoney(-SuccubisSecrets.getBodyCoveringTypeCost(bct));
-									}
-									
-									BodyChanging.getTarget().setSkinCovering(new Covering(
-											bct,
-											BodyChanging.getTarget().getCovering(bct).getPattern(),
-											BodyChanging.getTarget().getCovering(bct).getPrimaryColour(),
-											BodyChanging.getTarget().getCovering(bct).isPrimaryGlowing(),
-											BodyChanging.getTarget().getCovering(bct).getSecondaryColour(),
-											false), false);
-									
-								}
-							});
-						}
+						Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
+							@Override
+							public void effects() {
+								CharacterModificationUtils.getCoveringsToBeApplied().putIfAbsent(bct, new Covering(BodyChanging.getTarget().getCovering(bct)));
+								CharacterModificationUtils.getCoveringsToBeApplied().get(bct).setSecondaryGlowing(false);
+							}
+						});
 					}, false);
 				}
 				
@@ -3369,25 +3410,13 @@ public class MainController implements Initializable {
 				if (((EventTarget) document.getElementById(id)) != null) {
 					
 					((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
-						if(Main.game.getPlayer().getMoney() >= SuccubisSecrets.getBodyCoveringTypeCost(bct) || noCost) {
-							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
-								@Override
-								public void effects() {
-									if(!noCost) {
-										Main.game.getPlayer().incrementMoney(-SuccubisSecrets.getBodyCoveringTypeCost(bct));
-									}
-									
-									BodyChanging.getTarget().setSkinCovering(new Covering(
-											bct,
-											BodyChanging.getTarget().getCovering(bct).getPattern(),
-											BodyChanging.getTarget().getCovering(bct).getPrimaryColour(),
-											BodyChanging.getTarget().getCovering(bct).isPrimaryGlowing(),
-											BodyChanging.getTarget().getCovering(bct).getSecondaryColour(),
-											true), false);
-									
-								}
-							});
-						}
+						Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
+							@Override
+							public void effects() {
+								CharacterModificationUtils.getCoveringsToBeApplied().putIfAbsent(bct, new Covering(BodyChanging.getTarget().getCovering(bct)));
+								CharacterModificationUtils.getCoveringsToBeApplied().get(bct).setSecondaryGlowing(true);
+							}
+						});
 					}, false);
 				}
 				
@@ -3397,25 +3426,13 @@ public class MainController implements Initializable {
 					if (((EventTarget) document.getElementById(id)) != null) {
 						
 						((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
-							if(Main.game.getPlayer().getMoney() >= SuccubisSecrets.getBodyCoveringTypeCost(bct) || noCost) {
-								Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
-									@Override
-									public void effects() {
-										if(!noCost) {
-											Main.game.getPlayer().incrementMoney(-SuccubisSecrets.getBodyCoveringTypeCost(bct));
-										}
-										
-										BodyChanging.getTarget().setSkinCovering(new Covering(
-												bct,
-												pattern,
-												BodyChanging.getTarget().getCovering(bct).getPrimaryColour(),
-												BodyChanging.getTarget().getCovering(bct).isPrimaryGlowing(),
-												BodyChanging.getTarget().getCovering(bct).getSecondaryColour(),
-												BodyChanging.getTarget().getCovering(bct).isSecondaryGlowing()), false);
-										
-									}
-								});
-							}
+							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
+								@Override
+								public void effects() {
+									CharacterModificationUtils.getCoveringsToBeApplied().putIfAbsent(bct, new Covering(BodyChanging.getTarget().getCovering(bct)));
+									CharacterModificationUtils.getCoveringsToBeApplied().get(bct).setPattern(pattern);
+								}
+							});
 						}, false);
 					}
 				}
@@ -3425,35 +3442,14 @@ public class MainController implements Initializable {
 					
 					if (((EventTarget) document.getElementById(id)) != null) {
 						((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
-							if(Main.game.getPlayer().getMoney() >= SuccubisSecrets.getBodyCoveringTypeCost(bct) || noCost) {
-								Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
-									@Override
-									public void effects() {
-										if(!noCost) {
-											Main.game.getPlayer().incrementMoney(-SuccubisSecrets.getBodyCoveringTypeCost(bct));
-										}
-										
-										BodyChanging.getTarget().setSkinCovering(new Covering(
-												bct,
-												BodyChanging.getTarget().getCovering(bct).getPattern(),
-												colour,
-												(colour != Colour.COVERING_NONE && BodyChanging.getTarget().getCovering(bct).isPrimaryGlowing()),
-												BodyChanging.getTarget().getCovering(bct).getSecondaryColour(),
-												BodyChanging.getTarget().getCovering(bct).isSecondaryGlowing()), false);
-										
-										if(noCost) {
-//											if(bct == BodyCoveringType.HAIR_HUMAN) {
-//												Main.game.getPlayer().getBody().updateCoverings(false, false, true, false);
-//												
-//											} else 
-											if(bct == BodyCoveringType.HUMAN) {
-												BodyChanging.getTarget().getBody().updateCoverings(false, false, false, true);
-											}
-										}
-										
-									}
-								});
-							}
+							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
+								@Override
+								public void effects() {
+									CharacterModificationUtils.getCoveringsToBeApplied().putIfAbsent(bct, new Covering(BodyChanging.getTarget().getCovering(bct)));
+									CharacterModificationUtils.getCoveringsToBeApplied().get(bct).setPrimaryColour(colour);
+									CharacterModificationUtils.getCoveringsToBeApplied().get(bct).setPrimaryGlowing((colour != Colour.COVERING_NONE && BodyChanging.getTarget().getCovering(bct).isPrimaryGlowing()));
+								}
+							});
 						}, false);
 					}
 				}
@@ -3462,25 +3458,14 @@ public class MainController implements Initializable {
 					
 					if (((EventTarget) document.getElementById(id)) != null) {
 						((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
-							if(Main.game.getPlayer().getMoney() >= SuccubisSecrets.getBodyCoveringTypeCost(bct) || noCost) {
-								Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
-									@Override
-									public void effects() {
-										if(!noCost) {
-											Main.game.getPlayer().incrementMoney(-SuccubisSecrets.getBodyCoveringTypeCost(bct));
-										}
-										
-										BodyChanging.getTarget().setSkinCovering(new Covering(
-												bct,
-												BodyChanging.getTarget().getCovering(bct).getPattern(),
-												BodyChanging.getTarget().getCovering(bct).getPrimaryColour(),
-												BodyChanging.getTarget().getCovering(bct).isPrimaryGlowing(),
-												colour,
-												(colour != Colour.COVERING_NONE && BodyChanging.getTarget().getCovering(bct).isSecondaryGlowing())), false);
-										
-									}
-								});
-							}
+							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()){
+								@Override
+								public void effects() {
+									CharacterModificationUtils.getCoveringsToBeApplied().putIfAbsent(bct, new Covering(BodyChanging.getTarget().getCovering(bct)));
+									CharacterModificationUtils.getCoveringsToBeApplied().get(bct).setSecondaryColour(colour);
+									CharacterModificationUtils.getCoveringsToBeApplied().get(bct).setSecondaryGlowing(colour != Colour.COVERING_NONE && BodyChanging.getTarget().getCovering(bct).isSecondaryGlowing());
+								}
+							});
 						}, false);
 					}
 				}
@@ -3822,11 +3807,45 @@ public class MainController implements Initializable {
 				}
 			}
 			for (Fetish f : Fetish.values()) {
-				if (((EventTarget) document.getElementById("fetishUnlock" + f)) != null) {
-					addEventListener(document, "fetishUnlock" + f, "mousemove", moveTooltipListener, false);
-					addEventListener(document, "fetishUnlock" + f, "mouseleave", hideTooltipListener, false);
-					addEventListener(document, "fetishUnlock" + f, "mouseenter", new TooltipInformationEventListener().setFetish(f, Main.game.getPlayer()), false);
-					addEventListener(document, "fetishUnlock" + f, "click", new LevelUpButtonsEventListener().handleFetishPress(f), false);
+				id = "fetishUnlock" + f;
+				if (((EventTarget) document.getElementById(id)) != null) {
+					((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
+						if(Main.game.getPlayer().getEssenceCount(TFEssence.ARCANE)>=f.getCost()) {
+							if(Main.game.getPlayer().addFetish(f)) {
+								Main.game.getPlayer().incrementEssenceCount(TFEssence.ARCANE, -f.getCost());
+								Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()));
+							}
+						}
+					}, false);
+					
+					addEventListener(document, id, "mousemove", moveTooltipListener, false);
+					addEventListener(document, id, "mouseleave", hideTooltipListener, false);
+					addEventListener(document, id, "mouseenter", new TooltipInformationEventListener().setFetish(f, Main.game.getPlayer()), false);
+				}
+				
+				id = f+"_EXPERIENCE";
+				if (((EventTarget) document.getElementById(id)) != null) {
+					addEventListener(document, id, "mousemove", moveTooltipListener, false);
+					addEventListener(document, id, "mouseleave", hideTooltipListener, false);
+					addEventListener(document, id, "mouseenter", new TooltipInformationEventListener().setFetishExperience(f, Main.game.getPlayer()), false);
+				}
+				
+				for (FetishDesire desire : FetishDesire.values()) {
+					id = f+"_"+desire;
+					if (((EventTarget) document.getElementById(id)) != null) {
+						((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
+							if(Main.game.getPlayer().getEssenceCount(TFEssence.ARCANE)>=FetishDesire.getCostToChange()) {
+								if(Main.game.getPlayer().setFetishDesire(f, desire)) {
+									Main.game.getPlayer().incrementEssenceCount(TFEssence.ARCANE, -FetishDesire.getCostToChange());
+									Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()));
+								}
+							}
+						}, false);
+						
+						addEventListener(document, id, "mousemove", moveTooltipListener, false);
+						addEventListener(document, id, "mouseleave", hideTooltipListener, false);
+						addEventListener(document, id, "mouseenter", new TooltipInformationEventListener().setFetishDesire(f, desire, Main.game.getPlayer()), false);
+					}
 				}
 			}
 			
@@ -4379,6 +4398,23 @@ public class MainController implements Initializable {
 				}, false);
 			}
 			
+			id = "INFLATION_CONTENT_ON";
+			if (((EventTarget) document.getElementById(id)) != null) {
+				((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
+					Main.getProperties().inflationContent = !Main.getProperties().inflationContent;
+					Main.saveProperties();
+					Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()));
+				}, false);
+			}
+			id = "INFLATION_CONTENT_OFF";
+			if (((EventTarget) document.getElementById(id)) != null) {
+				((EventTarget) document.getElementById(id)).addEventListener("click", e -> {
+					Main.getProperties().inflationContent = !Main.getProperties().inflationContent;
+					Main.saveProperties();
+					Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()));
+				}, false);
+			}
+			
 			for(int i : OptionsDialogue.forcedTFsettings) {
 				id = "FORCED_TF_"+i;
 				if (((EventTarget) document.getElementById(id)) != null) {
@@ -4868,7 +4904,7 @@ public class MainController implements Initializable {
 			}
 			
 			// For perk slots:
-			for (PerkInterface p : character.getPerks()) {
+			for (Perk p : character.getPerks()) {
 				if (((EventTarget) documentAttributes.getElementById("PERK_"+idModifier + p)) != null) {
 					addEventListener(documentAttributes, "PERK_"+idModifier + p, "mousemove", moveTooltipListener, false);
 					addEventListener(documentAttributes, "PERK_"+idModifier + p, "mouseleave", hideTooltipListener, false);
@@ -5025,7 +5061,7 @@ public class MainController implements Initializable {
 //		
 //		// For perk slots:
 //		if(Main.game.getPlayer()!=null) {
-//			for (PerkInterface p : Main.game.getPlayer().getPerks()) {
+//			for (Perk p : Main.game.getPlayer().getPerks()) {
 //				if (((EventTarget) documentAttributes.getElementById("PERK_PLAYER_" + p)) != null) {
 //					addEventListener(documentAttributes, "PERK_PLAYER_" + p, "mousemove", moveTooltipListener, false);
 //					addEventListener(documentAttributes, "PERK_PLAYER_" + p, "mouseleave", hideTooltipListener, false);
@@ -5045,7 +5081,7 @@ public class MainController implements Initializable {
 //			}
 //		}
 //		if(Main.game.isInSex()) {
-//			for (PerkInterface p : Sex.getActivePartner().getPerks()) {
+//			for (Perk p : Sex.getActivePartner().getPerks()) {
 //				if (((EventTarget) documentAttributes.getElementById("PERK_PARTNER_" + p)) != null) {
 //					addEventListener(documentAttributes, "PERK_PARTNER_" + p, "mousemove", moveTooltipListener, false);
 //					addEventListener(documentAttributes, "PERK_PARTNER_" + p, "mouseleave", hideTooltipListener, false);
@@ -5246,7 +5282,7 @@ public class MainController implements Initializable {
 				}
 				
 				// For perk slots:
-				for (PerkInterface p : character.getPerks()) {
+				for (Perk p : character.getPerks()) {
 					if (((EventTarget) documentRight.getElementById("PERK_NPC_"+idModifier + p)) != null) {
 						addEventListener(documentRight, "PERK_NPC_"+idModifier + p, "mousemove", moveTooltipListener, false);
 						addEventListener(documentRight, "PERK_NPC_"+idModifier + p, "mouseleave", hideTooltipListener, false);

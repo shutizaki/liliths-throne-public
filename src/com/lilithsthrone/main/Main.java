@@ -9,6 +9,7 @@ import java.util.List;
 import com.lilithsthrone.controller.MainController;
 import com.lilithsthrone.game.Game;
 import com.lilithsthrone.game.Properties;
+import com.lilithsthrone.game.character.CharacterImportSetting;
 import com.lilithsthrone.game.character.CharacterUtils;
 import com.lilithsthrone.game.character.NameTriplet;
 import com.lilithsthrone.game.character.PlayerCharacter;
@@ -41,7 +42,7 @@ import javafx.stage.Stage;
 
 /**
  * @since 0.1.0
- * @version 0.1.97
+ * @version 0.1.98
  * @author Innoxia
  */
 public class Main extends Application {
@@ -55,7 +56,7 @@ public class Main extends Application {
 	public static Stage primaryStage;
 	public static String author = "Innoxia";
 
-	public static final String VERSION_NUMBER = "0.1.97.5",
+	public static final String VERSION_NUMBER = "0.1.98.5",
 			VERSION_DESCRIPTION = "Early Alpha";
 
 	public static final Image WINDOW_IMAGE = new Image("/com/lilithsthrone/res/images/windowIcon32.png");
@@ -69,11 +70,12 @@ public class Main extends Application {
 //		+ "<h6 style='text-align:center;'><b style='color:" + Colour.GENERIC_BAD.toWebHexString() + ";'>Early Alpha!</b></h6>"
 		
 		"<p>"
-			+ "Hello everyone! ^^"
+			+ "Hello everyone! :3"
 		+ "</p>"
 			
 		+ "<p>"
-			+ "I'm very close to finishing the new sex & orgasm content now - just another few days and it will be all done! I'll then move on to combat & Nyan work. :3"
+			+ "This is the preview version for 0.1.99, so it still contains some bugs and other half-finished content, but I have managed to update the fetishes and implement the majority of the lust mechanics in sex."
+			+ " I've also spent some time this week planning Nyan's quest content and the combat update, so I'll be able to get started on those on Monday (after finishing the lust & stamina mechanics and the fluids work)."
 		+ "</p>"
 		
 		+ "<p>"
@@ -84,70 +86,49 @@ public class Main extends Application {
 		+ "</br>"
 
 		+ "<list>"
-			+ "<h6>v0.1.97.5</h6>"
+			+ "<h6>v0.1.98.5</h6>"
 			+"<li>Engine:</li>"
-			+"<ul>Finished converting the save system to .xml. All saves now use the new .xml system, so you won't need to export/import between versions anymore.</ul>"
-			+"<ul>Optimised NPC load method, so loading a game should now be faster.</ul>"
-			+"<ul>Added support for conditional parsing commands to the parsing engine. I'll add documentation for this soon.</ul>"
-			+"<ul>Finished refactor of all sex engine code to properly support multiple-partner sex scenes.</ul>"
+			+"<ul>Updated to Java 9.0.4. If you're using the .jar version of the game, and are encountering UI bugs, please update your Java to 9.0.4 (.exe versions are unaffected, as they are packaged with 9.0.4).</ul>"
+			+"<ul>Save files now only keep track of the last 50 events in the event log. (As only the last 50 are ever displayed within the game, it was pointless to be saving more than this.)</ul>"
 
-			+"<li>UI:</li>"
-			+"<ul>Updated Save/Load UI, and changed Export/Import to exported character management screen.</ul>"
-			+"<ul>Updated inventory slot positions. (This should now be the final layout.)</ul>"
-
-			+"<li>Sex:</li>"
-			+"<ul>NPCs should no longer switch positions just before they orgasm.</ul>"
-			+"<ul>NPCs will no longer instantly re-penetrate themselves on the same turn that you forbid or stop all self-penetrative actions.</ul>"
-			+"<ul>Reworked all back-end code for generic orgasms, ready to write in more detailed content for the full release.</ul>"
-			+"<ul>Added 'cum on area' orgasm options, to allow you to cum on a specific area of your partner's body. (Not completely finished yet.)</ul>"
+			+"<li>Gameplay:</li>"
+			+"<ul>Expanded fetish mechanics to tie-in with the lust mechanic in sex. You can now select your 'desire' for each fetish, which affects your lust gains in sex. (Lust affects NPC pace, and when in consensual sex, dominant NPCs stop sex if their lust gets to 0, and submissive NPCs stop it when they drop below 20.)</ul>"
+			+"<ul>All NPCs now have their own desires. You can see these by hovering over their 'desires' status effect. (I chose to display these in a easy manner, rather than having you find them out 1-by-1, as I thought 'desire discovery' mechanics would get very tedious.)</ul>"
+			+"<ul>Added voyeurist, vaginal, pussy slut, leg lover, and strutter fetishes.</ul>"
+			+"<ul>Added new fetishes and desire increases/decreases to the 'mystery kink' item's enchantments. Also organised the fetish order in that menu.</ul>"
+			+"<ul>You now earn experience for each fetish-related action both in and out of sex. Higher fetish levels increase arousal gains from those actions in sex, and for the next version I'll make them level the fetish up to provide larger bonuses.</ul>"
+			+"<ul>Added the start of stamina drains in sex (although I haven't added exhaustion for when the character reaches 0 yet).</ul>"
+			+"<ul>Added the start of alcoholic effects (the rest & psychoactive effects will be finished for the full version).</ul>"
 
 			+"<li>Other:</li>"
-			+"<ul>Demons now only have 1 pair of breasts by default. (I originally intended this to be the case, but I ended up giving them 3 a long time ago to test multiple-breast rows, and forgot to change it back.)</ul>"
-			+"<ul>Improved corruption descriptions to reflect the fact that corruption is a measure of perversion.</ul>"
-			+"<ul>Offspring are now permanently removed from the encounterable NPC list when you tell them to leave. (I'll add a way to manually find them again in the future.)</ul>"
-			+"<ul>Penis, anus, nipple, and vagina sex actions (such as 'Finger him/her' and 'Stroke his/her cock') are now completely hidden until you discover if the NPC has the correct genitals/nipples/anus to perform those actions on.</ul>"
-			+"<ul>Removed old lore reference to the arcane making everyone bi-sexual (this was the case before I added sexual orientations to the game).</ul>"
-			+"<ul>Moved pregnancy lore information out of the phone's 'Pregnancy stats' page and into a book in Lilaya's library.</ul>"
-			+"<ul>Forced TFs will now increase your cum production, where appropriate.</ul>"
-			+"<ul>Gynephilic NPCs will now prefer to forcibly TF you into a female, unless they have the 'pregnancy' or 'broodmother' fetishes, in which case they will prefer to TF you into a futanari, shemale, or trap.</ul>"
-			+"<ul>Added a masochistic/cum addict variation of the 'dirty clothes' status effect.</ul>"
-			+"<ul>Added a 'dirty body' status effect (with matching masochistic/cum addict variation), which is applied if any of your body parts are covered in cum. (Can be removed by washing in your room.)</ul>"
-
-			+"<li>Contributors:</li>"
-			+"<ul>Added Linux font compatibility (added Carlito as an alternative font for Calibri). (by PyrophoricPlumage)</ul>"
-			+"<ul>Fixed incorrect colour reference. (by CognitiveMist)</ul>"
-			+"<ul>Numerous performance improvements. (by CognitiveMist)</ul>"
-			+"<ul>Addressed some control flow & code style items. (by CognitiveMist)</ul>"
-			+"<ul>Fixed striped leggings, panties, and bra using incorrect colour variables. (by Tukaima)</ul>"
+			+"<ul>Improved the save/load icons. (I'm sorry they were so poorly thought-out before!)</ul>"
+			+"<ul>Added more antler and horn colours.</ul>"
+			+"<ul>If you are the dom in a sex scene in which your partner does not have equal control (i.e. a non-con scene), then your partner will not be allowed to remove your clothing by default. (You can still permit them to.)</ul>"
+			+"<ul>Taking a shower now cleans 500ml of cum from all orifices, except your mouth (representing cum in stomach), which isn't affected.</ul>"
+			+"<ul>Sightly improved formatting of all tooltips.</ul>"
+			+"<ul>Added associated fetishes to orgasms.</ul>"
+			+"<ul>Added save/load entries to event log.</ul>"
+			+"<ul>Added correct fetishes to Lilaya & Rose (I still need to go through all unique NPCs and give them proper likes/dislikes).</ul>"
+			+"<ul>Ralph now stocks 25 dye brushes instead of 5. (Wait for his shop to refresh at midnight for him to start stocking 25.)</ul>"
 
 			+"<li>Bugs:</li>"
-			+"<ul>NPC orgasms should now function correctly (that is, they should now cum inside when they're supposed to).</ul>"
-			+"<ul>Typo fixes (some minor ones in tooltips, changing 'reindeer morph' to be hyphenated like other races, and several other small fixes).</ul>"
-			+"<ul>Imported slaves at the auction block no longer spawn in as being pregnant.</ul>"
-			+"<ul>Fixed bugs related to Finch's ownership of slaves. (He should now correctly lose ownership of slaves you purchase from the auction block.)</ul>"
-			+"<ul>Fixed incorrect penis reveal dialogue (where the NPC would compare your penis size to their own, non-existent penis).</ul>"
-			+"<ul>Fixed enchanting bug where crafting a potion to change a certain body type (primarily horns) would then lock out transformation options for other racial potions.</ul>"
-			+"<ul>Fixed hypno-watch effect description returning 'command_unknown'.</ul>"
-			+"<ul>Slightly changed piercing slot descriptions to reflect whether or not your character knows what the NPC's genitals/nipples look like.</ul>"
-			+"<ul>Nyan's inventory is now correctly saved/loaded.</ul>"
-			+"<ul>Multiple partner sex scenes should no loner suddenly lose one of the NPC partners.</ul>"
-			+"<ul>Fixed major game-freezing bug where if you were on the receiving end of penetrative non-consensual sex, and your partner reached orgasm but you did not, you would get stuck on the 'receive creampie' and 'request pullout' options.</ul>"
-			+"<ul>Fixed duplicate actions showing up in Kate's and Lilaya's sex scenes.</ul>"
-			+"<ul>When starting from a character import, the flag that sets your having met Brax is now correctly reset.</ul>"
-			+"<ul>Fixed minor bug in gender appearance method (masculine characters with no genitals are no assumed to be male if their groin is concealed).</ul>"
-			+"<ul>Added correct description variants for NPCs when consuming the harpy matriarchs' special items.</ul>"
-			+"<ul>Fixed bug where you could perform anilingus and cunnilingus at the same time. (Also fixed a related bug where multiple penis-related sex actions could be performed.)</ul>"
-			+"<ul>Fixed four and five rows of breasts always being described as three.</ul>"
-			+"<ul>Fixed issue where in some screens/dialogue/tooltips, incorrect NPC names or stats would be displayed.</ul>"
-			+"<ul>Can no longer pull up T-shirt from under concealing/blocking clothing.</ul>"
-			+"<ul>NPCs will no longer be stuck at having a fraction of their health, willpower, and stamina.</ul>"
-			+"<ul>Vicky's post-sex scene will now correctly no longer reference Arthur's package after you've completed that section of the side-quest.</ul>"
-			+"<ul>Importing a game that was exported while the difficulty was set to anything above 'Human' will no loner lock all NPC's levels to being double that of yours.</ul>"
-			+"<ul>Slightly improved genetics/inheritance method, so that offspring's ass & hip sizes (and probably a few other things) will now more closely resemble that of their parents.</ul>"
-			+"<ul>Fixed bugged arousal gain values in sex.</ul>"
-			+"<ul>Winter event Reindeer-morphs will no longer spawn in as human (if your furry settings are set to 'Human', then they'll spawn in as minor Reindeer-morphs).</ul>"
-			+"<ul>Reindeer overseers and cultist chapels should now both be able to be accessed if they are on the same tile.</ul>"
-			+"<ul>'Spread pussy' action will now transfer lubrication between fingers & vagina.</ul>"
+			+"<ul>Fixed ongoing penetration status effect's incorrect tooltip descriptions.</ul>"
+			+"<ul>Typos and parsing fixes (including fixing knotting descriptions).</ul>"
+			+"<ul>Fixed incorrect naming for breast shape and horn TF potions.</ul>"
+			+"<ul>Loading a game no longer overwrites the activity log.</ul>"
+			+"<ul>Your discoveries of NPC genitals are now correctly saved/loaded.</ul>"
+			+"<ul>Cumming inside a partner multiple times should no longer result in multiple pregnancy possibilities in the pregnancy stats screen.</ul>"
+			+"<ul>The description of losing your penile virginity should now always be appended correctly in sex.</ul>"
+			+"<ul>Body parts being exposed in sex should now have the correct descriptions appended.</ul>"
+			+"<ul>Fixed bug where the action 'Pull out (chest)' sometimes wouldn't work.</ul>"
+			+"<ul>Fixed grey horns and antlers text colour being red.</ul>"
+			+"<ul>Fixed Kate's intro referencing three pairs of breasts (she now just has a single pair of breasts).</ul>"
+			+"<ul>Fixed clothing remaining dirty after taking a shower.</ul>"
+			+"<ul>Fixed some sex actions randomly not being available.</ul>"
+			+"<ul>Fixed bug where 'stop X' actions would show up in sex actions for when your partner was using themselves. (e.g. 'Stop fingering' would show up when your partner was fingering themselves.)</ul>"
+			+"<ul>Fixed bug where the status message informing you that your clothing was getting dirty would lock up sex scenes.</ul>"
+			+"<ul>Fixed penile virginity being reset on every game load (old characters will still incorrectly be penile virgins, but after losing it their non-virgin state will be saved).</ul>"
+			+"<ul>NPCs will no longer listen to your pullout/creampie requests if they're the dom in non-con sex.</ul>"
 		+ "</list>"
 		;
 	
@@ -178,7 +159,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		credits.add(new CreditsSlot("Anonymous", "", 0, 6, 115+61, 37+20));
+		credits.add(new CreditsSlot("Anonymous", "", 0, 6, 111+61, 37+20));
 		
 
 		credits.add(new CreditsSlot("fun_bot", "", 0, 0, 0, 2));
@@ -295,6 +276,7 @@ public class Main extends Application {
 		credits.add(new CreditsSlot("Shas'O Dal'yth Kauyon Kais Taku", "", 0, 0, 6, 0));
 		credits.add(new CreditsSlot("Crow Invictus", "", 0, 0, 5, 0));
 		credits.add(new CreditsSlot("Sheltem", "", 0, 0, 4, 0));
+		credits.add(new CreditsSlot("Sig", "", 0, 0, 4, 0));
 		credits.add(new CreditsSlot("Silentark", "", 0, 0, 3, 0));
 		credits.add(new CreditsSlot("Sorter", "", 0, 0, 0, 6));
 		credits.add(new CreditsSlot("Spookermen", "", 0, 0, 0, 6));
@@ -550,7 +532,6 @@ public class Main extends Application {
 
 			properties.savePropertiesAsXML();
 
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -684,7 +665,7 @@ public class Main extends Application {
 		if (file != null) {
 			try {
 				Main.game.setPlayer(CharacterUtils.startLoadingCharacterFromXML());
-				Main.game.setPlayer(CharacterUtils.loadCharacterFromXML(file, Main.game.getPlayer()));
+				Main.game.setPlayer(CharacterUtils.loadCharacterFromXML(file, Main.game.getPlayer(), CharacterImportSetting.NO_PREGNANCY));
 				
 				Main.game.getPlayer().getSlavesOwned().clear();
 				Main.game.getPlayer().endPregnancy(false);

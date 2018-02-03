@@ -11,8 +11,8 @@ import com.lilithsthrone.game.character.body.CoverableArea;
 import com.lilithsthrone.game.character.body.types.PenisType;
 import com.lilithsthrone.game.character.body.types.VaginaType;
 import com.lilithsthrone.game.character.body.valueEnums.CupSize;
-import com.lilithsthrone.game.character.effects.Fetish;
 import com.lilithsthrone.game.character.effects.StatusEffect;
+import com.lilithsthrone.game.character.fetishes.Fetish;
 import com.lilithsthrone.game.character.gender.Gender;
 import com.lilithsthrone.game.character.npc.NPC;
 import com.lilithsthrone.game.character.race.RaceStage;
@@ -20,7 +20,6 @@ import com.lilithsthrone.game.character.race.RacialBody;
 import com.lilithsthrone.game.dialogue.SlaveryManagementDialogue;
 import com.lilithsthrone.game.dialogue.eventLog.SlaveryEventLogEntry;
 import com.lilithsthrone.game.dialogue.utils.UtilText;
-import com.lilithsthrone.game.inventory.clothing.AbstractClothing;
 import com.lilithsthrone.main.Main;
 import com.lilithsthrone.utils.Colour;
 import com.lilithsthrone.utils.Util;
@@ -114,51 +113,44 @@ public class SlaveryUtil implements Serializable {
 			
 			// ***** EVENTS: ***** //
 			
-			// Washing:
-			if((slave.hasStatusEffect(StatusEffect.CLOTHING_CUM) || !slave.getDirtySlots().isEmpty())
-					&& !slave.getWorkHours()[hour]
-					&& slave.hasSlavePermissionSetting(SlavePermissionSetting.CLEANLINESS_WASH_CLOTHES)) {
-				slave.cleanAllDirtySlots();
-				slave.cleanAllClothing();
-				for (AbstractClothing c : slave.getClothingCurrentlyEquipped()) {
-					c.setDirty(false);
-				}
-				slave.calculateStatusEffects(0);
-				addSlaveryEvent(day, slave, new SlaveryEventLogEntry(hour,
-						slave,
-						"Washed Clothes",
-						UtilText.parse(slave, "[npc.Name] washed [npc.her] clothes."),
-						Util.newArrayListOfValues(new ListValue<>("<span style='color:"+Colour.BASE_AQUA.toWebHexString()+";'>Clean Clothes</span>"))));
-			}
 			
-			// Washing clothes:
+			// Washing body:
 			if(slave.hasSlavePermissionSetting(SlavePermissionSetting.CLEANLINESS_WASH_BODY)
 					&& !slave.getWorkHours()[hour]
-					&& (slave.hasStatusEffect(StatusEffect.CREAMPIE_ANUS) || slave.hasStatusEffect(StatusEffect.CREAMPIE_VAGINA) || slave.hasStatusEffect(StatusEffect.CREAMPIE_NIPPLES) || slave.hasStatusEffect(StatusEffect.CREAMPIE_PENIS))) {
+					&& (slave.hasStatusEffect(StatusEffect.CREAMPIE_ANUS) || slave.hasStatusEffect(StatusEffect.CREAMPIE_VAGINA) || slave.hasStatusEffect(StatusEffect.CREAMPIE_NIPPLES))) {
 				List<String> cleanedParts = new ArrayList<>();
 				
 				if(slave.hasStatusEffect(StatusEffect.CREAMPIE_ANUS)) {
-					slave.removeStatusEffect(StatusEffect.CREAMPIE_ANUS);
 					cleanedParts.add("<span style='color:"+Colour.BASE_AQUA.toWebHexString()+";'>Cleaned Anal Creampie</span>");
 				}
 				if(slave.hasStatusEffect(StatusEffect.CREAMPIE_VAGINA)) {
-					slave.removeStatusEffect(StatusEffect.CREAMPIE_VAGINA);
 					cleanedParts.add("<span style='color:"+Colour.BASE_AQUA.toWebHexString()+";'>Cleaned Pussy Creampie</span>");
 				}
 				if(slave.hasStatusEffect(StatusEffect.CREAMPIE_NIPPLES)) {
-					slave.removeStatusEffect(StatusEffect.CREAMPIE_NIPPLES);
 					cleanedParts.add("<span style='color:"+Colour.BASE_AQUA.toWebHexString()+";'>Cleaned Nipple Creampie</span>");
 				}
-				if(slave.hasStatusEffect(StatusEffect.CREAMPIE_PENIS)) {
-					slave.removeStatusEffect(StatusEffect.CREAMPIE_PENIS);
-					cleanedParts.add("<span style='color:"+Colour.BASE_AQUA.toWebHexString()+";'>Cleaned Urethra Creampie</span>");
-				}
+				slave.washAllOrifices();
+				slave.calculateStatusEffects(0);
 				
 				addSlaveryEvent(day, slave, new SlaveryEventLogEntry(hour,
 						slave,
 						"Washed Body",
 						UtilText.parse(slave, "[npc.Name] had a wash and cleaned [npc.her] body."),
 						cleanedParts));
+			}
+			
+			// Washing clothes:
+			if((slave.hasStatusEffect(StatusEffect.CLOTHING_CUM) || !slave.getDirtySlots().isEmpty())
+					&& !slave.getWorkHours()[hour]
+					&& slave.hasSlavePermissionSetting(SlavePermissionSetting.CLEANLINESS_WASH_CLOTHES)) {
+				slave.cleanAllDirtySlots();
+				slave.cleanAllClothing();
+				slave.calculateStatusEffects(0);
+				addSlaveryEvent(day, slave, new SlaveryEventLogEntry(hour,
+						slave,
+						"Washed Clothes",
+						UtilText.parse(slave, "[npc.Name] washed [npc.her] clothes."),
+						Util.newArrayListOfValues(new ListValue<>("<span style='color:"+Colour.BASE_AQUA.toWebHexString()+";'>Clean Clothes</span>"))));
 			}
 			
 			// Events:

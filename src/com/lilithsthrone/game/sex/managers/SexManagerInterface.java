@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.body.CoverableArea;
+import com.lilithsthrone.game.character.npc.dominion.DominionAlleywayAttacker;
+import com.lilithsthrone.game.character.npc.dominion.DominionSuccubusAttacker;
 import com.lilithsthrone.game.dialogue.utils.UtilText;
 import com.lilithsthrone.game.sex.OrificeType;
 import com.lilithsthrone.game.sex.Sex;
@@ -26,7 +28,15 @@ public interface SexManagerInterface {
 	public Map<GameCharacter, SexPositionSlot> getDominants();
 	public Map<GameCharacter, SexPositionSlot> getSubmissives();
 	
-	public default SexPace getStartingSexPaceOverride(GameCharacter character) {
+	public default SexPace getStartingSexPaceModifier(GameCharacter character) {
+		return null;
+	}
+	
+	/**
+	 * @param character
+	 * @return The SexPace that this character should be locked into for the duration of this sex scene.
+	 */
+	public default SexPace getForcedSexPace(GameCharacter character) {
 		return null;
 	}
 	
@@ -46,23 +56,18 @@ public interface SexManagerInterface {
 	}
 	
 	public default boolean isPlayerAbleToStopSex() {
-		return Sex.isDom(Main.game.getPlayer()) || Sex.isSubHasEqualControl();
+		return Sex.isDom(Main.game.getPlayer())
+				|| (Sex.isSubHasEqualControl()
+					&& !(Sex.getActivePartner() instanceof DominionAlleywayAttacker)
+					&& !(Sex.getActivePartner() instanceof DominionSuccubusAttacker));
 	}
 	
-	public default boolean isPlayerCanRemoveOwnClothes(){
+	public default boolean isAbleToRemoveSelfClothing(GameCharacter character){
 		return true;
 	}
 	
-	public default boolean isPlayerCanRemovePartnersClothes(){
-		return true;
-	}
-	
-	public default boolean isPartnerCanRemoveOwnClothes(){
-		return true;
-	}
-	
-	public default boolean isPartnerCanRemovePlayersClothes(){
-		return true;
+	public default boolean isAbleToRemoveOthersClothing(GameCharacter character){
+		return getDominants().containsKey(character) || Sex.isSubHasEqualControl();
 	}
 	
 	public default boolean isItemUseAvailable() {
@@ -104,7 +109,7 @@ public interface SexManagerInterface {
 
 	// Partner:
 	public default String getPartnerAssRevealReaction() {
-		Sex.getActivePartner().getPlayerKnowsAreasMap().put(CoverableArea.ANUS, true);
+		Sex.getActivePartner().getPlayerKnowsAreas().add(CoverableArea.ANUS);
 		
 		String s = "<p>"
 				+ UtilText.parse(Sex.getActivePartner(), Sex.getActivePartner().getAssDescription())
@@ -115,7 +120,7 @@ public interface SexManagerInterface {
 	}
 
 	public default String getPartnerBreastsRevealReaction() {
-		Sex.getActivePartner().getPlayerKnowsAreasMap().put(CoverableArea.NIPPLES, true);
+		Sex.getActivePartner().getPlayerKnowsAreas().add(CoverableArea.NIPPLES);
 		
 		String s = "<p>"
 				+ UtilText.parse(Sex.getActivePartner(), Sex.getActivePartner().getBreastDescription())
@@ -126,7 +131,7 @@ public interface SexManagerInterface {
 	}
 
 	public default String getPartnerPenisRevealReaction() {
-		Sex.getActivePartner().getPlayerKnowsAreasMap().put(CoverableArea.PENIS, true);
+		Sex.getActivePartner().getPlayerKnowsAreas().add(CoverableArea.PENIS);
 		
 		String s = "<p>"
 				+ UtilText.parse(Sex.getActivePartner(), Sex.getActivePartner().getPenisDescription())
@@ -137,7 +142,7 @@ public interface SexManagerInterface {
 	}
 
 	public default String getPartnerVaginaRevealReaction() {
-		Sex.getActivePartner().getPlayerKnowsAreasMap().put(CoverableArea.VAGINA, true);
+		Sex.getActivePartner().getPlayerKnowsAreas().add(CoverableArea.VAGINA);
 		
 		String s = "<p>"
 				+ UtilText.parse(Sex.getActivePartner(), Sex.getActivePartner().getVaginaDescription())
@@ -148,8 +153,8 @@ public interface SexManagerInterface {
 	}
 
 	public default String getPartnerMoundRevealReaction() {
-		Sex.getActivePartner().getPlayerKnowsAreasMap().put(CoverableArea.PENIS, true);
-		Sex.getActivePartner().getPlayerKnowsAreasMap().put(CoverableArea.VAGINA, true);
+		Sex.getActivePartner().getPlayerKnowsAreas().add(CoverableArea.PENIS);
+		Sex.getActivePartner().getPlayerKnowsAreas().add(CoverableArea.VAGINA);
 		
 		String s = "<p>"
 				+ UtilText.parse(Sex.getActivePartner(), Sex.getActivePartner().getMoundDescription())
